@@ -1,7 +1,7 @@
 entrypoint = "main.py"
 modules = ["python-3.10:v18-20230807-322e88b"]
 
-hidden = [".pythonlibs"]
+hidden = [".pythonlibs", "main.py"]
 
 [nix]
 channel = "stable-23_05"
@@ -11,4 +11,5 @@ language = "python3"
 
 [deployment]
 run = ["python3", "main.py"]
+# run ["tepl", "index.tepl"]
 deploymentTarget = "cloudrun"
