@@ -55,4 +55,4 @@ programming TEPL is the choice for you.
 
 ## License
 TEPl was originally licensed under MIT, but for more security I 
-set the license to . In the end, I hope that this piece of software may inspire other projects and may improve the quality of new and existing software.
+set the license to the GNU license. In the end, I hope that this piece of software may inspire other projects and may improve the quality of new and existing software.
