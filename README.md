@@ -17,7 +17,35 @@ END
 <p>TEPL is a scripting programming language in development 
 that strives to make coding simple, easy, and fun to learn. 
 It comes with many features, including: <p>
+
 - 
+
+
+
+
+Documentation
+====
+### Table of Contents
+- Introduction 
+- Installation
+- Files and the command line
+- `OUTPUT`
+- Math operations
+- Strings
+- Logical operations
+- `SET`
+- Running files using `RUN`
+- NONE values
+- Conca- what?
+- Logic gates
+    - `IF`!
+    - What `ELSE`?
+    - `ELSEIF`...?
+    - Nested if statements
+    - `AND` what?
+    - `OR` or `NOT`
+- 
+
 
 
 FAQ
@@ -31,7 +59,7 @@ functionalities and important features. Eventually, we will
 add libraries and frameworks. 
 
 ## Why use TEPL?
-I know you are probably thinking, "And yes another programming 
+I know you are probably thinking, "And yet another programming 
 language?" I understand that there are many, many(around 
 10,000) programming languages in the world today. So what makes 
 TEPL(a new programming language) worth using? TEPL is built for 
@@ -55,4 +83,6 @@ programming TEPL is the choice for you.
 
 ## License
 TEPl was originally licensed under MIT, but for more security I 
-set the license to the GNU license. In the end, I hope that this piece of software may inspire other projects and may improve the quality of new and existing software.
+set the license to the GNU license. In the end, I hope that 
+this piece of software may inspire other projects and may 
+improve the quality of new and existing software.
