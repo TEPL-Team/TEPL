@@ -44,6 +44,7 @@ Documentation
     - Nested if statements
     - `AND` what?
     - `OR` or `NOT`
+- `FUNCTION`
 - 
 
 
