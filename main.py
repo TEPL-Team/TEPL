@@ -1,12 +1,31 @@
 ### IMPORTS
 ### END OF IMPORTS
 
-def interpreter(text):
+col = 0
+line = 1
+
+def Parser(tokens):
+    LENGTH = len(tokens)
+    pos = 0
+    vars = []
+    output = None
+    global col, line
+    
+    while pos < LENGTH:
+        TOKEN = tokens[pos]
+        if TOKEN['type'] == 'KEYWORD' and TOKEN['value'] == 'OUTPUT':
+            if not(tokens[pos + 1]):
+                return f'Unexpected end of line, expected valid value. At line ${line} and column ${col}!'
+
+            if tokens[pos + 1]['type'] == 'STRING':
+                output = tokens[pos + 1]['value']
+
+def Lexer(text):
     LENGTH = len(text)
-    line = 1
-    col = 0
+    global col, line
     pos = 0
     tokens = []
+    DIGITS = '0123456789'
     while pos < LENGTH:
         char = text[pos]
         if char == ' ':
@@ -97,15 +116,50 @@ def interpreter(text):
             pos += 1
             col += 1
             continue
+        elif char in DIGITS: # append: is True
+            res = ""
+            dots = 0
+            while pos < LENGTH and (char in DIGITS or char == '.'):
+                if char == '.':
+                    if dots == 1:
+                        return f'Invalid number at line {line} and column {col}!'
+                    dots += 1
+                    res += '.'
+                    pos += 1
+                    col += 1
+                else: 
+                    res += char
+                    pos += 1
+                    col += 1
+
+            if dots != 1:
+                tokens.append({
+                    'type': 'NUMBER',
+                    'value': res,
+                    'line': line,
+                    'col': col
+                })
+            else: 
+                tokens.append({
+                    'type': 'DECIMAL',
+                    'value': res,
+                    'line': line,
+                    'col': col
+                })
+
+            pos += 1
+            col += 1
+            continue
         else:
             return f"Invalid character at line {line}, col {col}"
 
     return tokens
+    # return Parser(tokens)
 
 
-data = '"Hello, world!"'
+data = '15'
 def run(text):
-    output = interpreter(text)
+    output = Lexer(text)
     print(output)
 
 run(data)
