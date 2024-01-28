@@ -1,165 +1,161 @@
-### IMPORTS
-### END OF IMPORTS
+import sys
 
-col = 0
-line = 1
 
-def Parser(tokens):
-    LENGTH = len(tokens)
-    pos = 0
-    vars = []
-    output = None
-    global col, line
-    
-    while pos < LENGTH:
-        TOKEN = tokens[pos]
-        if TOKEN['type'] == 'KEYWORD' and TOKEN['value'] == 'OUTPUT':
-            if not(tokens[pos + 1]):
-                return f'Unexpected end of line, expected valid value. At line ${line} and column ${col}!'
+class My:
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
 
-            if tokens[pos + 1]['type'] == 'STRING':
-                output = tokens[pos + 1]['value']
+    def __init__(self, code):
+        self.code = code
+        self.line_nr = 0
+        self.token_feed = self.tokens()
+        self.returned_token = None
+        self.stack = []
+        self.vars = {}
 
-def Lexer(text):
-    LENGTH = len(text)
-    global col, line
-    pos = 0
-    tokens = []
-    DIGITS = '0123456789'
-    while pos < LENGTH:
-        char = text[pos]
-        if char == ' ':
-            col += 1
-            pos += 1
-            continue
-        elif char == '\n':
-            line += 1
-            col = 0
-            pos += 1
-            continue
-        elif char == '+':
-            tokens.append({
-                'type': 'PLUS',
-                'value': '+',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            continue
-        elif char == '-':
-            tokens.append({
-                'type': 'MINUS',
-                'value': '-',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            continue
-        elif char == '*':
-            tokens.append({
-                'type': 'MULTIPLY',
-                'value': '*',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            continue
-        elif char == '/':
-            tokens.append({
-                'type': 'DIVIDE',
-                'value': '/',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            continue
-        elif char == '(':
-            tokens.append({
-                'type': 'LPAREN',
-                'value': '(',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            continue
-        elif char == '(':
-            tokens.append({
-                'type': 'RPAREN',
-                'value': ')',
-                'line': line,
-                'col': col
-            })
-            col += 1
-            pos += 1
-            pass
-        elif char == '"' or char == "'":
-            res = ""
-            pos += 1
-            col += 1
-            while pos < LENGTH and char != '"' and char != "'":
-                res += char 
-                pos += 1
-                col += 1
-            if (text[pos-1] != '"' and text[pos] != '"') or (text[pos-1] != "'" and text[pos] != "'"):
-                return f'Unterminated text at line {line} and column {col}!'
-            tokens.append({
-                'type': 'STRING',
-                'value': res,
-                'line': line,
-                'col': col
-            })
-            pos += 1
-            col += 1
-            continue
-        elif char in DIGITS: # append: is True
-            res = ""
-            dots = 0
-            while pos < LENGTH and (char in DIGITS or char == '.'):
-                if char == '.':
-                    if dots == 1:
-                        return f'Invalid number at line {line} and column {col}!'
-                    dots += 1
-                    res += '.'
-                    pos += 1
-                    col += 1
-                else: 
-                    res += char
-                    pos += 1
-                    col += 1
+    def raise_error(self, message):
+        raise ValueError(f'{self.line_nr}: {message}')
 
-            if dots != 1:
-                tokens.append({
-                    'type': 'NUMBER',
-                    'value': res,
-                    'line': line,
-                    'col': col
-                })
-            else: 
-                tokens.append({
-                    'type': 'DECIMAL',
-                    'value': res,
-                    'line': line,
-                    'col': col
-                })
+    def tokens(self):
+        for line in self.code.strip().split('\n'):
+            self.line_nr += 1
+            for token in line.strip().split(' '):
+                if token in ['print', '=', '+', '-', '*', '/']:
+                    yield (token,)
+                elif token.isnumeric():
+                    yield ('number', int(token))
+                elif token[0].isalpha():
+                    yield ('identifier', token)
+                else:
+                    self.raise_error(f'Invalid token {token}')
+            yield ('\n',)
 
-            pos += 1
-            col += 1
-            continue
+    def next_token(self):
+        if self.returned_token:
+            token = self.returned_token
+            self.returned_token = None
         else:
-            return f"Invalid character at line {line}, col {col}"
+            try:
+                token = next(self.token_feed)
+            except StopIteration:
+                token = None
+        return token
 
-    return tokens
-    # return Parser(tokens)
+    def return_token(self, token):
+        if self.returned_token is not None:
+            raise RuntimeError('Cannot return more than one token at a time')
+        self.returned_token = token
+
+    def parse_program(self):
+        if not self.parse_statement():
+            self.raise_error('Expected: statement')
+        token = self.next_token()
+        while token is not None:
+            self.return_token(token)
+            if not self.parse_statement():
+                self.raise_error('Expected: statement')
+            token = self.next_token()
+        return True
+
+    def parse_statement(self):
+        if not self.parse_print_statement() and not self.parse_assignment():
+            self.raise_error('Expected: print statement or assignment')
+        token = self.next_token()
+        if token[0] != '\n':
+            self.raise_error('Expected: end of line')
+        return True
+
+    def parse_print_statement(self):
+        token = self.next_token()
+        if token[0] != 'print':
+            self.return_token(token)
+            return False
+        if not self.parse_expression():
+            self.raise_error('Expected: expression')
+
+        value = self.stack_collapse()
+        print(value)
+        return True
+
+    def parse_assignment(self):
+        token = self.next_token()
+        if token[0] != 'identifier':
+            self.return_token(token)
+            return False
+        identifier = token[1]
+        token = self.next_token()
+        if token[0] != '=':
+            self.raise_error('Expected =')
+        if not self.parse_expression():
+            self.raise_error('Expected expression')
+
+        self.vars[identifier] = self.stack_collapse()
+        return True
+
+    def parse_expression(self):
+        if not self.parse_value():
+            return False
+        if self.parse_operator():
+            self.parse_expression()
+        return True
+
+    def parse_value(self):
+        token = self.next_token()
+        if token[0] not in ['number', 'identifier']:
+            self.return_token(token)
+            return False
+        
+        if token[0] == 'identifier':
+            if token[1] not in self.vars:
+                self.raise_error(f'Syntax Error: Unknown variable {token[1]}')
+            else:
+                self.stack_push(self.vars[token[1]])
+        else:
+            self.stack_push(token[1])
+        return True
+
+    def parse_operator(self):
+        token = self.next_token()
+        if token[0] not in ['+', '-', '*', '/']:
+            self.return_token(token)
+            return False
+
+        self.stack_push(self.stack_collapse(next_operator=token[0]))
+        self.stack_push((token[0], self.precedence[token[0]]))
+        return True
+
+    def stack_push(self, arg):
+        self.stack.append(arg)
+
+    def stack_pop(self):
+        return self.stack.pop()
+
+    def stack_collapse(self, next_operator=None):
+        op_precedence = 0 if next_operator is None else \
+            self.precedence[next_operator]
+        while len(self.stack) > 1 and self.stack[-2][1] > op_precedence:
+            value2 = self.stack_pop()
+            prev_op = self.stack_pop()[0]
+            value1 = self.stack_pop()
+            if prev_op == '+':
+                self.stack_push(value1 + value2)
+            elif prev_op == '-':
+                self.stack_push(value1 - value2)
+            elif prev_op == '*':
+                self.stack_push(value1 * value2)
+            elif prev_op == '/':
+                self.stack_push(value1 // value2)
+        return self.stack.pop()
+
+    def run(self):
+        try:
+            return self.parse_program()
+        except ValueError as exc:
+            print(str(exc))
+            return False
 
 
-data = '15'
-def run(text):
-    output = Lexer(text)
-    print(output)
-
-run(data)
+if __name__ == '__main__':
+    with open(sys.argv[1], 'rt') as f:
+        code = f.read()
+    program = My(code)
+    program.run()
