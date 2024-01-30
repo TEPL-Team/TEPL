@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUMINUSDIVIDE LPAREN MINUS MULTIPLY NUMBER PLUS RPARENexpression : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : LPAREN expression RPARENexpression : MINUS expression %prec UMINUS'
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUMINUSDIVIDE LPAREN MINUS MULTIPLY NUMBER PLUS RPARENstatement  : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBERexpression : LPAREN expression RPARENexpression : MINUS expression %prec UMINUS'
     
-_lr_action_items = {'NUMBER':([0,3,4,5,6,7,8,],[2,2,2,11,12,13,14,]),'LPAREN':([0,3,4,],[4,4,4,]),'MINUS':([0,2,3,4,],[3,6,3,3,]),'$end':([1,9,11,12,13,14,15,],[0,-6,-1,-2,-3,-4,-5,]),'PLUS':([2,],[5,]),'MULTIPLY':([2,],[7,]),'DIVIDE':([2,],[8,]),'RPAREN':([9,10,11,12,13,14,15,],[-6,15,-1,-2,-3,-4,-5,]),}
+_lr_action_items = {'NUMBER':([0,3,4,5,6,],[2,7,8,9,10,]),'$end':([1,7,8,9,10,],[0,-1,-2,-3,-4,]),'PLUS':([2,],[3,]),'MINUS':([2,],[4,]),'MULTIPLY':([2,],[5,]),'DIVIDE':([2,],[6,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,3,4,],[1,9,10,]),}
+_lr_goto_items = {'statement':([0,],[1,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,11 +26,12 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> NUMBER PLUS NUMBER','expression',3,'p_binary_operators','main.py',56),
-  ('expression -> NUMBER MINUS NUMBER','expression',3,'p_binary_operators','main.py',57),
-  ('expression -> NUMBER MULTIPLY NUMBER','expression',3,'p_binary_operators','main.py',58),
-  ('expression -> NUMBER DIVIDE NUMBER','expression',3,'p_binary_operators','main.py',59),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','main.py',72),
-  ('expression -> MINUS expression','expression',2,'p_expr_uminus','main.py',76),
+  ("S' -> statement","S'",1,None,None,None),
+  ('statement -> NUMBER PLUS NUMBER','statement',3,'p_expression_binop','tepl.py',69),
+  ('statement -> NUMBER MINUS NUMBER','statement',3,'p_expression_binop','tepl.py',70),
+  ('statement -> NUMBER MULTIPLY NUMBER','statement',3,'p_expression_binop','tepl.py',71),
+  ('statement -> NUMBER DIVIDE NUMBER','statement',3,'p_expression_binop','tepl.py',72),
+  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',88),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',92),
+  ('expression -> MINUS expression','expression',2,'p_expr_uminus','tepl.py',96),
 ]

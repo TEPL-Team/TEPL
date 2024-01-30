@@ -1,1 +1,117 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> NUMBER PLUS NUMBER
+Rule 2     statement -> NUMBER MINUS NUMBER
+Rule 3     statement -> NUMBER MULTIPLY NUMBER
+Rule 4     statement -> NUMBER DIVIDE NUMBER
+Rule 5     expression -> NUMBER
+Rule 6     expression -> LPAREN expression RPAREN
+Rule 7     expression -> MINUS expression
+
+Terminals, with rules where they appear
+
+DIVIDE               : 4
+LPAREN               : 6
+MINUS                : 2 7
+MULTIPLY             : 3
+NUMBER               : 1 1 2 2 3 3 4 4 5
+PLUS                 : 1
+RPAREN               : 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 6 7
+statement            : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . NUMBER PLUS NUMBER
+    (2) statement -> . NUMBER MINUS NUMBER
+    (3) statement -> . NUMBER MULTIPLY NUMBER
+    (4) statement -> . NUMBER DIVIDE NUMBER
+
+    NUMBER          shift and go to state 2
+
+    statement                      shift and go to state 1
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> NUMBER . PLUS NUMBER
+    (2) statement -> NUMBER . MINUS NUMBER
+    (3) statement -> NUMBER . MULTIPLY NUMBER
+    (4) statement -> NUMBER . DIVIDE NUMBER
+
+    PLUS            shift and go to state 3
+    MINUS           shift and go to state 4
+    MULTIPLY        shift and go to state 5
+    DIVIDE          shift and go to state 6
+
+
+state 3
+
+    (1) statement -> NUMBER PLUS . NUMBER
+
+    NUMBER          shift and go to state 7
+
+
+state 4
+
+    (2) statement -> NUMBER MINUS . NUMBER
+
+    NUMBER          shift and go to state 8
+
+
+state 5
+
+    (3) statement -> NUMBER MULTIPLY . NUMBER
+
+    NUMBER          shift and go to state 9
+
+
+state 6
+
+    (4) statement -> NUMBER DIVIDE . NUMBER
+
+    NUMBER          shift and go to state 10
+
+
+state 7
+
+    (1) statement -> NUMBER PLUS NUMBER .
+
+    $end            reduce using rule 1 (statement -> NUMBER PLUS NUMBER .)
+
+
+state 8
+
+    (2) statement -> NUMBER MINUS NUMBER .
+
+    $end            reduce using rule 2 (statement -> NUMBER MINUS NUMBER .)
+
+
+state 9
+
+    (3) statement -> NUMBER MULTIPLY NUMBER .
+
+    $end            reduce using rule 3 (statement -> NUMBER MULTIPLY NUMBER .)
+
+
+state 10
+
+    (4) statement -> NUMBER DIVIDE NUMBER .
+
+    $end            reduce using rule 4 (statement -> NUMBER DIVIDE NUMBER .)
+
