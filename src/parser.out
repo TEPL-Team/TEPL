@@ -8,23 +8,24 @@ Rule 2     statement -> NUMBER MINUS NUMBER
 Rule 3     statement -> NUMBER MULTIPLY NUMBER
 Rule 4     statement -> NUMBER DIVIDE NUMBER
 Rule 5     expression -> NUMBER
-Rule 6     expression -> LPAREN expression RPAREN
-Rule 7     expression -> MINUS expression
+Rule 6     expression -> UMINUS
+Rule 7     expression -> LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
 DIVIDE               : 4
-LPAREN               : 6
-MINUS                : 2 7
+LPAREN               : 7
+MINUS                : 2
 MULTIPLY             : 3
 NUMBER               : 1 1 2 2 3 3 4 4 5
 PLUS                 : 1
-RPAREN               : 6
+RPAREN               : 7
+UMINUS               : 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 6 7
+expression           : 7
 statement            : 0
 
 Parsing method: LALR

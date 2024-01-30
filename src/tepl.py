@@ -4,7 +4,7 @@ from ply.yacc import yacc
 
 # list of tokens, this is always required when using ply
 tokens = (
-    'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 
+    'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 'UMINUS', 
     'NUMBER',
 )
 
@@ -16,7 +16,8 @@ t_DIVIDE       = r'/'
 t_LPAREN       = r'\('
 t_RPAREN       = r'\)'
 t_NUMBER       = r'\d+'
-
+t_UMINUS       = r'-\d+'
+t_ignore       = ' '
 
 # a rule so we can track line numbers
 def t_newline(t):
@@ -37,64 +38,57 @@ precedence = (
 )
 
 # transveral ast 
-class Expr: 
-    pass
+class Node:
+    def __init__(self,type,children=None,leaf=None):
+         self.type = type
+         if children:
+              self.children = children
+         else:
+              self.children = [ ]
+         self.leaf = leaf
 
-class BinOp(Expr):
-    def __init__(self,left,op,right):
-        self.type = "binop"
-        self.left = left
-        self.right = right
-        self.op = op
-
-    def math(self):
-        if self.op == "+":
-            return self.left.math() + self.right.math()
-        elif self.op == "-":
-            return self.left.math() - self.right.math()
-        elif self.op == "*":
-            return self.left.math() * self.right.math()
-        elif self.op == "/":
-            return self.left.math() / self.right.math()
-
-class Number(Expr):
-    def __init__(self,value):
-        self.type = "number"
-        self.value = value
-
-    def re(self):
-        return int(self.value)
+    def binop(self):
+        if self.type == "binop": 
+            pass
+        else: 
+            return "Error: Not a binary operation"
+        left = self.children[0]
+        right = self.children[1]
+        op = self.leaf
+        
+        if op == "+":
+            return int(left) + int(right)
+        elif op == "-":
+            return int(left) - int(right)
+        elif op == "*":
+            return int(left) * int(right)
+        elif op == "/":
+            if right == 0: 
+                return "Error: Division by zero"
+            else:
+                return int(left) / int(right)
+        else: 
+            return f"Unknown operator, {op}"
 
 def p_expression_binop(p):
     '''statement  : NUMBER PLUS NUMBER
                   | NUMBER MINUS NUMBER
                   | NUMBER MULTIPLY NUMBER
                   | NUMBER DIVIDE NUMBER'''
-
-    #Math = BinOp(p[1],p[2],p[3])
-    #p[0] = Math.math()
-    if p[2] == '+':
-        p[0] = int(p[1]) + int(p[3])
-    elif p[2] == '-':
-        p[0] = int(p[1]) - int(p[3])
-    elif p[2] == '*':
-        p[0] = int(p[1]) * int(p[3])
-    elif p[2] == '/':
-        p[0] = int(p[1]) / int(p[3])
-
+    
+    equation = Node("binop", [p[1], p[3]], p[2])
+    result = equation.binop()
+    p[0] = result
     print(p[0])
 
 def p_expression_number(p):
-    'expression : NUMBER'
-    p[0] = ('number-expression', p[1])
+    '''expression : NUMBER
+                  | UMINUS '''
+    p[0] = p[1]
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
-
-def p_expr_uminus(p):
-    'expression : MINUS expression %prec UMINUS'
-    p[0] = -p[2]
 
 def p_error(p):
     if p:
