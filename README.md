@@ -83,7 +83,7 @@ Simple, right? Yes it is! If you want to get a jump-start into
 programming TEPL is the choice for you.
 
 ## License
-TEPl was originally licensed under MIT, but for more security I 
-set the license to the GNU license. In the end, I hope that 
+TEPl was originally licensed under GNU, but for more security I 
+set the license to the Apache license. In the end, I hope that 
 this piece of software may inspire other projects and may 
 improve the quality of new and existing software.
