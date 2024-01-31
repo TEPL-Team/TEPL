@@ -1,6 +1,22 @@
+### Stages to completing TEPL:
+# 1. Build a basic arithmetic calculator. 
+# 2. Add variable support.
+# 3. Add basic logic operators. 
+# 4. Implement booleans. 
+# 5. Add more math operators and math functions, including: sin, cos, and tan. 
+# 6. 
+### END OF STAGES
+
 # importing ply(python, lex, and yacc)
 from ply.lex import lex
 from ply.yacc import yacc
+
+# a list of reserved keywords
+keywords = {
+    'print': 'OUTPUT',
+    'var': 'SET', 
+    ''
+}
 
 # list of tokens, this is always required when using ply
 tokens = (
@@ -15,13 +31,18 @@ t_MULTIPLY     = r'\*'
 t_DIVIDE       = r'/'
 t_LPAREN       = r'\('
 t_RPAREN       = r'\)'
-t_NUMBER       = r'\d+'
-t_ignore       = ' '
+t_ignore       = ' \t'
 
 # a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+# regex rule for numbers
+def t_NUMBER(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
 
 # handling errors
 def t_error(t):
@@ -39,18 +60,18 @@ precedence = (
 # transveral ast 
 class Node:
     def __init__(self,type,children=None,leaf=None):
-         self.type = type
-         if children:
-              self.children = children
-         else:
-              self.children = [ ]
-         self.leaf = leaf
+        self.type = type
+        
+        if children:
+            self.children = children
+        else:
+            self.children = [ ]
+        self.leaf = leaf
+
+        if self.type == "binop": 
+            self.binop()
 
     def binop(self):
-        if self.type == "binop": 
-            pass
-        else: 
-            return "Error: Not a binary operation"
         left = self.children[0]
         right = self.children[1]
         op = self.leaf
@@ -89,7 +110,7 @@ def p_expression_group(p):
     p[0] = p[2]
 
 def p_expression_uminus(p):
-    'expression : MINUS expression %prec UMINUS'
+    'expression : MINUS NUMBER %prec UMINUS'
     p[0] = -p[2]
 
 def p_error(p):
