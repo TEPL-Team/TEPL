@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUMINUSDIVIDE LPAREN MINUS MULTIPLY NUMBER PLUS RPAREN UMINUSstatement  : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBER\n                  | UMINUS expression : LPAREN expression RPAREN'
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUMINUSDIVIDE LPAREN MINUS MULTIPLY NUMBER PLUS RPARENstatement  : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBERexpression : LPAREN expression RPARENexpression : MINUS expression %prec UMINUS'
     
 _lr_action_items = {'NUMBER':([0,3,4,5,6,],[2,7,8,9,10,]),'$end':([1,7,8,9,10,],[0,-1,-2,-3,-4,]),'PLUS':([2,],[3,]),'MINUS':([2,],[4,]),'MULTIPLY':([2,],[5,]),'DIVIDE':([2,],[6,]),}
 
@@ -27,11 +27,11 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> NUMBER PLUS NUMBER','statement',3,'p_expression_binop','tepl.py',74),
-  ('statement -> NUMBER MINUS NUMBER','statement',3,'p_expression_binop','tepl.py',75),
-  ('statement -> NUMBER MULTIPLY NUMBER','statement',3,'p_expression_binop','tepl.py',76),
-  ('statement -> NUMBER DIVIDE NUMBER','statement',3,'p_expression_binop','tepl.py',77),
-  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',85),
-  ('expression -> UMINUS','expression',1,'p_expression_number','tepl.py',86),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',90),
+  ('statement -> NUMBER PLUS NUMBER','statement',3,'p_expression_binop','tepl.py',73),
+  ('statement -> NUMBER MINUS NUMBER','statement',3,'p_expression_binop','tepl.py',74),
+  ('statement -> NUMBER MULTIPLY NUMBER','statement',3,'p_expression_binop','tepl.py',75),
+  ('statement -> NUMBER DIVIDE NUMBER','statement',3,'p_expression_binop','tepl.py',76),
+  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',84),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',88),
+  ('expression -> MINUS expression','expression',2,'p_expression_uminus','tepl.py',92),
 ]

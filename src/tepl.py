@@ -4,7 +4,7 @@ from ply.yacc import yacc
 
 # list of tokens, this is always required when using ply
 tokens = (
-    'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 'UMINUS', 
+    'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 
     'NUMBER',
 )
 
@@ -16,7 +16,6 @@ t_DIVIDE       = r'/'
 t_LPAREN       = r'\('
 t_RPAREN       = r'\)'
 t_NUMBER       = r'\d+'
-t_UMINUS       = r'-\d+'
 t_ignore       = ' '
 
 # a rule so we can track line numbers
@@ -82,13 +81,16 @@ def p_expression_binop(p):
     print(p[0])
 
 def p_expression_number(p):
-    '''expression : NUMBER
-                  | UMINUS '''
+    '''expression : NUMBER'''
     p[0] = p[1]
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
+
+def p_expression_uminus(p):
+    'expression : MINUS expression %prec UMINUS'
+    p[0] = -p[2]
 
 def p_error(p):
     if p:
