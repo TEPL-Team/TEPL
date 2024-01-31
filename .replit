@@ -1,7 +1,7 @@
 entrypoint = "main.py"
 modules = ["python-3.10:v18-20230807-322e88b"]
 
-hidden = [".pythonlibs", ".ccls-cache", ""]
+hidden = [".pythonlibs", ".ccls-cache", "src"]
 run = "python ./src/main.py"
 
 [nix]
