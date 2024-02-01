@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDErightUMINUSDIVIDE LPAREN MINUS MULTIPLY NUMBER PLUS RPARENstatement  : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBERexpression : LPAREN expression RPARENexpression : MINUS NUMBER %prec UMINUS'
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEDIVIDE ID LPAREN MINUS MULTIPLY NUMBER PLUS RPAREN SET TO\n    statement : SET ID TO expression\n    expression : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBERexpression : LPAREN expression RPAREN\n    expression : ID\n    '
     
-_lr_action_items = {'NUMBER':([0,3,4,5,6,],[2,7,8,9,10,]),'$end':([1,7,8,9,10,],[0,-1,-2,-3,-4,]),'PLUS':([2,],[3,]),'MINUS':([2,],[4,]),'MULTIPLY':([2,],[5,]),'DIVIDE':([2,],[6,]),}
+_lr_action_items = {'SET':([0,],[2,]),'$end':([1,5,6,7,14,15,16,17,18,],[0,-8,-1,-6,-2,-3,-4,-5,-7,]),'ID':([2,4,8,],[3,5,5,]),'TO':([3,],[4,]),'NUMBER':([4,8,9,10,11,12,],[7,7,14,15,16,17,]),'LPAREN':([4,8,],[8,8,]),'RPAREN':([5,7,13,14,15,16,17,18,],[-8,-6,18,-2,-3,-4,-5,-7,]),'PLUS':([7,],[9,]),'MINUS':([7,],[10,]),'MULTIPLY':([7,],[11,]),'DIVIDE':([7,],[12,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'expression':([4,8,],[6,13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,11 +27,12 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> NUMBER PLUS NUMBER','statement',3,'p_expression_binop','tepl.py',73),
-  ('statement -> NUMBER MINUS NUMBER','statement',3,'p_expression_binop','tepl.py',74),
-  ('statement -> NUMBER MULTIPLY NUMBER','statement',3,'p_expression_binop','tepl.py',75),
-  ('statement -> NUMBER DIVIDE NUMBER','statement',3,'p_expression_binop','tepl.py',76),
-  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',84),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',88),
-  ('expression -> MINUS NUMBER','expression',2,'p_expression_uminus','tepl.py',92),
+  ('statement -> SET ID TO expression','statement',4,'p_statement_assignvar','tepl.py',128),
+  ('expression -> NUMBER PLUS NUMBER','expression',3,'p_expression_binop','tepl.py',133),
+  ('expression -> NUMBER MINUS NUMBER','expression',3,'p_expression_binop','tepl.py',134),
+  ('expression -> NUMBER MULTIPLY NUMBER','expression',3,'p_expression_binop','tepl.py',135),
+  ('expression -> NUMBER DIVIDE NUMBER','expression',3,'p_expression_binop','tepl.py',136),
+  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',143),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',147),
+  ('expression -> ID','expression',1,'p_expression_id','tepl.py',152),
 ]

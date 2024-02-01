@@ -29,12 +29,13 @@ from ply.yacc import yacc
 # a list of reserved keywords
 keywords = {
     'var': 'SET',
+    'to': 'TO',
 }
 
 # list of tokens, this is always required when using ply
 tokens = (
     'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 
-    'NUMBER',
+    'NUMBER', 'ID'
 ) + tuple(keywords.values())
 
 # regexes for the tokens
@@ -72,8 +73,10 @@ def t_error(t):
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULTIPLY', 'DIVIDE'),
-    ('right', 'UMINUS'),            # unary minus operator
+    #('right', 'UMINUS'), # unary minus operator
 )
+
+vars = {}
 
 # transveral ast 
 class Node:
@@ -83,11 +86,13 @@ class Node:
         if children:
             self.children = children
         else:
-            self.children = [ ]
+            self.children = []
         self.leaf = leaf
 
         if self.type == "binop": 
             self.binop()
+        elif self.type == "var-assignment":
+            self.assignvar()
 
     def binop(self):
         left = self.children[0]
@@ -108,8 +113,24 @@ class Node:
         else: 
             return f"Unknown operator, {op}"
 
+    def assignvar(self):
+        global vars
+        varname = self.leaf
+        value = self.children[0]
+
+        if self.children[1] == 'TO':
+            vars[varname] = value
+        else: 
+            return f"Error: Invalid assignment, was expecting, 'TO', but got {self.children[1]}"
+        
+def p_statement_assignvar(p):
+    '''
+    statement : SET ID TO expression
+    '''
+    newvar = Node("var-assignment", [p[4], p[3]], p[2])
+
 def p_expression_binop(p):
-    '''statement  : NUMBER PLUS NUMBER
+    '''expression : NUMBER PLUS NUMBER
                   | NUMBER MINUS NUMBER
                   | NUMBER MULTIPLY NUMBER
                   | NUMBER DIVIDE NUMBER'''
@@ -117,7 +138,6 @@ def p_expression_binop(p):
     equation = Node("binop", [p[1], p[3]], p[2])
     result = equation.binop()
     p[0] = result
-    print(p[0])
 
 def p_expression_number(p):
     '''expression : NUMBER'''
@@ -126,6 +146,15 @@ def p_expression_number(p):
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
+
+def p_expression_id(p):
+    '''
+    expression : ID
+    '''
+    if p[1] in vars:
+        p[0] = vars[p[1]] 
+    else:
+        return f"Error: Variable {p[1]} is not defined"
 
 #def p_expression_uminus(p):
  #   'expression : MINUS NUMBER %prec UMINUS'

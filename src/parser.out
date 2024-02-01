@@ -3,28 +3,32 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Grammar
 
 Rule 0     S' -> statement
-Rule 1     statement -> NUMBER PLUS NUMBER
-Rule 2     statement -> NUMBER MINUS NUMBER
-Rule 3     statement -> NUMBER MULTIPLY NUMBER
-Rule 4     statement -> NUMBER DIVIDE NUMBER
-Rule 5     expression -> NUMBER
-Rule 6     expression -> LPAREN expression RPAREN
-Rule 7     expression -> MINUS NUMBER
+Rule 1     statement -> SET ID TO expression
+Rule 2     expression -> NUMBER PLUS NUMBER
+Rule 3     expression -> NUMBER MINUS NUMBER
+Rule 4     expression -> NUMBER MULTIPLY NUMBER
+Rule 5     expression -> NUMBER DIVIDE NUMBER
+Rule 6     expression -> NUMBER
+Rule 7     expression -> LPAREN expression RPAREN
+Rule 8     expression -> ID
 
 Terminals, with rules where they appear
 
-DIVIDE               : 4
-LPAREN               : 6
-MINUS                : 2 7
-MULTIPLY             : 3
-NUMBER               : 1 1 2 2 3 3 4 4 5 7
-PLUS                 : 1
-RPAREN               : 6
+DIVIDE               : 5
+ID                   : 1 8
+LPAREN               : 7
+MINUS                : 3
+MULTIPLY             : 4
+NUMBER               : 2 2 3 3 4 4 5 5 6
+PLUS                 : 2
+RPAREN               : 7
+SET                  : 1
+TO                   : 1
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 6
+expression           : 1 7
 statement            : 0
 
 Parsing method: LALR
@@ -32,12 +36,9 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . statement
-    (1) statement -> . NUMBER PLUS NUMBER
-    (2) statement -> . NUMBER MINUS NUMBER
-    (3) statement -> . NUMBER MULTIPLY NUMBER
-    (4) statement -> . NUMBER DIVIDE NUMBER
+    (1) statement -> . SET ID TO expression
 
-    NUMBER          shift and go to state 2
+    SET             shift and go to state 2
 
     statement                      shift and go to state 1
 
@@ -49,69 +50,154 @@ state 1
 
 state 2
 
-    (1) statement -> NUMBER . PLUS NUMBER
-    (2) statement -> NUMBER . MINUS NUMBER
-    (3) statement -> NUMBER . MULTIPLY NUMBER
-    (4) statement -> NUMBER . DIVIDE NUMBER
+    (1) statement -> SET . ID TO expression
 
-    PLUS            shift and go to state 3
-    MINUS           shift and go to state 4
-    MULTIPLY        shift and go to state 5
-    DIVIDE          shift and go to state 6
+    ID              shift and go to state 3
 
 
 state 3
 
-    (1) statement -> NUMBER PLUS . NUMBER
+    (1) statement -> SET ID . TO expression
 
-    NUMBER          shift and go to state 7
+    TO              shift and go to state 4
 
 
 state 4
 
-    (2) statement -> NUMBER MINUS . NUMBER
+    (1) statement -> SET ID TO . expression
+    (2) expression -> . NUMBER PLUS NUMBER
+    (3) expression -> . NUMBER MINUS NUMBER
+    (4) expression -> . NUMBER MULTIPLY NUMBER
+    (5) expression -> . NUMBER DIVIDE NUMBER
+    (6) expression -> . NUMBER
+    (7) expression -> . LPAREN expression RPAREN
+    (8) expression -> . ID
 
-    NUMBER          shift and go to state 8
+    NUMBER          shift and go to state 7
+    LPAREN          shift and go to state 8
+    ID              shift and go to state 5
 
+    expression                     shift and go to state 6
 
 state 5
 
-    (3) statement -> NUMBER MULTIPLY . NUMBER
+    (8) expression -> ID .
 
-    NUMBER          shift and go to state 9
+    $end            reduce using rule 8 (expression -> ID .)
+    RPAREN          reduce using rule 8 (expression -> ID .)
 
 
 state 6
 
-    (4) statement -> NUMBER DIVIDE . NUMBER
+    (1) statement -> SET ID TO expression .
 
-    NUMBER          shift and go to state 10
+    $end            reduce using rule 1 (statement -> SET ID TO expression .)
 
 
 state 7
 
-    (1) statement -> NUMBER PLUS NUMBER .
+    (2) expression -> NUMBER . PLUS NUMBER
+    (3) expression -> NUMBER . MINUS NUMBER
+    (4) expression -> NUMBER . MULTIPLY NUMBER
+    (5) expression -> NUMBER . DIVIDE NUMBER
+    (6) expression -> NUMBER .
 
-    $end            reduce using rule 1 (statement -> NUMBER PLUS NUMBER .)
+    PLUS            shift and go to state 9
+    MINUS           shift and go to state 10
+    MULTIPLY        shift and go to state 11
+    DIVIDE          shift and go to state 12
+    $end            reduce using rule 6 (expression -> NUMBER .)
+    RPAREN          reduce using rule 6 (expression -> NUMBER .)
 
 
 state 8
 
-    (2) statement -> NUMBER MINUS NUMBER .
+    (7) expression -> LPAREN . expression RPAREN
+    (2) expression -> . NUMBER PLUS NUMBER
+    (3) expression -> . NUMBER MINUS NUMBER
+    (4) expression -> . NUMBER MULTIPLY NUMBER
+    (5) expression -> . NUMBER DIVIDE NUMBER
+    (6) expression -> . NUMBER
+    (7) expression -> . LPAREN expression RPAREN
+    (8) expression -> . ID
 
-    $end            reduce using rule 2 (statement -> NUMBER MINUS NUMBER .)
+    NUMBER          shift and go to state 7
+    LPAREN          shift and go to state 8
+    ID              shift and go to state 5
 
+    expression                     shift and go to state 13
 
 state 9
 
-    (3) statement -> NUMBER MULTIPLY NUMBER .
+    (2) expression -> NUMBER PLUS . NUMBER
 
-    $end            reduce using rule 3 (statement -> NUMBER MULTIPLY NUMBER .)
+    NUMBER          shift and go to state 14
 
 
 state 10
 
-    (4) statement -> NUMBER DIVIDE NUMBER .
+    (3) expression -> NUMBER MINUS . NUMBER
 
-    $end            reduce using rule 4 (statement -> NUMBER DIVIDE NUMBER .)
+    NUMBER          shift and go to state 15
+
+
+state 11
+
+    (4) expression -> NUMBER MULTIPLY . NUMBER
+
+    NUMBER          shift and go to state 16
+
+
+state 12
+
+    (5) expression -> NUMBER DIVIDE . NUMBER
+
+    NUMBER          shift and go to state 17
+
+
+state 13
+
+    (7) expression -> LPAREN expression . RPAREN
+
+    RPAREN          shift and go to state 18
+
+
+state 14
+
+    (2) expression -> NUMBER PLUS NUMBER .
+
+    $end            reduce using rule 2 (expression -> NUMBER PLUS NUMBER .)
+    RPAREN          reduce using rule 2 (expression -> NUMBER PLUS NUMBER .)
+
+
+state 15
+
+    (3) expression -> NUMBER MINUS NUMBER .
+
+    $end            reduce using rule 3 (expression -> NUMBER MINUS NUMBER .)
+    RPAREN          reduce using rule 3 (expression -> NUMBER MINUS NUMBER .)
+
+
+state 16
+
+    (4) expression -> NUMBER MULTIPLY NUMBER .
+
+    $end            reduce using rule 4 (expression -> NUMBER MULTIPLY NUMBER .)
+    RPAREN          reduce using rule 4 (expression -> NUMBER MULTIPLY NUMBER .)
+
+
+state 17
+
+    (5) expression -> NUMBER DIVIDE NUMBER .
+
+    $end            reduce using rule 5 (expression -> NUMBER DIVIDE NUMBER .)
+    RPAREN          reduce using rule 5 (expression -> NUMBER DIVIDE NUMBER .)
+
+
+state 18
+
+    (7) expression -> LPAREN expression RPAREN .
+
+    $end            reduce using rule 7 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 7 (expression -> LPAREN expression RPAREN .)
 
