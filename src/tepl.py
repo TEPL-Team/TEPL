@@ -4,8 +4,23 @@
 # 3. Add basic logic operators. 
 # 4. Implement booleans. 
 # 5. Add more math operators and math functions, including: sin, cos, and tan. 
-# 6. 
+# 6. Add if statements. 
+# 7. Add elseif, and else. 
+# 8. Add AND, OR, and NOT.
+# 9. Add TEXT data type. 
+# 10. Add OUPUT statement. 
+# 11. Add .tepl file support. 
+# 12. Add comments. 
+# 13. Add text manipulation functions. 
+# 14. Add INPUT statement. 
+# 15. Add list support. 
+# 16. Add for loops. 
+# 17. Add while loops. 
+# 18. Add special for loop functions. 
+# 19. 
 ### END OF STAGES
+
+# Grammar rules can be found in the README.md file. 
 
 # importing ply(python, lex, and yacc)
 from ply.lex import lex
@@ -13,16 +28,14 @@ from ply.yacc import yacc
 
 # a list of reserved keywords
 keywords = {
-    'print': 'OUTPUT',
-    'var': 'SET', 
-    ''
+    'var': 'SET',
 }
 
 # list of tokens, this is always required when using ply
 tokens = (
     'PLUS', 'MINUS', 'MULTIPLY', 'DIVIDE', 'LPAREN', 'RPAREN', 
     'NUMBER',
-)
+) + tuple(keywords.values())
 
 # regexes for the tokens
 t_PLUS         = r'\+'
@@ -42,6 +55,11 @@ def t_newline(t):
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = keywords.get(t.value, 'ID') # < check for keywords
     return t
 
 # handling errors
@@ -109,9 +127,9 @@ def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
 
-def p_expression_uminus(p):
-    'expression : MINUS NUMBER %prec UMINUS'
-    p[0] = -p[2]
+#def p_expression_uminus(p):
+ #   'expression : MINUS NUMBER %prec UMINUS'
+#    p[0] = -p[2]
 
 def p_error(p):
     if p:

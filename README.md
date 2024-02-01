@@ -26,7 +26,7 @@ It comes with many features, including: <p>
 Documentation
 ====
 ### Table of Contents
-- Introduction 
+- [Introduction](/README.md/Documentation/Introduction)
 - Installation
 - Files and the command line
 - `OUTPUT`
@@ -45,7 +45,10 @@ Documentation
     - `AND` what?
     - `OR` or `NOT`
 - `FUNCTION`
-- 
+
+
+
+### Introduction 
 
 
 
