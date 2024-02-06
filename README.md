@@ -27,7 +27,7 @@ Documentation
 ====
 ### Table of Contents
 - [Introduction](#Introduction)
-- Installation
+- [Installation](#Installation)
 - Files and the command line
 - `OUTPUT`
 - Math operations
@@ -49,7 +49,16 @@ Documentation
 
 
 ### Introduction 
+Welcome fellow programmers or soon to-be programmers! This guide
+is to explain thoroughly how TEPL works. TEPL is a basic 
+programming language with many features to teach the basic 
+concepts of programming. Beginners will find TEPL useful, but 
+so will teachers for teaching kids in schools or in other 
+places how to program. I hope you find TEPL useful. If you 
+have any questions ask them [here](https://github.com/TENTHER101/TEPL/discussions/categories/q-a).
+Now let's jump right in! 
 
+### Installation
 
 
 
