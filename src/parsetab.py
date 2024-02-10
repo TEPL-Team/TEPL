@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEDIVIDE ID LPAREN MINUS MULTIPLY NUMBER PLUS RPAREN SET TO\n    statement : SET ID TO expression\n    expression : NUMBER PLUS NUMBER\n                  | NUMBER MINUS NUMBER\n                  | NUMBER MULTIPLY NUMBER\n                  | NUMBER DIVIDE NUMBERexpression : NUMBERexpression : LPAREN expression RPAREN\n    expression : ID\n    '
+_lr_signature = 'DIVIDE EQUALS IDENTIFIER LPAREN MINUS NUMBER PLUS RPAREN SET TIMESstatement : SET IDENTIFIER expression\n    expression : expression PLUS expression\n               | expression MINUS expression\n               | expression TIMES expression\n               | expression DIVIDE expression\n    expression : NUMBERexpression : IDENTIFIERexpression : LPAREN expression RPAREN'
     
-_lr_action_items = {'SET':([0,],[2,]),'$end':([1,5,6,7,14,15,16,17,18,],[0,-8,-1,-6,-2,-3,-4,-5,-7,]),'ID':([2,4,8,],[3,5,5,]),'TO':([3,],[4,]),'NUMBER':([4,8,9,10,11,12,],[7,7,14,15,16,17,]),'LPAREN':([4,8,],[8,8,]),'RPAREN':([5,7,13,14,15,16,17,18,],[-8,-6,18,-2,-3,-4,-5,-7,]),'PLUS':([7,],[9,]),'MINUS':([7,],[10,]),'MULTIPLY':([7,],[11,]),'DIVIDE':([7,],[12,]),}
+_lr_action_items = {'SET':([0,],[2,]),'$end':([1,4,5,6,13,14,15,16,17,],[0,-7,-1,-6,-2,-3,-4,-5,-8,]),'IDENTIFIER':([2,3,7,8,9,10,11,],[3,4,4,4,4,4,4,]),'NUMBER':([3,7,8,9,10,11,],[6,6,6,6,6,6,]),'LPAREN':([3,7,8,9,10,11,],[7,7,7,7,7,7,]),'PLUS':([4,5,6,12,13,14,15,16,17,],[-7,8,-6,8,8,8,8,8,-8,]),'MINUS':([4,5,6,12,13,14,15,16,17,],[-7,9,-6,9,9,9,9,9,-8,]),'TIMES':([4,5,6,12,13,14,15,16,17,],[-7,10,-6,10,10,10,10,10,-8,]),'DIVIDE':([4,5,6,12,13,14,15,16,17,],[-7,11,-6,11,11,11,11,11,-8,]),'RPAREN':([4,6,12,13,14,15,16,17,],[-7,-6,17,-2,-3,-4,-5,-8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([4,8,],[6,13,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'expression':([3,7,8,9,10,11,],[5,12,13,14,15,16,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,12 +27,12 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> SET ID TO expression','statement',4,'p_statement_assignvar','tepl.py',128),
-  ('expression -> NUMBER PLUS NUMBER','expression',3,'p_expression_binop','tepl.py',133),
-  ('expression -> NUMBER MINUS NUMBER','expression',3,'p_expression_binop','tepl.py',134),
-  ('expression -> NUMBER MULTIPLY NUMBER','expression',3,'p_expression_binop','tepl.py',135),
-  ('expression -> NUMBER DIVIDE NUMBER','expression',3,'p_expression_binop','tepl.py',136),
-  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',143),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',147),
-  ('expression -> ID','expression',1,'p_expression_id','tepl.py',152),
+  ('statement -> SET IDENTIFIER expression','statement',3,'p_statement_set','tepl.py',79),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','tepl.py',84),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','tepl.py',85),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_binop','tepl.py',86),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','tepl.py',87),
+  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',92),
+  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','tepl.py',96),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',100),
 ]
