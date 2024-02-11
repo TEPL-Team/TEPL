@@ -23,6 +23,16 @@ It comes with many features, including: <p>
 
 
 
+Updates to come
+====
+### Prepared updates:
+- 
+
+**Note:**
+These updates are subject to change from simple changes like
+date change or to drastic changes like being removed. 
+
+
 
 Documentation
 ====

@@ -92,6 +92,12 @@ precedence = (
 )
 
 # Define grammar rules
+def p_statement_output(p):
+    '''
+    statement : OUTPUT expression
+    '''
+    print(p[2])
+
 def p_expression(p):
     '''
     expression : expression PLUS expression
