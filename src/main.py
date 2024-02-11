@@ -8,6 +8,4 @@ while True:
     if not text:
         continue
     result = parser.parse(text)
-    interpret(result)
     print(result)
-    print("Test- ")

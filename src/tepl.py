@@ -23,117 +23,107 @@
 
 # Grammar rules can be found in the README.md file.
 
-# import ply(python, lex, and yacc) library
 import ply.lex as lex
 import ply.yacc as yacc
 
-# Define tokens
+# Define tokens and keywors
+keywords = (
+    'OUTPUT', 
+    'TO',
+    'SET'
+)
+
 tokens = (
-    'NUMBER',
+    'NUMBER', 'TEXT',
     'PLUS',
     'MINUS',
     'TIMES',
     'DIVIDE',
     'LPAREN',
     'RPAREN',
-    'EQUALS',
+    'POWER',
     'IDENTIFIER',
-    'SET'
-)
+) + keywords
 
-# Define token regex patterns
+# Define regular expressions for tokens
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_EQUALS = r'='
-t_SET = r'SET'
+t_POWER = r'\^'
 
-# Ignore whitespace
-t_ignore = ' \t'
+# Define a rule for numbers
+def t_NUMBER(t):
+    r'\d+\.?\d*'
+    t.value = float(t.value)
+    return t
 
-# Define identifier token
+# Define a rule for keywords and identifiers
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = 'IDENTIFIER'
+    # Check if it's a keyword
+    if t.value in keywords:
+        t.type = 'KEYWORD'
+
+    # Check if it's an identifier
+    else:
+        t.type = 'IDENTIFIER'
     return t
 
-# Define number token
-def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+# Ignored characters (whitespace)
+t_ignore = ' \t'
 
-# Error handling
+# Error handling rule
 def t_error(t):
-    print(f"Illegal character '{t.value[0]}'")
+    print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
 # Build the lexer
 lexer = lex.lex()
 
-# Define grammar rules
-def p_statement_set(p):
-    'statement : SET IDENTIFIER expression'
-    p[0] = ('SET', p[2], p[3])
-    interpret(p[0])
+# Define precedence and associativity
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+    ('right', 'POWER'),
+    ('left', 'LPAREN', 'RPAREN'),
+)
 
-def p_expression_binop(p):
+# Define grammar rules
+def p_expression(p):
     '''
     expression : expression PLUS expression
                | expression MINUS expression
                | expression TIMES expression
                | expression DIVIDE expression
+               | expression POWER expression
     '''
-    p[0] = (p[2], p[1], p[3])
-    interpret(p[0])
-
-def p_expression_number(p):
-    'expression : NUMBER'
-    p[0] = ('NUMBER', p[1])
-    interpret(p[0])
-
-def p_expression_identifier(p):
-    'expression : IDENTIFIER'
-    p[0] = ('IDENTIFIER', p[1])
-    interpret(p[0])
+    if p[2] == '+':
+        p[0] = p[1] + p[3]
+    elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        if p[3] == 0:
+            raise ZeroDivisionError("division by zero")
+        p[0] = p[1] / p[3]
+    elif p[2] == '^':
+        p[0] = p[1] ** p[3]
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
-    interpret(p[0])
 
+def p_expression_number(p):
+    'expression : NUMBER'
+    p[0] = p[1]
+
+# Error rule for syntax errors
 def p_error(p):
-    print("Syntax error")
+    print("Syntax error in input!")
 
 # Build the parser
 parser = yacc.yacc()
-
-# Interpreter function
-def interpret(ast):
-    if isinstance(ast, tuple):
-        if ast[0] == 'SET':
-            variables[ast[1]] = interpret(ast[2])
-        elif ast[0] == 'NUMBER':
-            return ast[1]
-        elif ast[0] == 'IDENTIFIER':
-            return variables.get(ast[1], 0)
-        else:
-            op = ast[0]
-            left = interpret(ast[1])
-            right = interpret(ast[2])
-            if op == 'PLUS':
-                return left + right
-            elif op == 'MINUS':
-                return left - right
-            elif op == 'TIMES':
-                return left * right
-            elif op == 'DIVIDE':
-                return left / right
-    else:
-        return ast
-
-variables = {}
-print("TEST=")
