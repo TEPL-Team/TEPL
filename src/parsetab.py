@@ -28,11 +28,11 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
   ('statement -> SET IDENTIFIER expression','statement',3,'p_statement_set','tepl.py',79),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','tepl.py',84),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','tepl.py',85),
-  ('expression -> expression TIMES expression','expression',3,'p_expression_binop','tepl.py',86),
-  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','tepl.py',87),
-  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',92),
-  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','tepl.py',96),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',100),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','tepl.py',85),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','tepl.py',86),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_binop','tepl.py',87),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','tepl.py',88),
+  ('expression -> NUMBER','expression',1,'p_expression_number','tepl.py',94),
+  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','tepl.py',99),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','tepl.py',104),
 ]

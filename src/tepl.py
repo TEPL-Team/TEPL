@@ -78,6 +78,7 @@ lexer = lex.lex()
 def p_statement_set(p):
     'statement : SET IDENTIFIER expression'
     p[0] = ('SET', p[2], p[3])
+    interpret(p[0])
 
 def p_expression_binop(p):
     '''
@@ -87,18 +88,22 @@ def p_expression_binop(p):
                | expression DIVIDE expression
     '''
     p[0] = (p[2], p[1], p[3])
+    interpret(p[0])
 
 def p_expression_number(p):
     'expression : NUMBER'
     p[0] = ('NUMBER', p[1])
+    interpret(p[0])
 
 def p_expression_identifier(p):
     'expression : IDENTIFIER'
     p[0] = ('IDENTIFIER', p[1])
+    interpret(p[0])
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
+    interpret(p[0])
 
 def p_error(p):
     print("Syntax error")
@@ -131,3 +136,4 @@ def interpret(ast):
         return ast
 
 variables = {}
+print("TEST=")
