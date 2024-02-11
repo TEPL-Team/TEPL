@@ -1,5 +1,6 @@
 TEPL 
 ====
+![TEPL logo goes here](tepl/logo.jpg "TEPL logo")
 
 ⚠️ This compiler is currently in development so it might have breaking changes with each update
 
@@ -78,7 +79,7 @@ pip install python
 ```
 To start the program, run the main.py file. You should see 
 this: 
-![Code Panel image goes here](tepl-docs-img-1.png "Code Panel")
+![Code Panel image goes here](doc-images/tepl-docs-img-1.png "Code Panel")
 In this code line you can input the statement you'd like to
 execute. In the next lesson we will cover more details on how
 the code panel works and how to create our very first tepl 
