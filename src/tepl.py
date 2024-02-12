@@ -66,7 +66,6 @@ def t_IDENTIFIER(t):
     # Check if it's a keyword
     if t.value in keywords:
         t.type = 'KEYWORD'
-
     # Check if it's an identifier
     else:
         t.type = 'IDENTIFIER'
@@ -91,12 +90,20 @@ precedence = (
     ('left', 'LPAREN', 'RPAREN'),
 )
 
+vars = {}
+
 # Define grammar rules
 def p_statement_output(p):
     '''
     statement : OUTPUT expression
     '''
     print(p[2])
+
+def p_statement_assignment(p):
+    '''
+    statement : SET IDENTIFIER TO expression
+    '''
+    vars[p[2]] = p[4]
 
 def p_expression(p):
     '''
