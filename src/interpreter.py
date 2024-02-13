@@ -17,7 +17,8 @@
 # 16. Add for loops.
 # 17. Add while loops.
 # 18. Add special for loop functions.
-# 19.
+# 19. List manipulation functions
+# 20. 
 ### END OF STAGES
 
 
@@ -27,8 +28,32 @@
 
 from parser import *
 
+
 class Node: 
     def __init__(self, ast):
         self.ast = ast
+        self.type = ast[0]
+        self.checktype()
 
-    def 
+    def checktype(self):
+        if self.type[0] == 'statement': 
+            if self.type[1] == 'OUTPUT': 
+                self.output()
+            elif self.type[1] == 'SET':
+                self.set()
+        elif self.type[0] == 'expression':
+            value = self.eval()
+            return value
+
+    def output(self):
+        value = Node(['expression', self.ast[1]])
+        print(value)
+
+    def set(self):
+        varname = self.ast[1]
+        value = Node(['expression', self.ast[2]])
+        vars[varname] = value
+
+    def eval(self):
+        toeval = self.ast[1]
+

@@ -2,7 +2,7 @@ TEPL
 ====
 ![TEPL logo goes here](tepl/logo.jpg "TEPL logo")
 
-⚠️ This compiler is currently in development so it might have breaking changes with each update
+⚠️ This interpreter is currently in development so it might have breaking changes with each update
 
 💬 Got some questions or feedback? Just open an issue and we'll be glad to respond!
 

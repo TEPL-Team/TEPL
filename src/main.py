@@ -1,5 +1,6 @@
 from interpreter import *
 
+
 while True:
     try:
         text = input('>> ')
@@ -8,3 +9,4 @@ while True:
     if not text:
         break
     result = parser.parse(text)
+    node = Node(result)
