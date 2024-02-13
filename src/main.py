@@ -1,4 +1,4 @@
-from tepl import *
+from interpreter import *
 
 while True:
     try:
@@ -6,6 +6,5 @@ while True:
     except EOFError:
         break
     if not text:
-        continue
+        break
     result = parser.parse(text)
-    print(result)
