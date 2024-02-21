@@ -11,12 +11,20 @@ body {
     color: #1da2b4;
 }
 
-#centeredtext {
+.centeredtext {
     text-align: center;
     color: #1da2b4;
 }
 
-#centeredtext:hover, #mainh1:hover {
+#teplthumbnail {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.centeredtext:hover,
+#mainh1:hover {
     color: #1da2b4;
     text-decoration: underline;
 }
