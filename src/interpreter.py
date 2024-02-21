@@ -26,34 +26,41 @@
 # Lexer can be found in the lexer.py file.
 # Parser can be found in the parser.py file.
 
+# importing parser
 from parser import *
 
+#def run_code(p): 
+ #   print(interpret(p[0]))
 
-class Node: 
-    def __init__(self, ast):
-        self.ast = ast
-        self.type = ast[0]
-        self.checktype()
-
-    def checktype(self):
-        if self.type[0] == 'statement': 
-            if self.type[1] == 'OUTPUT': 
-                self.output()
-            elif self.type[1] == 'SET':
-                self.set()
-        elif self.type[0] == 'expression':
-            value = self.eval()
-            return value
-
-    def output(self):
-        value = Node(['expression', self.ast[1]])
-        print(value)
-
-    def set(self):
-        varname = self.ast[1]
-        value = Node(['expression', self.ast[2]])
-        vars[varname] = value
-
-    def eval(self):
-        toeval = self.ast[1]
-
+def interpret(ast):
+    if isinstance(ast, tuple):
+        if ast[0] == 'SET':
+            vars[ast[1]] = interpret(ast[2])
+        elif ast[0] == 'OUPUT':
+            print(interpret(ast[1]))
+        elif ast[0] == 'NUMBER':
+            return ast[1]
+        elif ast[0] == 'IDENTIFIER':
+            if ast[1] in vars:
+                return vars.get(ast[1])
+            else:
+                return NameError(f"Name '{ast[1]}' is not defined")
+        else:
+            op = ast[0]
+            left = interpret(ast[1])
+            right = interpret(ast[2])
+            if op == '+':
+                return left + right
+            elif op == '-':
+                return left - right
+            elif op == '*':
+                return left * right
+            elif op == '/':
+                if right == 0:
+                    raise ZeroDivisionError("Division by zero")
+                else: 
+                    return left / right
+            elif op == '^':
+                return left ** right
+    else:
+        return ast

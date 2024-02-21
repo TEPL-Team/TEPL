@@ -5,8 +5,8 @@ while True:
     try:
         text = input('>> ')
     except EOFError:
-        break
+        quit(1)
     if not text:
-        break
+        quit(0)
     result = parser.parse(text)
-    node = Node(result)
+    interpret(result)

@@ -16,13 +16,13 @@ def p_statement_output(p):
     '''
     statement : OUTPUT expression
     '''
-    print(p[2])
+    p[0] = ('OUTPUT', p[2])
 
 def p_statement_assignment(p):
     '''
     statement : SET IDENTIFIER TO expression
     '''
-    vars[p[2]] = p[4]
+    p[0] = ('SET', p[2], p[4])
 
 def p_expression(p):
     '''
@@ -32,33 +32,19 @@ def p_expression(p):
                | expression DIVIDE expression
                | expression POWER expression
     '''
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        if p[3] == 0:
-            raise ZeroDivisionError("division by zero")
-        p[0] = p[1] / p[3]
-    elif p[2] == '^':
-        p[0] = p[1] ** p[3]
+    p[0] = (p[2], p[1], p[3])
 
 def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
-    p[0] = p[2]
+    p[0] = (p[2])
 
 def p_expression_number(p):
     'expression : NUMBER'
-    p[0] = p[1]
+    p[0] = ('NUMBER', p[1])
 
 def p_expression_identifier(p): 
     'expression : IDENTIFIER'
-    if p[1] in vars:
-        p[0] = vars[p[1]]
-    else: 
-        raise NameError(f"Name '{p[1]}' is not defined")
+    p[0] = ('IDENTIFIER', p[1])
 
 # Error rule for syntax errors
 def p_error(p):
