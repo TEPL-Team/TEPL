@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+#mainh1 {
+    text-align: center;
+    margin-top: 50px;
+    color: #1da2b4;
+}
+
+#centeredtext {
+    text-align: center;
+    color: #1da2b4;
+}
+
+#centeredtext:hover, #mainh1:hover {
+    color: #1da2b4;
+    text-decoration: underline;
+}
