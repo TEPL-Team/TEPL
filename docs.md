@@ -80,12 +80,9 @@ have any questions ask them [here](https://github.com/TENTHER101/TEPL/discussion
 
 ### Installation 
 You only need to actually download the main.py and tepl.py
-files. You should have python 3 installed and ply. You can 
-download python 3 on [python.org](https://www.python.org/). 
-To download ply open the command prompt on your device and run
-this command: 
+files. In order to install all requirements run this command: 
 ```
-pip install python
+pip install -r requirements.txt
 ```
 To start the program, run the main.py file. You should see 
 this: 

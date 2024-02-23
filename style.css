@@ -1,19 +1,59 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #e5ad34;
     margin: 0;
     padding: 0;
+    /*width: 100%;
+    height: 100%;*/
 }
 
-#mainh1 {
+.topnav {
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+@font-face {
+    font-family: ChelseaMarket-Regular;
+    src: url('ChelseaMarket-Regular.ttf');
+}
+
+.mainh1 {
     text-align: center;
     margin-top: 50px;
     color: #1da2b4;
+    font-family: ChelseaMarket-Regular;
 }
 
 .centeredtext {
     text-align: center;
     color: #1da2b4;
+    font-family: ChelseaMarket-Regular;
+}
+
+.maininfo {
+    text-align: center;
+    color: #1da2b4;
+    font-family: ChelseaMarket-Regular;
+    font-size: 20px;
 }
 
 #teplthumbnail {
@@ -23,8 +63,34 @@ body {
     width: 50%;
 }
 
-.centeredtext:hover,
-#mainh1:hover {
+#bgimagehelp {
+    display: block;
+    background-size: cover;
+    position: relative;
+}
+
+#help {
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 500px;
+    z-index: 1000;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    color: black;
+    text-align: right;
+    padding: 5px;
+}
+
+.bullet {
     color: #1da2b4;
-    text-decoration: underline;
+    font-family: ChelseaMarket-Regular;
+    font-size: 20px;
+}
+
+@media screen and (orientation: landscape) {
+    #toolbar {
+        position: fixed;
+        width: 2.65em;
+        height: 100%;
+    }
 }
