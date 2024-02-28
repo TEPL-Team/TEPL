@@ -61,12 +61,6 @@ body {
     width: 50%;
 }
 
-#bgimagehelp {
-    display: block;
-    background-size: cover;
-    position: relative;
-}
-
 #help {
     float: left;
     position: absolute;

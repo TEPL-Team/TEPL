@@ -1,6 +1,6 @@
 TEPL 
 ====
-![TEPL logo goes here](tepl/logo.png "TEPL logo")
+![TEPL logo goes here](logo.png "TEPL logo")
 
 ⚠️ This interpreter is currently in development so it might have breaking changes with each update
 
