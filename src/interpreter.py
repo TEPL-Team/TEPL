@@ -29,22 +29,23 @@
 # importing parser
 from parser import *
 
-#def run_code(p): 
- #   print(interpret(p[0]))
+vars = {}
 
 def interpret(ast):
+    global vars
     if isinstance(ast, tuple):
         if ast[0] == 'SET':
             vars[ast[1]] = interpret(ast[2])
-        elif ast[0] == 'OUPUT':
-            print(interpret(ast[1]))
+        elif ast[0] == 'OUTPUT':
+            value = interpret(ast[1])
+            print(value)
         elif ast[0] == 'NUMBER':
             return ast[1]
         elif ast[0] == 'IDENTIFIER':
             if ast[1] in vars:
-                return vars.get(ast[1])
+                return vars[ast[1]]
             else:
-                return NameError(f"Name '{ast[1]}' is not defined")
+                raise NameError(f"Name '{ast[1]}' is not defined")
         else:
             op = ast[0]
             left = interpret(ast[1])
@@ -64,3 +65,4 @@ def interpret(ast):
                 return left ** right
     else:
         return ast
+

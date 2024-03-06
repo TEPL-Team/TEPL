@@ -9,8 +9,6 @@ precedence = (
     ('left', 'LPAREN', 'RPAREN'),
 )
 
-vars = {}
-
 # Define grammar rules
 def p_statement_output(p):
     '''

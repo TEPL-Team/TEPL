@@ -10,3 +10,4 @@ while True:
         quit(0)
     result = parser.parse(text)
     interpret(result)
+
