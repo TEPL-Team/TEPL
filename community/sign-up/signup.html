@@ -1,33 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up - TEPL Community Forum</title>
-    <link rel="stylesheet" href="signup.css" />
-  </head>
-  <body>
-    <div class="signup-container">
-      <h1>Sign Up</h1>
-      <form action="register.php" method="POST">
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign Up - TEPL Community Forum</title>
+        <link rel="stylesheet" href="signup.css" />
+        <link rel="icon" type="image/svg+xml" href="../logo.png" />
+    </head>
+    <body>
+        <div class="topnav">
+            <a href="index.html">Home</a>
+            <a href="help.html">Help</a>
+            <a href="about.html">About</a>
+            <a href="download.html">Download</a>
         </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required />
+        
+        <div class="signup-container">
+            <h1>Sign Up</h1>
+            <form action="register.php" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="avatar">Avatar (URL):</label>
+                    <input type="text" id="avatar" name="avatar" />
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
         </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <div class="form-group">
-          <label for="avatar">Avatar (URL):</label>
-          <input type="text" id="avatar" name="avatar" />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  </body>
+    </body>
 </html>
