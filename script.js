@@ -1,4 +1,4 @@
-import { Analytics } from "@vercel/analytics/react";
+//import { Analytics } from "@vercel/analytics/react";
 //importing vercel analystics ^
 
 var downloads = {
