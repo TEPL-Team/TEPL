@@ -18,6 +18,14 @@ tokens = (
     'RPAREN',
     'POWER',
     'IDENTIFIER',
+    'EQ',
+    'GT', 
+    'LT',
+    'GE',
+    'LE',
+    'NE',
+    'YES',
+    'NO'
 ) + keywords
 
 # Define regular expressions for tokens
@@ -28,11 +36,27 @@ t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_POWER = r'\^'
+t_EQ = r'=='
+t_GT = r'>'
+t_LT = r'<'
+t_GE = r'>='
+t_LE = r'<='
+t_NE = r'!='
 
 # Define a rule for numbers
 def t_NUMBER(t):
     r'\d+\.?\d*'
     t.value = float(t.value)
+    return t
+
+def t_YES(t):
+    r'YES'
+    t.value = True
+    return t
+
+def t_NO(t):
+    r'NO'
+    t.value = False
     return t
 
 # Define a rule for keywords and identifiers

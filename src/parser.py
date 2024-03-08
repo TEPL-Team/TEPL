@@ -36,6 +36,24 @@ def p_expression_group(p):
     'expression : LPAREN expression RPAREN'
     p[0] = (p[2])
 
+def p_expression_boolean(p):
+    '''
+    expression : YES
+               | NO
+    '''
+    p[0] = ('BOOL', p[1])
+
+def p_expression_comparison(p):
+    '''
+    expression : expression EQ expression
+               | expression GT expression
+               | expression LT expression
+               | expression GE expression
+               | expression LE expression
+               | expression NE expression
+    '''
+    p[0] = (p[2], p[1], p[3])
+
 def p_expression_number(p):
     'expression : NUMBER'
     p[0] = ('NUMBER', p[1])
