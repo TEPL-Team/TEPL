@@ -57,7 +57,7 @@ def interpret(ast):
             elif ast[1] == 'NO':
                 return False
             else: 
-                raise ValueError('UnknownError: Invalid boolean value')
+                raise ValueError('UnknownError: Invalid boolean value?')
         else:
             op = ast[0]
             left = interpret(ast[1])
@@ -93,15 +93,10 @@ def interpret(ast):
         return ast
 
 
-
 '''
 source_code = [
-    ('SET', 'x', ('NUMBER', 10)),
-    ('SET', 'y', ('NUMBER', 20)),
-    ('SET', 'is_greater', ('GT', ('IDENTIFIER', 'x'), ('IDENTIFIER', 'y'))),
-    ('SET', 'is_equal', ('EQ', ('IDENTIFIER', 'x'), ('IDENTIFIER', 'y'))),
-    ('OUTPUT', ('IDENTIFIER', 'is_greater')),
-    ('OUTPUT', ('IDENTIFIER', 'is_equal'))
+    ('SET', 'x', ('>', ('NUMBER', 10), ('NUMBER', 5))),
+    ('OUTPUT', ('IDENTIFIER', 'x'))
 ]
 
 for line in source_code:
