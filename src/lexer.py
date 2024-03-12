@@ -2,13 +2,14 @@
 import ply.lex as lex
 
 # Define tokens and keywors
-keywords = (
+keywords: tuple = (
     'OUTPUT', 
     'TO',
-    'SET'
+    'SET',
+    'TYPE'
 )
 
-tokens = (
+tokens: tuple = (
     'NUMBER', 'TEXT',
     'PLUS',
     'MINUS',
@@ -25,7 +26,8 @@ tokens = (
     'LE',
     'NE',
     'YES',
-    'NO'
+    'NO',
+    'DATATYPE'
 ) + keywords
 
 # Define regular expressions for tokens
@@ -42,6 +44,15 @@ t_LT = r'<'
 t_GE = r'>='
 t_LE = r'<='
 t_NE = r'!='
+t_DATATYPE = r'(NUM|DEC|TXT|BOOL)'
+
+
+types = (
+    'NUM',
+    'DEC',
+    'TXT',
+    'BOOL'
+)
 
 # Define a rule for numbers
 def t_NUMBER(t):
@@ -65,6 +76,9 @@ def t_IDENTIFIER(t):
     # Check if it's a keyword
     if t.value in keywords:
         t.type = t.value
+    # Check if it is a datatype
+    elif t.value in types:
+        t.type = 'DATATYPE'
     # Check if it's an identifier
     else:
         t.type = 'IDENTIFIER'

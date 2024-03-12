@@ -3,9 +3,11 @@
 # 1. Build a basic arithmetic calculator.
 # Status: Completed.
 # 2. Add variable support.
-# Status: In-Progress
+# Status: Completed.
 # 3. Add basic logic operators.
+# Status: Completed. 
 # 4. Implement booleans.
+# Status: To-Begin. 
 # 5. Add more math operators and math functions, including: sin, cos, and tan.
 # 6. Add if statements.
 # 7. Add elseif, and else.
@@ -20,8 +22,8 @@
 # 16. Add for loops.
 # 17. Add while loops.
 # 18. Add special for loop functions.
-# 19. List manipulation functions
-# 20.
+# 19. Add list manipulation functions. 
+# 20. Add TYPE keyword. 
 ### END OF STAGES
 
 # Grammar rules can be found at
@@ -30,6 +32,7 @@
 # Parser can be found in the parser.py file.
 
 # importing parser
+from typing import Any
 from parser import *
 
 vars = {}
@@ -39,7 +42,11 @@ def interpret(ast):
     global vars
     if isinstance(ast, tuple):
         if ast[0] == 'SET':
-            vars[ast[1]] = interpret(ast[2])
+            if len(ast) == 4:  # Variable declaration with type
+                if ast[1] == 'TYPE':
+                    vars[ast[0]]: ast[2] = ast[2]
+                else: 
+                    vars[ast[1]]: ast[4][1] = interpret(ast[2])  # Regular variable assignment
         elif ast[0] == 'OUTPUT':
             value = interpret(ast[1])
             print(value)
@@ -56,7 +63,7 @@ def interpret(ast):
                 return True
             elif ast[1] == 'NO':
                 return False
-            else: 
+            else:
                 raise ValueError('UnknownError: Invalid boolean value?')
         else:
             op = ast[0]
@@ -74,7 +81,7 @@ def interpret(ast):
                 else:
                     return left / right
             elif op == '^':
-                return left**right
+                return left ** right
             elif op == '==':
                 return left == right
             elif op == '>':
@@ -95,7 +102,7 @@ def interpret(ast):
 
 '''
 source_code = [
-    ('SET', 'x', ('>', ('NUMBER', 10), ('NUMBER', 5))),
+    ('SET', 'x', 5, ('TYPE', 'NUM')),
     ('OUTPUT', ('IDENTIFIER', 'x'))
 ]
 
