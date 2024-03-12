@@ -11,7 +11,7 @@ INPUT EXPECTING NUM "Enter a number: " IS num
 IF num % 2 == 0 THEN
   OUTPUT num+" is a even number!"
 ELSE THEN
-  OUTPTUT num+" is a odd number!"
+  OUTPUT num+" is a odd number!"
 END
 ```
 
