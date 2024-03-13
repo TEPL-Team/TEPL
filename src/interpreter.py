@@ -5,9 +5,9 @@
 # 2. Add variable support.
 # Status: Completed.
 # 3. Add basic logic operators.
-# Status: Completed. 
+# Status: Completed.
 # 4. Implement booleans.
-# Status: To-Begin. 
+# Status: To-Begin.
 # 5. Add more math operators and math functions, including: sin, cos, and tan.
 # 6. Add if statements.
 # 7. Add elseif, and else.
@@ -22,8 +22,8 @@
 # 16. Add for loops.
 # 17. Add while loops.
 # 18. Add special for loop functions.
-# 19. Add list manipulation functions. 
-# 20. Add TYPE keyword. 
+# 19. Add list manipulation functions.
+# 20. Add TYPE keyword.
 ### END OF STAGES
 
 # Grammar rules can be found at
@@ -31,13 +31,80 @@
 # Lexer can be found in the lexer.py file.
 # Parser can be found in the parser.py file.
 
-# importing parser
+# importing parser and Any type
 from typing import Any
 from parser import *
 
 vars = {}
 
+def interpret(ast: tuple | list) -> Any: 
+    global vars
+    if ast[0] == 'OUTPUT':
+        value = interpret(ast[1])
+        print(value)
+    elif ast[0] == 'SET':
+        if ast[2] == 'NONE':
+            vars[ast[1]] = None
+        else:
+            value = interpret(ast[2])
+            name = ast[1]
+            vars[name] = value
+    elif ast[0] == 'IDENTIFIER':
+        if ast[1] in vars:
+            return vars[ast[1]]
+        else: 
+            return print('NameError: name \'' + ast[1] + '\' is not defined')
+    elif ast[0] == 'MATH_EXPR':
+        op = ast[1]
+        left = interpret(ast[2])
+        right = interpret(ast[3])
+        match op:
+            case '+':
+                return left + right
+            case '-':
+                return left - right
+            case '*':
+                return left * right
+            case '/':
+                return left / right
+            case '^':
+                return left ** right
+            case _:
+                return print(f'SyntaxError: invalid operator,  {op}!')
+    elif ast[0] == 'BOOL': 
+        if ast[1] == 'YES':
+            return True
+        elif ast[1] == 'NO':
+            return False
+        else: 
+            return print(f'UnknownError: {ast[1]} is not a boolean?')
+    elif ast[0] == 'NUMBER':
+        return ast[1]
+    elif ast[0] == 'COMP_EXPR':
+        cp = ast[1]
+        left = interpret(ast[2])
+        right = interpret(ast[3])
+        match cp:
+            case '==':
+                return left == right
+            case '>':
+                return left > right
+            case '<' :
+                return left < right
+            case '>=':
+                return left >= right
+            case '<=':
+                return left <= right
+            case '!=':
+                return left != right
+            case _:
+                return print(f'SyntaxError: invalid operator, {cp}!')
 
+    else:
+        return print(f'SyntaxError: {ast[0]} is not a valid token!')
+
+
+'''
 def interpret(ast):
     global vars
     if isinstance(ast, tuple):
@@ -45,8 +112,11 @@ def interpret(ast):
             if len(ast) == 4:  # Variable declaration with type
                 if ast[1] == 'TYPE':
                     vars[ast[0]]: ast[2] = ast[2]
-                else: 
-                    vars[ast[1]]: ast[4][1] = interpret(ast[2])  # Regular variable assignment
+                else:
+                    vars[ast[1]]: ast[4][1] = interpret(ast[2])
+                    # Regular variable assignment ^
+            else:
+                vars[ast[0][1]] = interpret(ast[1])
         elif ast[0] == 'OUTPUT':
             value = interpret(ast[1])
             print(value)
@@ -81,7 +151,7 @@ def interpret(ast):
                 else:
                     return left / right
             elif op == '^':
-                return left ** right
+                return left**right
             elif op == '==':
                 return left == right
             elif op == '>':
@@ -98,6 +168,7 @@ def interpret(ast):
                 raise ValueError(f"Invalid operator: {op}")
     else:
         return ast
+'''
 
 
 '''

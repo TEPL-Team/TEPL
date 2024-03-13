@@ -6,7 +6,7 @@ keywords: tuple = (
     'OUTPUT', 
     'TO',
     'SET',
-    'TYPE'
+    'TYPE',
 )
 
 tokens: tuple = (
@@ -25,9 +25,9 @@ tokens: tuple = (
     'GE',
     'LE',
     'NE',
+    'DATATYPE',
     'YES',
-    'NO',
-    'DATATYPE'
+    'NO'
 ) + keywords
 
 # Define regular expressions for tokens
@@ -45,6 +45,8 @@ t_GE = r'>='
 t_LE = r'<='
 t_NE = r'!='
 t_DATATYPE = r'(NUM|DEC|TXT|BOOL)'
+t_YES = r'YES'
+t_NO = r'NO'
 
 
 types = (
@@ -60,16 +62,6 @@ def t_NUMBER(t):
     t.value = float(t.value)
     return t
 
-def t_YES(t):
-    r'YES'
-    t.value = True
-    return t
-
-def t_NO(t):
-    r'NO'
-    t.value = False
-    return t
-
 # Define a rule for keywords and identifiers
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -79,6 +71,9 @@ def t_IDENTIFIER(t):
     # Check if it is a datatype
     elif t.value in types:
         t.type = 'DATATYPE'
+    # Check if it's a boolean
+    elif t.value == 'YES' or t.value == 'NO':
+        t.type = t.value 
     # Check if it's an identifier
     else:
         t.type = 'IDENTIFIER'
