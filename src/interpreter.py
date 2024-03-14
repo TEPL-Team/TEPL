@@ -43,8 +43,10 @@ def interpret(ast: tuple | list) -> Any:
         value = interpret(ast[1])
         print(value)
     elif ast[0] == 'SET':
+        if len(ast) == 2
         if ast[2] == 'NONE':
             vars[ast[1]] = None
+        elif ast[3] == 'TYPE'
         else:
             value = interpret(ast[2])
             name = ast[1]
@@ -99,76 +101,8 @@ def interpret(ast: tuple | list) -> Any:
                 return left != right
             case _:
                 return print(f'SyntaxError: invalid operator, {cp}!')
-
     else:
         return print(f'SyntaxError: {ast[0]} is not a valid token!')
-
-
-'''
-def interpret(ast):
-    global vars
-    if isinstance(ast, tuple):
-        if ast[0] == 'SET':
-            if len(ast) == 4:  # Variable declaration with type
-                if ast[1] == 'TYPE':
-                    vars[ast[0]]: ast[2] = ast[2]
-                else:
-                    vars[ast[1]]: ast[4][1] = interpret(ast[2])
-                    # Regular variable assignment ^
-            else:
-                vars[ast[0][1]] = interpret(ast[1])
-        elif ast[0] == 'OUTPUT':
-            value = interpret(ast[1])
-            print(value)
-            return value
-        elif ast[0] == 'NUMBER':
-            return ast[1]
-        elif ast[0] == 'IDENTIFIER':
-            if ast[1] in vars:
-                return vars[ast[1]]
-            else:
-                raise NameError(f"Name '{ast[1]}' is not defined")
-        elif ast[0] == 'BOOL':
-            if ast[1] == 'YES':
-                return True
-            elif ast[1] == 'NO':
-                return False
-            else:
-                raise ValueError('UnknownError: Invalid boolean value?')
-        else:
-            op = ast[0]
-            left = interpret(ast[1])
-            right = interpret(ast[2])
-            if op == '+':
-                return left + right
-            elif op == '-':
-                return left - right
-            elif op == '*':
-                return left * right
-            elif op == '/':
-                if right == 0:
-                    raise ZeroDivisionError("Division by zero")
-                else:
-                    return left / right
-            elif op == '^':
-                return left**right
-            elif op == '==':
-                return left == right
-            elif op == '>':
-                return left > right
-            elif op == '<':
-                return left < right
-            elif op == '>=':
-                return left >= right
-            elif op == '<=':
-                return left <= right
-            elif op == '!=':
-                return left != right
-            else:
-                raise ValueError(f"Invalid operator: {op}")
-    else:
-        return ast
-'''
 
 
 '''

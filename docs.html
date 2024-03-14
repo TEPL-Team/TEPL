@@ -1,203 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TEPL Site</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/svg+xml" href="logo.png" />
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TEPL Documentation</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="icon" type="image/svg+xml" href="teplthumbnail.png" />
+    </head>
 
-  <body>
-    <div class="topnav">
-      <a href="index.html">Home</a>
-      <a href="help.html">Help</a>
-      <a href="about.html">About</a>
-      <a href="download.html">Download</a>
-    </div>
+    <body>
+        <nav class="topnav">
+            <div class="container">
+                <a href="index.html">Home</a>
+                <a href="help.html">Help</a>
+                <a href="about.html">About</a>
+                <a href="download.html">Download</a>
+            </div>
+        </nav>
 
-    <h1>TEPL</h1>
-    <img
-      src="logo.png"
-      alt="TEPL logo"
-      title="TEPL logo"
-      id="teplthumbnail"
-    />
-    <p>
-      <strong
-        >⚠️ This interpreter is currently in development so it might have
-        breaking changes with each update</strong
-      >
-    </p>
-    <p>
-      <strong
-        >💬 Got some questions or feedback? Just open an issue and we'll be glad
-        to respond!</strong
-      >
-    </p>
+        <section class="docs-section">
+            <div class="container">
+                <h1 class="main-title">TEPL Documentation</h1>
 
-    <pre lang="tepl">
+                <div class="warning">
+                    <p>
+                        ⚠️ This interpreter is currently in development, so it
+                        might have breaking changes with each update.
+                    </p>
+                </div>
+
+                <div class="feedback">
+                    <p>
+                        💬 Got some questions or feedback? Just open an issue
+                        <a
+                            href="https://github.com/TENTHER101/TEPL/discussions/categories/q-a"
+                            >here</a
+                        >
+                        and we'll be glad to respond!
+                    </p>
+                </div>
+
+                <div class="code-sample">
+                    <pre lang="tepl">
 INPUT EXPECTING NUM "Enter a number: " IS num
 IF num % 2 == 0 THEN
-  OUTPUT num+" is a even number!"
+  OUTPUT num+" is an even number!"
 ELSE THEN
-  OUTPTUT num+" is a odd number!"
+  OUTPUT num+" is an odd number!"
 END
-</pre
-    >
+                </pre
+                    >
+                </div>
 
-    <p>
-      TEPL is a scripting programming language in development that strives to
-      make coding simple, easy, and fun to learn. It comes with many features,
-      including:
-    </p>
+                <p class="main-info">
+                    TEPL is a scripting programming language in development that
+                    strives to make coding simple, easy, and fun to learn. It
+                    comes with many features, including:
+                </p>
 
-    <p></p>
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 class="toc-title">Table of Contents</h2>
+                    <ul class="toc-list">
+                        <li><a href="#intro">Introduction</a></li>
+                        <li><a href="#install">Installation</a></li>
+                        <li>
+                            <a href="#files-and-the-code-panel"
+                                >Files and the Code Panel</a
+                            >
+                        </li>
+                        <li><a href="#output">OUTPUT</a></li>
+                        <!-- Add more as needed -->
+                    </ul>
+                </div>
 
-    <h2>Updates to come</h2>
-    <h3>Prepared updates:</h3>
-    <ul>
-      <li></li>
-    </ul>
+                <!-- Documentation Content -->
+                <!-- Introduction -->
+                <div id="intro" class="section-content">
+                    <h3>Introduction</h3>
+                    <p>
+                        Welcome fellow programmers or soon-to-be programmers!
+                        This guide aims to thoroughly explain how TEPL works.
+                        TEPL is a basic programming language with many features
+                        designed to teach the basic concepts of programming. It
+                        is especially useful for beginners and teachers looking
+                        to introduce programming in a clear and simple manner.
+                    </p>
+                    <!-- Add more content as needed -->
+                </div>
 
-    <p>
-      <strong>Note:</strong> These updates are subject to change from simple
-      changes like date change or to drastic changes like being removed.
-    </p>
-
-    <h1>Documentation</h1>
-    <h3>Table of Contents</h3>
-    <ul>
-      <li><a href="#intro">Introduction</a></li>
-      <li><a href="#install">Installation</a></li>
-      <li><a href="#files-and-the-code-panel">Files and the Code Panel</a></li>
-      <li><a href="#output">OUTPUT</a></li>
-      <li>Math operations</li>
-      <li>
-        Strings
-        <ul>
-          <li>"" or ''?</li>
-          <li>The only complicated thing award goes to...$!</li>
-          <li>Special string operators!</li>
-          <li>Don't manipulate me!</li>
-        </ul>
-      </li>
-      <li>
-        Logical operations
-        <ul>
-          <li>Booleans</li>
-          <li>Yes OR no?</li>
-          <li>AND what?</li>
-          <li>NOT you!</li>
-          <li>Logical operators!</li>
-        </ul>
-      </li>
-      <li><code>SET</code></li>
-      <li>Running files using <code>RUN</code></li>
-      <li>NONE values</li>
-      <li>Conca- what?</li>
-      <li>CONVER(T)sion!</li>
-      <li>
-        Logic gates
-        <ul>
-          <li><code>IF</code>!</li>
-          <li>What <code>ELSE</code>?</li>
-          <li><code>ELSEIF</code>...?</li>
-          <li>Nested if statements</li>
-          <li><code>AND</code> what?</li>
-          <li><code>OR</code> or <code>NOT</code></li>
-        </ul>
-      </li>
-      <li><code>FUNCTION</code></li>
-    </ul>
-
-    <h3 id="intro">Introduction</h3>
-    <p>
-      Welcome fellow programmers or soon to-be programmers! This guide is to
-      explain thoroughly how TEPL works. TEPL is a basic programming language
-      with many features to teach the basic concepts of programming. Beginners
-      will find TEPL useful, but so will teachers for teaching kids in schools
-      or in other places how to program. I hope you find TEPL useful. If you
-      have any questions ask them
-      <a href="https://github.com/TENTHER101/TEPL/discussions/categories/q-a"
-        >here</a
-      >. Now let's jump right in!
-    </p>
-
-    <h3 id="install">Installation</h3>
-    <p>
-      You only need to actually download the main.py and tepl.py files. In order
-      to install all requirements run this command:
-    </p>
-    <pre>
+                <!-- Installation -->
+                <div id="install" class="section-content">
+                    <h3>Installation</h3>
+                    <p>
+                        If you wish to view the source code and edit it,
+                        download the <code>lexer.py</code>,
+                        <code>parser.py</code>, <code>interpreter.py</code>, and
+                        <code>main.py</code> files. You can also download the
+                        executable file
+                        <a href="https://tepl.vercel.app/download.html">here</a
+                        >.
+                    </p>
+                    <pre>
 pip install -r requirements.txt
-</pre
-    >
-    <p>To start the program, run the main.py file. You should see this:</p>
-    <img
-      src="doc-images/tepl-docs-img-1.png"
-      alt="Code Panel image"
-      title="Code Panel"
-    />
-    <p>
-      In this code line you can input the statement you'd like to execute. In
-      the next lesson we will cover more details on how the code panel works and
-      how to create our very first tepl file!
-    </p>
+                </pre
+                    >
+                    <p>
+                        To start the program, run the <code>main.py</code> file.
+                    </p>
+                </div>
 
-    <h3 id="files-and-the-code-panel">Files and the Code Panel</h3>
+                <!-- Add more sections as needed -->
 
-    <h2>FAQ</h2>
+                <!-- FAQ -->
+                <div class="faq-section">
+                    <h2>FAQ</h2>
+                    <h3>When will TEPL be ready to use?</h3>
+                    <p>
+                        We aim to have TEPL ready by the end of 2024 or possibly
+                        sooner. Currently, we are building the base syntax and
+                        will move on to more advanced functionalities and
+                        important features. Libraries and frameworks will also
+                        be added in the future.
+                    </p>
 
-    <h3>When will TEPL be ready to use?</h3>
-    <p>
-      We will hopefully have it ready by the end of 2024 or possibly sooner.
-      Currently, we're starting on building the base syntax. After we're done
-      with that we will move on to more advanced functionalities and important
-      features. Eventually, we will add libraries and frameworks.
-    </p>
-
-    <h3>Why use TEPL?</h3>
-    <p>
-      I know you are probably thinking, "And yet another programming language?"
-      I understand that there are many, many(around 10,000) programming
-      languages in the world today. So what makes TEPL(a new programming
-      language) worth using? TEPL is built for beginners and is a backend
-      development programming language. It contains no frontend features for
-      now, but in the near future we will add VEPL(a library for TEPL, also
-      known as: visually educational programming language) which will add some
-      frontend development. TEPL is a great place to start if your new to
-      programming because its grammar is like English. For example, in order to
-      build a function you write:
-    </p>
-    <pre>
+                    <h3>Why use TEPL?</h3>
+                    <p>
+                        TEPL is designed for beginners and focuses on backend
+                        development. Although it currently lacks frontend
+                        features, we plan to introduce VEPL (Visually
+                        Educational Programming Language) for frontend
+                        development. TEPL uses simple and English-like grammar,
+                        making it easy for beginners to learn.
+                    </p>
+                    <pre>
 FUNCTION add a b MEANS
 RETURN a+b
-END 
-</pre
-    >
-    <p>
-      (Disclaimer: the syntax shown above is not yet available and may be
-      changed, but the idea of functions is something we look to add later on)
-      Simple, right? Yes it is! If you want to get a jump-start into programming
-      TEPL is the choice for you.
-    </p>
+END
+                </pre
+                    >
+                    <p>
+                        (Disclaimer: the syntax shown above is subject to
+                        change, but the idea of functions will be introduced
+                        later on.)
+                    </p>
 
-    <h3>License</h3>
-    <p>
-      TEPl was originally licensed under GNU, but for more security I set the
-      license to the Apache license. In the end, I hope that this piece of
-      software may inspire other projects and may improve the quality of new and
-      existing software.
-    </p>
+                    <h3>License</h3>
+                    <p>
+                        TEPL is licensed under the Apache License for enhanced
+                        security. We hope that this software will inspire other
+                        projects and contribute to the improvement of software
+                        quality.
+                    </p>
 
-    <h3>Credits</h3>
-    <p>
-      Credits to everyone(like literally everyone)! I got help from tons of
-      different rescources and even from AI! I got inspired by those around me
-      and by certain needs in our society. In the end of it all, I give credits
-      to you(that's right even to you!) and to everyone else!
-    </p>
-  </body>
+                    <h3>Credits</h3>
+                    <p>
+                        Credits to everyone who contributed! We have received
+                        help from various resources and even AI. The inspiration
+                        for TEPL comes from the needs in our society, and we
+                        credit everyone for their support.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>

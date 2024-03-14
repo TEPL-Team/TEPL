@@ -37,11 +37,17 @@ def p_statement_assignment(p):
     '''
     statement : var_assignment TO expression
               | var_assignment 
+              | var_assignment type_statement
+              | var_assignment TO expression type_statement
     '''
     if len(p) == 2:
         p[0] = ('SET', p[1][1], 'NONE')
     elif len(p) == 4:
         p[0] = ('SET', p[1][1], p[3])
+    elif len(p) == 4:
+        p[0] = ('SET', p[1][1], 'TYPE', p[2][1])
+    elif len(p) == 6:
+        p[0] = ('SET', p[1][1], p[3], 'TYPE', p[4][1])
 
 
 def p_expression(p):
