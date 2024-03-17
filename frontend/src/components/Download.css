@@ -1,0 +1,21 @@
+/* Styles for Download Page */
+
+.download-section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.download-link {
+    display: inline-block;
+    padding: 16px 32px;
+    background-color: #1da2b4;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.download-link:hover {
+    background-color: #007ea7;
+}

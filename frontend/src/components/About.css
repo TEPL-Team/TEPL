@@ -1,0 +1,36 @@
+/* Styles for Contact Us Section */
+
+.contact-section {
+    margin-top: 40px;
+}
+
+.contact-title {
+    font-size: 28px;
+    color: #1da2b4;
+    margin-bottom: 20px;
+}
+
+.contact-info {
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.contact-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.contact-list li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.contact-list li a {
+    color: #1da2b4;
+    text-decoration: none;
+}
+
+.contact-list li a:hover {
+    text-decoration: underline;
+}

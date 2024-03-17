@@ -1,0 +1,30 @@
+/* Styles for Help Page */
+
+.help-section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.toc {
+    margin-bottom: 40px;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-item {
+    margin-bottom: 10px;
+}
+
+.toc-link {
+    color: #1da2b4;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.toc-link:hover {
+    color: #007ea7;
+}

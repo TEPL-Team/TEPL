@@ -1,0 +1,60 @@
+/* Styles for Documentation Page */
+
+.docs-section {
+    padding: 80px 0;
+    text-align: left;
+}
+
+.main-title {
+    text-align: center;
+}
+
+.warning,
+.feedback {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.warning p,
+.feedback p {
+    font-weight: bold;
+}
+
+.code-sample {
+    background-color: #000000;
+    /* Changed background color to black */
+    color: #ffffff;
+    /* Changed text color to white */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.toc {
+    margin-bottom: 40px;
+}
+
+.toc-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-list li {
+    margin-bottom: 10px;
+}
+
+.section-content {
+    margin-bottom: 40px;
+}
+
+.faq-section {
+    margin-top: 40px;
+}
+
+.faq-section h2 {
+    margin-bottom: 20px;
+}
