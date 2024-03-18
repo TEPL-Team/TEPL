@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@vercel/analytics": "^1.2.2",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "react-scripts": "^2.0.6"
   }
 }
