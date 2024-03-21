@@ -1,15 +1,16 @@
-# import lex tool
 import ply.lex as lex
 
-# Define tokens and keywors
-keywords: tuple = (
+# Define tokens and keywords
+keywords = (
     'OUTPUT', 
     'TO',
     'SET',
     'TYPE',
+    'RANDOM',
+    'FROM',
 )
 
-tokens: tuple = (
+tokens = (
     'NUMBER', 'TEXT',
     'PLUS',
     'MINUS',
@@ -44,32 +45,24 @@ t_LT = r'<'
 t_GE = r'>='
 t_LE = r'<='
 t_NE = r'!='
-t_DATATYPE = r'(NUM|DEC|TXT|BOOL)'
 t_YES = r'YES'
 t_NO = r'NO'
+t_DATATYPE = r'(NUM|DEC)'  # Updated regex to avoid empty match
 
-
-types = (
-    'NUM',
-    'DEC',
-    'TXT',
-    'BOOL'
-)
-
-# Define a rule for numbers
+# Define a rule for numbers(integers)
 def t_NUMBER(t):
-    r'\d+\.?\d*'
-    t.value = float(t.value)
+    r'\d+'
+    t.value = int(t.value)  # Convert to integer
     return t
 
 # Define a rule for keywords and identifiers
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     # Check if it's a keyword
-    if t.value in keywords:
-        t.type = t.value
+    if t.value.upper() in keywords:
+        t.type = t.value.upper()
     # Check if it is a datatype
-    elif t.value in types:
+    elif t.value.upper() in ['DEC', 'NUM']:
         t.type = 'DATATYPE'
     # Check if it's a boolean
     elif t.value == 'YES' or t.value == 'NO':

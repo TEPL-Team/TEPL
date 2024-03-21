@@ -13,6 +13,7 @@
 # 7. Add elseif, and else.
 # 8. Add AND, OR, and NOT.
 # 9. Add TEXT data type.
+# Status: Completed. 
 # 10. Add OUPUT statement.
 # 11. Add .tepl file support.
 # 12. Add comments.
@@ -26,36 +27,58 @@
 # 20. Add TYPE keyword.
 ### END OF STAGES
 
-# Grammar rules can be found at
+# Docs can be found at
 # https://tepl.vercel.app/docs.html.
 # Lexer can be found in the lexer.py file.
 # Parser can be found in the parser.py file.
 
+# FIX, TOOD: 
+'''
+>> set x to random num from 0 to 100
+>> output x + 100
+170
+>> set x to 5
+>> output x
+70
+
+
+the new x value was never read...
+lines possible: 
+
+except AttributeError:
+    value = interpret(ast[2])
+    vars[name] = value
+'''
+
 # importing parser and Any type
-from typing import Any
+import random
 from parser import *
+from typing import Any
+
 
 vars = {}
 
-def interpret(ast: tuple | list) -> Any: 
-    global vars
+
+def interpret(ast: tuple | list) -> Any:
+    global vars, __error__
     if ast[0] == 'OUTPUT':
         value = interpret(ast[1])
         print(value)
     elif ast[0] == 'SET':
-        if len(ast) == 2
-        if ast[2] == 'NONE':
+        if ast[2] is None:
             vars[ast[1]] = None
-        elif ast[3] == 'TYPE'
         else:
-            value = interpret(ast[2])
             name = ast[1]
+            value = interpret(ast[2])
             vars[name] = value
+
     elif ast[0] == 'IDENTIFIER':
         if ast[1] in vars:
             return vars[ast[1]]
-        else: 
-            return print('NameError: name \'' + ast[1] + '\' is not defined')
+        else:
+            print(f'NameError: name \'{ast[1]}\' is not defined!')
+            __error__ = True
+            return print(f'Current variables and their values: '+ str(vars))
     elif ast[0] == 'MATH_EXPR':
         op = ast[1]
         left = interpret(ast[2])
@@ -72,13 +95,15 @@ def interpret(ast: tuple | list) -> Any:
             case '^':
                 return left ** right
             case _:
+                __error__ = True
                 return print(f'SyntaxError: invalid operator,  {op}!')
-    elif ast[0] == 'BOOL': 
+    elif ast[0] == 'BOOL':
         if ast[1] == 'YES':
-            return True
+            return 'YES'
         elif ast[1] == 'NO':
-            return False
-        else: 
+            return 'NO'
+        else:
+            __error__ = True
             return print(f'UnknownError: {ast[1]} is not a boolean?')
     elif ast[0] == 'NUMBER':
         return ast[1]
@@ -88,29 +113,29 @@ def interpret(ast: tuple | list) -> Any:
         right = interpret(ast[3])
         match cp:
             case '==':
-                return left == right
+                return 'YES' if left == right else 'NO'
             case '>':
-                return left > right
-            case '<' :
-                return left < right
+                return 'YES' if left > right else 'NO'
+            case '<':
+                return 'YES' if left < right else 'NO'
             case '>=':
-                return left >= right
+                return 'YES' if left >= right else 'NO'
             case '<=':
-                return left <= right
+                return 'YES' if left <= right else 'NO'
             case '!=':
-                return left != right
+                return 'YES' if left != right else 'NO'
             case _:
+                __error__ = True
                 return print(f'SyntaxError: invalid operator, {cp}!')
+    elif ast[0] == 'RANDOM':
+        _1 = interpret(ast[2])  # Starting value
+        _2 = interpret(ast[3])  # Ending value
+        if ast[1].upper() == 'NUM':  # Check for NUM or DEC
+            return random.randint(_1, _2)
+        else:
+            __error__ = True
+            return print(f'SyntaxError: invalid data type, {ast[1]} only \'NUM\' is allowed!')
     else:
-        return print(f'SyntaxError: {ast[0]} is not a valid token!')
+        __error__ = True
+        return print(f'SyntaxError: {ast[1]} is not a valid token!')
 
-
-'''
-source_code = [
-    ('SET', 'x', 5, ('TYPE', 'NUM')),
-    ('OUTPUT', ('IDENTIFIER', 'x'))
-]
-
-for line in source_code:
-    interpret(line)
-'''

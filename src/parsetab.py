@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDErightPOWERleftLPARENRPARENDATATYPE DIVIDE EQ GE GT IDENTIFIER LE LPAREN LT MINUS NE NO NUMBER OUTPUT PLUS POWER RPAREN SET TEXT TIMES TO TYPE YES\n    statement : OUTPUT expression\n    \n    type_statement : TYPE DATATYPE\n    \n    var_assignment : SET IDENTIFIER\n    \n    statement : var_assignment TO expression\n              | var_assignment \n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n               | expression TIMES expression\n               | expression DIVIDE expression\n               | expression POWER expression\n    expression : LPAREN expression RPAREN\n    expression : YES\n               | NO\n    \n    expression : expression EQ expression\n               | expression GT expression\n               | expression LT expression\n               | expression GE expression\n               | expression LE expression\n               | expression NE expression\n    expression : NUMBERexpression : IDENTIFIER'
+_lr_signature = 'leftPLUSMINUSleftTIMESDIVIDErightPOWERleftLPARENRPARENDATATYPE DIVIDE EQ FROM GE GT IDENTIFIER LE LPAREN LT MINUS NE NO NUMBER OUTPUT PLUS POWER RANDOM RPAREN SET TEXT TIMES TO TYPE YES\n    statement : OUTPUT expression\n    \n    random_statement : RANDOM DATATYPE FROM expression TO expression\n    \n    type_statement : TYPE DATATYPE\n    \n    var_assignment : SET IDENTIFIER\n    \n    statement : var_assignment TO expression\n              | var_assignment \n    \n    expression : expression PLUS expression\n               | expression MINUS expression\n               | expression TIMES expression\n               | expression DIVIDE expression\n               | expression POWER expression\n    expression : LPAREN expression RPAREN\n    expression : YES\n               | NO\n    \n    comp_expr  : expression EQ expression\n               | expression GT expression\n               | expression LT expression\n               | expression GE expression\n               | expression LE expression\n               | expression NE expression\n    \n    expression : comp_expr\n    expression : NUMBERexpression : IDENTIFIERexpression : random_statement'
     
-_lr_action_items = {'OUTPUT':([0,],[2,]),'SET':([0,],[4,]),'$end':([1,3,5,7,8,9,10,12,25,26,27,28,29,30,31,32,33,34,35,36,37,],[0,-5,-1,-12,-13,-20,-21,-3,-4,-6,-7,-8,-9,-10,-14,-15,-16,-17,-18,-19,-11,]),'LPAREN':([2,6,11,13,14,15,16,17,18,19,20,21,22,23,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'YES':([2,6,11,13,14,15,16,17,18,19,20,21,22,23,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'NO':([2,6,11,13,14,15,16,17,18,19,20,21,22,23,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'NUMBER':([2,6,11,13,14,15,16,17,18,19,20,21,22,23,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'IDENTIFIER':([2,4,6,11,13,14,15,16,17,18,19,20,21,22,23,],[10,12,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'TO':([3,12,],[11,-3,]),'PLUS':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[13,-12,-13,-20,-21,13,13,-6,-7,-8,-9,-10,13,13,13,13,13,13,-11,]),'MINUS':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[14,-12,-13,-20,-21,14,14,-6,-7,-8,-9,-10,14,14,14,14,14,14,-11,]),'TIMES':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[15,-12,-13,-20,-21,15,15,15,15,-8,-9,-10,15,15,15,15,15,15,-11,]),'DIVIDE':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[16,-12,-13,-20,-21,16,16,16,16,-8,-9,-10,16,16,16,16,16,16,-11,]),'POWER':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[17,-12,-13,-20,-21,17,17,17,17,17,17,17,17,17,17,17,17,17,-11,]),'EQ':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[18,-12,-13,-20,-21,18,18,-6,-7,-8,-9,-10,18,18,18,18,18,18,-11,]),'GT':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[19,-12,-13,-20,-21,19,19,-6,-7,-8,-9,-10,19,19,19,19,19,19,-11,]),'LT':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[20,-12,-13,-20,-21,20,20,-6,-7,-8,-9,-10,20,20,20,20,20,20,-11,]),'GE':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[21,-12,-13,-20,-21,21,21,-6,-7,-8,-9,-10,21,21,21,21,21,21,-11,]),'LE':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[22,-12,-13,-20,-21,22,22,-6,-7,-8,-9,-10,22,22,22,22,22,22,-11,]),'NE':([5,7,8,9,10,24,25,26,27,28,29,30,31,32,33,34,35,36,37,],[23,-12,-13,-20,-21,23,23,-6,-7,-8,-9,-10,23,23,23,23,23,23,-11,]),'RPAREN':([7,8,9,10,24,26,27,28,29,30,31,32,33,34,35,36,37,],[-12,-13,-20,-21,37,-6,-7,-8,-9,-10,-14,-15,-16,-17,-18,-19,-11,]),}
+_lr_action_items = {'OUTPUT':([0,],[2,]),'SET':([0,],[4,]),'$end':([1,3,5,7,8,9,10,11,12,15,29,30,31,32,33,34,35,36,37,38,39,40,41,45,],[0,-6,-1,-13,-14,-21,-22,-23,-24,-4,-5,-7,-8,-9,-10,-11,-15,-16,-17,-18,-19,-20,-12,-2,]),'LPAREN':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,]),'YES':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),'NO':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,]),'NUMBER':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,]),'IDENTIFIER':([2,4,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[11,15,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,]),'RANDOM':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,]),'TO':([3,7,8,9,10,11,12,15,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[14,-13,-14,-21,-22,-23,-24,-4,-7,-8,-9,-10,-11,-15,-16,-17,-18,-19,-20,-12,44,-2,]),'PLUS':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[16,-13,-14,-21,-22,-23,-24,16,16,-7,-8,-9,-10,-11,16,16,16,16,16,16,-12,16,16,]),'MINUS':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[17,-13,-14,-21,-22,-23,-24,17,17,-7,-8,-9,-10,-11,17,17,17,17,17,17,-12,17,17,]),'TIMES':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[18,-13,-14,-21,-22,-23,-24,18,18,18,18,-9,-10,-11,18,18,18,18,18,18,-12,18,18,]),'DIVIDE':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[19,-13,-14,-21,-22,-23,-24,19,19,19,19,-9,-10,-11,19,19,19,19,19,19,-12,19,19,]),'POWER':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[20,-13,-14,-21,-22,-23,-24,20,20,20,20,20,20,20,20,20,20,20,20,20,-12,20,20,]),'EQ':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[21,-13,-14,-21,-22,-23,-24,21,21,-7,-8,-9,-10,-11,21,21,21,21,21,21,-12,21,21,]),'GT':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[22,-13,-14,-21,-22,-23,-24,22,22,-7,-8,-9,-10,-11,22,22,22,22,22,22,-12,22,22,]),'LT':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[23,-13,-14,-21,-22,-23,-24,23,23,-7,-8,-9,-10,-11,23,23,23,23,23,23,-12,23,23,]),'GE':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[24,-13,-14,-21,-22,-23,-24,24,24,-7,-8,-9,-10,-11,24,24,24,24,24,24,-12,24,24,]),'LE':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[25,-13,-14,-21,-22,-23,-24,25,25,-7,-8,-9,-10,-11,25,25,25,25,25,25,-12,25,25,]),'NE':([5,7,8,9,10,11,12,27,29,30,31,32,33,34,35,36,37,38,39,40,41,43,45,],[26,-13,-14,-21,-22,-23,-24,26,26,-7,-8,-9,-10,-11,26,26,26,26,26,26,-12,26,26,]),'RPAREN':([7,8,9,10,11,12,27,30,31,32,33,34,35,36,37,38,39,40,41,45,],[-13,-14,-21,-22,-23,-24,41,-7,-8,-9,-10,-11,-15,-16,-17,-18,-19,-20,-12,-2,]),'DATATYPE':([13,],[28,]),'FROM':([28,],[42,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'var_assignment':([0,],[3,]),'expression':([2,6,11,13,14,15,16,17,18,19,20,21,22,23,],[5,24,25,26,27,28,29,30,31,32,33,34,35,36,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'var_assignment':([0,],[3,]),'expression':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[5,27,29,30,31,32,33,34,35,36,37,38,39,40,43,45,]),'comp_expr':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,]),'random_statement':([2,6,14,16,17,18,19,20,21,22,23,24,25,26,42,44,],[12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,25 +27,28 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> OUTPUT expression','statement',2,'p_statement_output','parser.py',16),
-  ('type_statement -> TYPE DATATYPE','type_statement',2,'p_statement_type','parser.py',23),
-  ('var_assignment -> SET IDENTIFIER','var_assignment',2,'p_statement_var_assignment','parser.py',30),
-  ('statement -> var_assignment TO expression','statement',3,'p_statement_assignment','parser.py',38),
-  ('statement -> var_assignment','statement',1,'p_statement_assignment','parser.py',39),
-  ('expression -> expression PLUS expression','expression',3,'p_expression','parser.py',49),
-  ('expression -> expression MINUS expression','expression',3,'p_expression','parser.py',50),
-  ('expression -> expression TIMES expression','expression',3,'p_expression','parser.py',51),
-  ('expression -> expression DIVIDE expression','expression',3,'p_expression','parser.py',52),
-  ('expression -> expression POWER expression','expression',3,'p_expression','parser.py',53),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','parser.py',59),
-  ('expression -> YES','expression',1,'p_expression_boolean','parser.py',65),
-  ('expression -> NO','expression',1,'p_expression_boolean','parser.py',66),
-  ('expression -> expression EQ expression','expression',3,'p_expression_comparison','parser.py',73),
-  ('expression -> expression GT expression','expression',3,'p_expression_comparison','parser.py',74),
-  ('expression -> expression LT expression','expression',3,'p_expression_comparison','parser.py',75),
-  ('expression -> expression GE expression','expression',3,'p_expression_comparison','parser.py',76),
-  ('expression -> expression LE expression','expression',3,'p_expression_comparison','parser.py',77),
-  ('expression -> expression NE expression','expression',3,'p_expression_comparison','parser.py',78),
-  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',84),
-  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','parser.py',89),
+  ('statement -> OUTPUT expression','statement',2,'p_statement_output','parser.py',18),
+  ('random_statement -> RANDOM DATATYPE FROM expression TO expression','random_statement',6,'p_random_statement','parser.py',25),
+  ('type_statement -> TYPE DATATYPE','type_statement',2,'p_type_statement','parser.py',32),
+  ('var_assignment -> SET IDENTIFIER','var_assignment',2,'p_statement_var_assignment','parser.py',39),
+  ('statement -> var_assignment TO expression','statement',3,'p_statement_assignment','parser.py',47),
+  ('statement -> var_assignment','statement',1,'p_statement_assignment','parser.py',48),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','parser.py',58),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','parser.py',59),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_binop','parser.py',60),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_binop','parser.py',61),
+  ('expression -> expression POWER expression','expression',3,'p_expression_binop','parser.py',62),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','parser.py',68),
+  ('expression -> YES','expression',1,'p_expression_boolean','parser.py',74),
+  ('expression -> NO','expression',1,'p_expression_boolean','parser.py',75),
+  ('comp_expr -> expression EQ expression','comp_expr',3,'p_comp_expr','parser.py',82),
+  ('comp_expr -> expression GT expression','comp_expr',3,'p_comp_expr','parser.py',83),
+  ('comp_expr -> expression LT expression','comp_expr',3,'p_comp_expr','parser.py',84),
+  ('comp_expr -> expression GE expression','comp_expr',3,'p_comp_expr','parser.py',85),
+  ('comp_expr -> expression LE expression','comp_expr',3,'p_comp_expr','parser.py',86),
+  ('comp_expr -> expression NE expression','comp_expr',3,'p_comp_expr','parser.py',87),
+  ('expression -> comp_expr','expression',1,'p_expression_comp_expr','parser.py',94),
+  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',100),
+  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','parser.py',105),
+  ('expression -> random_statement','expression',1,'p_expression_random','parser.py',110),
 ]
