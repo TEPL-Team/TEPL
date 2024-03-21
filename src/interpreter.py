@@ -32,23 +32,6 @@
 # Lexer can be found in the lexer.py file.
 # Parser can be found in the parser.py file.
 
-# FIX, TOOD: 
-'''
->> set x to random num from 0 to 100
->> output x + 100
-170
->> set x to 5
->> output x
-70
-
-
-the new x value was never read...
-lines possible: 
-
-except AttributeError:
-    value = interpret(ast[2])
-    vars[name] = value
-'''
 
 # importing parser and Any type
 import random
