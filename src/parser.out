@@ -1,74 +1,79 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    TEXT
-
 Grammar
 
 Rule 0     S' -> statement
 Rule 1     statement -> OUTPUT expression
-Rule 2     random_statement -> RANDOM DATATYPE FROM expression TO expression
-Rule 3     type_statement -> TYPE DATATYPE
-Rule 4     var_assignment -> SET IDENTIFIER
-Rule 5     statement -> var_assignment TO expression
-Rule 6     statement -> var_assignment
-Rule 7     expression -> expression PLUS expression
-Rule 8     expression -> expression MINUS expression
-Rule 9     expression -> expression TIMES expression
-Rule 10    expression -> expression DIVIDE expression
-Rule 11    expression -> expression POWER expression
-Rule 12    expression -> LPAREN expression RPAREN
-Rule 13    expression -> YES
-Rule 14    expression -> NO
-Rule 15    comp_expr -> expression EQ expression
-Rule 16    comp_expr -> expression GT expression
-Rule 17    comp_expr -> expression LT expression
-Rule 18    comp_expr -> expression GE expression
-Rule 19    comp_expr -> expression LE expression
-Rule 20    comp_expr -> expression NE expression
-Rule 21    expression -> comp_expr
-Rule 22    expression -> NUMBER
-Rule 23    expression -> IDENTIFIER
-Rule 24    expression -> random_statement
+Rule 2     statement -> OUTPUT ask
+Rule 3     ask -> TEXT EXPECTING INPUT AND DATATYPE
+Rule 4     random_statement -> RANDOM DATATYPE FROM expression TO expression
+Rule 5     var_assignment -> SET IDENTIFIER
+Rule 6     statement -> var_assignment TO expression
+Rule 7     statement -> var_assignment
+Rule 8     statement -> var_assignment TO ask
+Rule 9     statement -> IF comp_expr THEN statement
+Rule 10    expression -> expression PLUS expression
+Rule 11    expression -> expression MINUS expression
+Rule 12    expression -> expression TIMES expression
+Rule 13    expression -> expression DIVIDE expression
+Rule 14    expression -> expression POWER expression
+Rule 15    expression -> LPAREN expression RPAREN
+Rule 16    expression -> YES
+Rule 17    expression -> NO
+Rule 18    comp_expr -> expression EQ expression
+Rule 19    comp_expr -> expression GT expression
+Rule 20    comp_expr -> expression LT expression
+Rule 21    comp_expr -> expression GE expression
+Rule 22    comp_expr -> expression LE expression
+Rule 23    comp_expr -> expression NE expression
+Rule 24    expression -> comp_expr
+Rule 25    expression -> NUMBER
+Rule 26    expression -> IDENTIFIER
+Rule 27    expression -> random_statement
+Rule 28    expression -> TEXT
+Rule 29    expression -> INPUT
 
 Terminals, with rules where they appear
 
-DATATYPE             : 2 3
-DIVIDE               : 10
-EQ                   : 15
-FROM                 : 2
-GE                   : 18
-GT                   : 16
-IDENTIFIER           : 4 23
-LE                   : 19
-LPAREN               : 12
-LT                   : 17
-MINUS                : 8
-NE                   : 20
-NO                   : 14
-NUMBER               : 22
-OUTPUT               : 1
-PLUS                 : 7
-POWER                : 11
-RANDOM               : 2
-RPAREN               : 12
-SET                  : 4
-TEXT                 : 
-TIMES                : 9
-TO                   : 2 5
-TYPE                 : 3
-YES                  : 13
+AND                  : 3
+DATATYPE             : 3 4
+DIVIDE               : 13
+EQ                   : 18
+EXPECTING            : 3
+FROM                 : 4
+GE                   : 21
+GT                   : 19
+IDENTIFIER           : 5 26
+IF                   : 9
+INPUT                : 3 29
+LE                   : 22
+LPAREN               : 15
+LT                   : 20
+MINUS                : 11
+NE                   : 23
+NO                   : 17
+NUMBER               : 25
+OUTPUT               : 1 2
+PLUS                 : 10
+POWER                : 14
+RANDOM               : 4
+RPAREN               : 15
+SET                  : 5
+TEXT                 : 3 28
+THEN                 : 9
+TIMES                : 12
+TO                   : 4 6 8
+YES                  : 16
 error                : 
 
 Nonterminals, with rules where they appear
 
-comp_expr            : 21
-expression           : 1 2 2 5 7 7 8 8 9 9 10 10 11 11 12 15 15 16 16 17 17 18 18 19 19 20 20
-random_statement     : 24
-statement            : 0
-type_statement       : 
-var_assignment       : 5 6
+ask                  : 2 8
+comp_expr            : 9 24
+expression           : 1 4 4 6 10 10 11 11 12 12 13 13 14 14 15 18 18 19 19 20 20 21 21 22 22 23 23
+random_statement     : 27
+statement            : 9 0
+var_assignment       : 6 7 8
 
 Parsing method: LALR
 
@@ -76,12 +81,16 @@ state 0
 
     (0) S' -> . statement
     (1) statement -> . OUTPUT expression
-    (5) statement -> . var_assignment TO expression
-    (6) statement -> . var_assignment
-    (4) var_assignment -> . SET IDENTIFIER
+    (2) statement -> . OUTPUT ask
+    (6) statement -> . var_assignment TO expression
+    (7) statement -> . var_assignment
+    (8) statement -> . var_assignment TO ask
+    (9) statement -> . IF comp_expr THEN statement
+    (5) var_assignment -> . SET IDENTIFIER
 
     OUTPUT          shift and go to state 2
-    SET             shift and go to state 4
+    IF              shift and go to state 4
+    SET             shift and go to state 5
 
     statement                      shift and go to state 1
     var_assignment                 shift and go to state 3
@@ -95,1394 +104,1212 @@ state 1
 state 2
 
     (1) statement -> OUTPUT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (2) statement -> OUTPUT . ask
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (3) ask -> . TEXT EXPECTING INPUT AND DATATYPE
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 15
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 5
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 6
+    ask                            shift and go to state 7
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 3
 
-    (5) statement -> var_assignment . TO expression
-    (6) statement -> var_assignment .
+    (6) statement -> var_assignment . TO expression
+    (7) statement -> var_assignment .
+    (8) statement -> var_assignment . TO ask
 
-    TO              shift and go to state 14
-    $end            reduce using rule 6 (statement -> var_assignment .)
+    TO              shift and go to state 18
+    $end            reduce using rule 7 (statement -> var_assignment .)
 
 
 state 4
 
-    (4) var_assignment -> SET . IDENTIFIER
+    (9) statement -> IF . comp_expr THEN statement
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    IDENTIFIER      shift and go to state 15
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
+    comp_expr                      shift and go to state 19
+    expression                     shift and go to state 20
+    random_statement               shift and go to state 14
 
 state 5
 
-    (1) statement -> OUTPUT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (5) var_assignment -> SET . IDENTIFIER
 
-    $end            reduce using rule 1 (statement -> OUTPUT expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    IDENTIFIER      shift and go to state 22
 
 
 state 6
 
-    (12) expression -> LPAREN . expression RPAREN
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (1) statement -> OUTPUT expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    $end            reduce using rule 1 (statement -> OUTPUT expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
 
-    expression                     shift and go to state 27
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 7
 
-    (13) expression -> YES .
+    (2) statement -> OUTPUT ask .
 
-    PLUS            reduce using rule 13 (expression -> YES .)
-    MINUS           reduce using rule 13 (expression -> YES .)
-    TIMES           reduce using rule 13 (expression -> YES .)
-    DIVIDE          reduce using rule 13 (expression -> YES .)
-    POWER           reduce using rule 13 (expression -> YES .)
-    EQ              reduce using rule 13 (expression -> YES .)
-    GT              reduce using rule 13 (expression -> YES .)
-    LT              reduce using rule 13 (expression -> YES .)
-    GE              reduce using rule 13 (expression -> YES .)
-    LE              reduce using rule 13 (expression -> YES .)
-    NE              reduce using rule 13 (expression -> YES .)
-    $end            reduce using rule 13 (expression -> YES .)
-    RPAREN          reduce using rule 13 (expression -> YES .)
-    TO              reduce using rule 13 (expression -> YES .)
+    $end            reduce using rule 2 (statement -> OUTPUT ask .)
 
 
 state 8
 
-    (14) expression -> NO .
+    (15) expression -> LPAREN . expression RPAREN
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    PLUS            reduce using rule 14 (expression -> NO .)
-    MINUS           reduce using rule 14 (expression -> NO .)
-    TIMES           reduce using rule 14 (expression -> NO .)
-    DIVIDE          reduce using rule 14 (expression -> NO .)
-    POWER           reduce using rule 14 (expression -> NO .)
-    EQ              reduce using rule 14 (expression -> NO .)
-    GT              reduce using rule 14 (expression -> NO .)
-    LT              reduce using rule 14 (expression -> NO .)
-    GE              reduce using rule 14 (expression -> NO .)
-    LE              reduce using rule 14 (expression -> NO .)
-    NE              reduce using rule 14 (expression -> NO .)
-    $end            reduce using rule 14 (expression -> NO .)
-    RPAREN          reduce using rule 14 (expression -> NO .)
-    TO              reduce using rule 14 (expression -> NO .)
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
+    expression                     shift and go to state 34
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 9
 
-    (21) expression -> comp_expr .
+    (16) expression -> YES .
 
-    PLUS            reduce using rule 21 (expression -> comp_expr .)
-    MINUS           reduce using rule 21 (expression -> comp_expr .)
-    TIMES           reduce using rule 21 (expression -> comp_expr .)
-    DIVIDE          reduce using rule 21 (expression -> comp_expr .)
-    POWER           reduce using rule 21 (expression -> comp_expr .)
-    EQ              reduce using rule 21 (expression -> comp_expr .)
-    GT              reduce using rule 21 (expression -> comp_expr .)
-    LT              reduce using rule 21 (expression -> comp_expr .)
-    GE              reduce using rule 21 (expression -> comp_expr .)
-    LE              reduce using rule 21 (expression -> comp_expr .)
-    NE              reduce using rule 21 (expression -> comp_expr .)
-    $end            reduce using rule 21 (expression -> comp_expr .)
-    RPAREN          reduce using rule 21 (expression -> comp_expr .)
-    TO              reduce using rule 21 (expression -> comp_expr .)
+    PLUS            reduce using rule 16 (expression -> YES .)
+    MINUS           reduce using rule 16 (expression -> YES .)
+    TIMES           reduce using rule 16 (expression -> YES .)
+    DIVIDE          reduce using rule 16 (expression -> YES .)
+    POWER           reduce using rule 16 (expression -> YES .)
+    EQ              reduce using rule 16 (expression -> YES .)
+    GT              reduce using rule 16 (expression -> YES .)
+    LT              reduce using rule 16 (expression -> YES .)
+    GE              reduce using rule 16 (expression -> YES .)
+    LE              reduce using rule 16 (expression -> YES .)
+    NE              reduce using rule 16 (expression -> YES .)
+    $end            reduce using rule 16 (expression -> YES .)
+    RPAREN          reduce using rule 16 (expression -> YES .)
+    THEN            reduce using rule 16 (expression -> YES .)
+    TO              reduce using rule 16 (expression -> YES .)
 
 
 state 10
 
-    (22) expression -> NUMBER .
+    (17) expression -> NO .
 
-    PLUS            reduce using rule 22 (expression -> NUMBER .)
-    MINUS           reduce using rule 22 (expression -> NUMBER .)
-    TIMES           reduce using rule 22 (expression -> NUMBER .)
-    DIVIDE          reduce using rule 22 (expression -> NUMBER .)
-    POWER           reduce using rule 22 (expression -> NUMBER .)
-    EQ              reduce using rule 22 (expression -> NUMBER .)
-    GT              reduce using rule 22 (expression -> NUMBER .)
-    LT              reduce using rule 22 (expression -> NUMBER .)
-    GE              reduce using rule 22 (expression -> NUMBER .)
-    LE              reduce using rule 22 (expression -> NUMBER .)
-    NE              reduce using rule 22 (expression -> NUMBER .)
-    $end            reduce using rule 22 (expression -> NUMBER .)
-    RPAREN          reduce using rule 22 (expression -> NUMBER .)
-    TO              reduce using rule 22 (expression -> NUMBER .)
+    PLUS            reduce using rule 17 (expression -> NO .)
+    MINUS           reduce using rule 17 (expression -> NO .)
+    TIMES           reduce using rule 17 (expression -> NO .)
+    DIVIDE          reduce using rule 17 (expression -> NO .)
+    POWER           reduce using rule 17 (expression -> NO .)
+    EQ              reduce using rule 17 (expression -> NO .)
+    GT              reduce using rule 17 (expression -> NO .)
+    LT              reduce using rule 17 (expression -> NO .)
+    GE              reduce using rule 17 (expression -> NO .)
+    LE              reduce using rule 17 (expression -> NO .)
+    NE              reduce using rule 17 (expression -> NO .)
+    $end            reduce using rule 17 (expression -> NO .)
+    RPAREN          reduce using rule 17 (expression -> NO .)
+    THEN            reduce using rule 17 (expression -> NO .)
+    TO              reduce using rule 17 (expression -> NO .)
 
 
 state 11
 
-    (23) expression -> IDENTIFIER .
+    (24) expression -> comp_expr .
 
-    PLUS            reduce using rule 23 (expression -> IDENTIFIER .)
-    MINUS           reduce using rule 23 (expression -> IDENTIFIER .)
-    TIMES           reduce using rule 23 (expression -> IDENTIFIER .)
-    DIVIDE          reduce using rule 23 (expression -> IDENTIFIER .)
-    POWER           reduce using rule 23 (expression -> IDENTIFIER .)
-    EQ              reduce using rule 23 (expression -> IDENTIFIER .)
-    GT              reduce using rule 23 (expression -> IDENTIFIER .)
-    LT              reduce using rule 23 (expression -> IDENTIFIER .)
-    GE              reduce using rule 23 (expression -> IDENTIFIER .)
-    LE              reduce using rule 23 (expression -> IDENTIFIER .)
-    NE              reduce using rule 23 (expression -> IDENTIFIER .)
-    $end            reduce using rule 23 (expression -> IDENTIFIER .)
-    RPAREN          reduce using rule 23 (expression -> IDENTIFIER .)
-    TO              reduce using rule 23 (expression -> IDENTIFIER .)
+    PLUS            reduce using rule 24 (expression -> comp_expr .)
+    MINUS           reduce using rule 24 (expression -> comp_expr .)
+    TIMES           reduce using rule 24 (expression -> comp_expr .)
+    DIVIDE          reduce using rule 24 (expression -> comp_expr .)
+    POWER           reduce using rule 24 (expression -> comp_expr .)
+    EQ              reduce using rule 24 (expression -> comp_expr .)
+    GT              reduce using rule 24 (expression -> comp_expr .)
+    LT              reduce using rule 24 (expression -> comp_expr .)
+    GE              reduce using rule 24 (expression -> comp_expr .)
+    LE              reduce using rule 24 (expression -> comp_expr .)
+    NE              reduce using rule 24 (expression -> comp_expr .)
+    $end            reduce using rule 24 (expression -> comp_expr .)
+    RPAREN          reduce using rule 24 (expression -> comp_expr .)
+    THEN            reduce using rule 24 (expression -> comp_expr .)
+    TO              reduce using rule 24 (expression -> comp_expr .)
 
 
 state 12
 
-    (24) expression -> random_statement .
+    (25) expression -> NUMBER .
 
-    PLUS            reduce using rule 24 (expression -> random_statement .)
-    MINUS           reduce using rule 24 (expression -> random_statement .)
-    TIMES           reduce using rule 24 (expression -> random_statement .)
-    DIVIDE          reduce using rule 24 (expression -> random_statement .)
-    POWER           reduce using rule 24 (expression -> random_statement .)
-    EQ              reduce using rule 24 (expression -> random_statement .)
-    GT              reduce using rule 24 (expression -> random_statement .)
-    LT              reduce using rule 24 (expression -> random_statement .)
-    GE              reduce using rule 24 (expression -> random_statement .)
-    LE              reduce using rule 24 (expression -> random_statement .)
-    NE              reduce using rule 24 (expression -> random_statement .)
-    $end            reduce using rule 24 (expression -> random_statement .)
-    RPAREN          reduce using rule 24 (expression -> random_statement .)
-    TO              reduce using rule 24 (expression -> random_statement .)
+    PLUS            reduce using rule 25 (expression -> NUMBER .)
+    MINUS           reduce using rule 25 (expression -> NUMBER .)
+    TIMES           reduce using rule 25 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 25 (expression -> NUMBER .)
+    POWER           reduce using rule 25 (expression -> NUMBER .)
+    EQ              reduce using rule 25 (expression -> NUMBER .)
+    GT              reduce using rule 25 (expression -> NUMBER .)
+    LT              reduce using rule 25 (expression -> NUMBER .)
+    GE              reduce using rule 25 (expression -> NUMBER .)
+    LE              reduce using rule 25 (expression -> NUMBER .)
+    NE              reduce using rule 25 (expression -> NUMBER .)
+    $end            reduce using rule 25 (expression -> NUMBER .)
+    RPAREN          reduce using rule 25 (expression -> NUMBER .)
+    THEN            reduce using rule 25 (expression -> NUMBER .)
+    TO              reduce using rule 25 (expression -> NUMBER .)
 
 
 state 13
 
-    (2) random_statement -> RANDOM . DATATYPE FROM expression TO expression
+    (26) expression -> IDENTIFIER .
 
-    DATATYPE        shift and go to state 28
+    PLUS            reduce using rule 26 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 26 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 26 (expression -> IDENTIFIER .)
+    DIVIDE          reduce using rule 26 (expression -> IDENTIFIER .)
+    POWER           reduce using rule 26 (expression -> IDENTIFIER .)
+    EQ              reduce using rule 26 (expression -> IDENTIFIER .)
+    GT              reduce using rule 26 (expression -> IDENTIFIER .)
+    LT              reduce using rule 26 (expression -> IDENTIFIER .)
+    GE              reduce using rule 26 (expression -> IDENTIFIER .)
+    LE              reduce using rule 26 (expression -> IDENTIFIER .)
+    NE              reduce using rule 26 (expression -> IDENTIFIER .)
+    $end            reduce using rule 26 (expression -> IDENTIFIER .)
+    RPAREN          reduce using rule 26 (expression -> IDENTIFIER .)
+    THEN            reduce using rule 26 (expression -> IDENTIFIER .)
+    TO              reduce using rule 26 (expression -> IDENTIFIER .)
 
 
 state 14
 
-    (5) statement -> var_assignment TO . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (27) expression -> random_statement .
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    PLUS            reduce using rule 27 (expression -> random_statement .)
+    MINUS           reduce using rule 27 (expression -> random_statement .)
+    TIMES           reduce using rule 27 (expression -> random_statement .)
+    DIVIDE          reduce using rule 27 (expression -> random_statement .)
+    POWER           reduce using rule 27 (expression -> random_statement .)
+    EQ              reduce using rule 27 (expression -> random_statement .)
+    GT              reduce using rule 27 (expression -> random_statement .)
+    LT              reduce using rule 27 (expression -> random_statement .)
+    GE              reduce using rule 27 (expression -> random_statement .)
+    LE              reduce using rule 27 (expression -> random_statement .)
+    NE              reduce using rule 27 (expression -> random_statement .)
+    $end            reduce using rule 27 (expression -> random_statement .)
+    RPAREN          reduce using rule 27 (expression -> random_statement .)
+    THEN            reduce using rule 27 (expression -> random_statement .)
+    TO              reduce using rule 27 (expression -> random_statement .)
 
-    expression                     shift and go to state 29
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 15
 
-    (4) var_assignment -> SET IDENTIFIER .
+    (28) expression -> TEXT .
+    (3) ask -> TEXT . EXPECTING INPUT AND DATATYPE
 
-    TO              reduce using rule 4 (var_assignment -> SET IDENTIFIER .)
-    $end            reduce using rule 4 (var_assignment -> SET IDENTIFIER .)
+    PLUS            reduce using rule 28 (expression -> TEXT .)
+    MINUS           reduce using rule 28 (expression -> TEXT .)
+    TIMES           reduce using rule 28 (expression -> TEXT .)
+    DIVIDE          reduce using rule 28 (expression -> TEXT .)
+    POWER           reduce using rule 28 (expression -> TEXT .)
+    EQ              reduce using rule 28 (expression -> TEXT .)
+    GT              reduce using rule 28 (expression -> TEXT .)
+    LT              reduce using rule 28 (expression -> TEXT .)
+    GE              reduce using rule 28 (expression -> TEXT .)
+    LE              reduce using rule 28 (expression -> TEXT .)
+    NE              reduce using rule 28 (expression -> TEXT .)
+    $end            reduce using rule 28 (expression -> TEXT .)
+    EXPECTING       shift and go to state 35
 
 
 state 16
 
-    (7) expression -> expression PLUS . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (29) expression -> INPUT .
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    PLUS            reduce using rule 29 (expression -> INPUT .)
+    MINUS           reduce using rule 29 (expression -> INPUT .)
+    TIMES           reduce using rule 29 (expression -> INPUT .)
+    DIVIDE          reduce using rule 29 (expression -> INPUT .)
+    POWER           reduce using rule 29 (expression -> INPUT .)
+    EQ              reduce using rule 29 (expression -> INPUT .)
+    GT              reduce using rule 29 (expression -> INPUT .)
+    LT              reduce using rule 29 (expression -> INPUT .)
+    GE              reduce using rule 29 (expression -> INPUT .)
+    LE              reduce using rule 29 (expression -> INPUT .)
+    NE              reduce using rule 29 (expression -> INPUT .)
+    $end            reduce using rule 29 (expression -> INPUT .)
+    RPAREN          reduce using rule 29 (expression -> INPUT .)
+    THEN            reduce using rule 29 (expression -> INPUT .)
+    TO              reduce using rule 29 (expression -> INPUT .)
 
-    expression                     shift and go to state 30
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 17
 
-    (8) expression -> expression MINUS . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (4) random_statement -> RANDOM . DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    DATATYPE        shift and go to state 36
 
-    expression                     shift and go to state 31
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 18
 
-    (9) expression -> expression TIMES . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (6) statement -> var_assignment TO . expression
+    (8) statement -> var_assignment TO . ask
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (3) ask -> . TEXT EXPECTING INPUT AND DATATYPE
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 15
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 32
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 37
+    ask                            shift and go to state 38
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 19
 
-    (10) expression -> expression DIVIDE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (9) statement -> IF comp_expr . THEN statement
+    (24) expression -> comp_expr .
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    THEN            shift and go to state 39
+    EQ              reduce using rule 24 (expression -> comp_expr .)
+    GT              reduce using rule 24 (expression -> comp_expr .)
+    LT              reduce using rule 24 (expression -> comp_expr .)
+    GE              reduce using rule 24 (expression -> comp_expr .)
+    LE              reduce using rule 24 (expression -> comp_expr .)
+    NE              reduce using rule 24 (expression -> comp_expr .)
+    PLUS            reduce using rule 24 (expression -> comp_expr .)
+    MINUS           reduce using rule 24 (expression -> comp_expr .)
+    TIMES           reduce using rule 24 (expression -> comp_expr .)
+    DIVIDE          reduce using rule 24 (expression -> comp_expr .)
+    POWER           reduce using rule 24 (expression -> comp_expr .)
 
-    expression                     shift and go to state 33
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 20
 
-    (11) expression -> expression POWER . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
 
-    expression                     shift and go to state 34
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 21
 
-    (15) comp_expr -> expression EQ . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (28) expression -> TEXT .
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    EQ              reduce using rule 28 (expression -> TEXT .)
+    GT              reduce using rule 28 (expression -> TEXT .)
+    LT              reduce using rule 28 (expression -> TEXT .)
+    GE              reduce using rule 28 (expression -> TEXT .)
+    LE              reduce using rule 28 (expression -> TEXT .)
+    NE              reduce using rule 28 (expression -> TEXT .)
+    PLUS            reduce using rule 28 (expression -> TEXT .)
+    MINUS           reduce using rule 28 (expression -> TEXT .)
+    TIMES           reduce using rule 28 (expression -> TEXT .)
+    DIVIDE          reduce using rule 28 (expression -> TEXT .)
+    POWER           reduce using rule 28 (expression -> TEXT .)
+    RPAREN          reduce using rule 28 (expression -> TEXT .)
+    $end            reduce using rule 28 (expression -> TEXT .)
+    THEN            reduce using rule 28 (expression -> TEXT .)
+    TO              reduce using rule 28 (expression -> TEXT .)
 
-    expression                     shift and go to state 35
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 22
 
-    (16) comp_expr -> expression GT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (5) var_assignment -> SET IDENTIFIER .
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    TO              reduce using rule 5 (var_assignment -> SET IDENTIFIER .)
+    $end            reduce using rule 5 (var_assignment -> SET IDENTIFIER .)
 
-    expression                     shift and go to state 36
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
 
 state 23
 
-    (17) comp_expr -> expression LT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (10) expression -> expression PLUS . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 37
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 40
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 24
 
-    (18) comp_expr -> expression GE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (11) expression -> expression MINUS . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 38
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 41
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 25
 
-    (19) comp_expr -> expression LE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (12) expression -> expression TIMES . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 39
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 42
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 26
 
-    (20) comp_expr -> expression NE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (13) expression -> expression DIVIDE . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-    expression                     shift and go to state 40
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+    expression                     shift and go to state 43
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 27
 
-    (12) expression -> LPAREN expression . RPAREN
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (14) expression -> expression POWER . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    RPAREN          shift and go to state 41
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
+    expression                     shift and go to state 44
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 28
 
-    (2) random_statement -> RANDOM DATATYPE . FROM expression TO expression
+    (18) comp_expr -> expression EQ . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    FROM            shift and go to state 42
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
+    expression                     shift and go to state 45
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 29
 
-    (5) statement -> var_assignment TO expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (19) comp_expr -> expression GT . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    $end            reduce using rule 5 (statement -> var_assignment TO expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
+    expression                     shift and go to state 46
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 30
 
-    (7) expression -> expression PLUS expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (20) comp_expr -> expression LT . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    PLUS            reduce using rule 7 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 7 (expression -> expression PLUS expression .)
-    EQ              reduce using rule 7 (expression -> expression PLUS expression .)
-    GT              reduce using rule 7 (expression -> expression PLUS expression .)
-    LT              reduce using rule 7 (expression -> expression PLUS expression .)
-    GE              reduce using rule 7 (expression -> expression PLUS expression .)
-    LE              reduce using rule 7 (expression -> expression PLUS expression .)
-    NE              reduce using rule 7 (expression -> expression PLUS expression .)
-    $end            reduce using rule 7 (expression -> expression PLUS expression .)
-    RPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
-    TO              reduce using rule 7 (expression -> expression PLUS expression .)
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-  ! TIMES           [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! DIVIDE          [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! POWER           [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 17 ]
-  ! EQ              [ shift and go to state 21 ]
-  ! GT              [ shift and go to state 22 ]
-  ! LT              [ shift and go to state 23 ]
-  ! GE              [ shift and go to state 24 ]
-  ! LE              [ shift and go to state 25 ]
-  ! NE              [ shift and go to state 26 ]
-
+    expression                     shift and go to state 47
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 31
 
-    (8) expression -> expression MINUS expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (21) comp_expr -> expression GE . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
-    EQ              reduce using rule 8 (expression -> expression MINUS expression .)
-    GT              reduce using rule 8 (expression -> expression MINUS expression .)
-    LT              reduce using rule 8 (expression -> expression MINUS expression .)
-    GE              reduce using rule 8 (expression -> expression MINUS expression .)
-    LE              reduce using rule 8 (expression -> expression MINUS expression .)
-    NE              reduce using rule 8 (expression -> expression MINUS expression .)
-    $end            reduce using rule 8 (expression -> expression MINUS expression .)
-    RPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
-    TO              reduce using rule 8 (expression -> expression MINUS expression .)
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-  ! TIMES           [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! DIVIDE          [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! POWER           [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 17 ]
-  ! EQ              [ shift and go to state 21 ]
-  ! GT              [ shift and go to state 22 ]
-  ! LT              [ shift and go to state 23 ]
-  ! GE              [ shift and go to state 24 ]
-  ! LE              [ shift and go to state 25 ]
-  ! NE              [ shift and go to state 26 ]
-
+    expression                     shift and go to state 48
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 32
 
-    (9) expression -> expression TIMES expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (22) comp_expr -> expression LE . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    PLUS            reduce using rule 9 (expression -> expression TIMES expression .)
-    MINUS           reduce using rule 9 (expression -> expression TIMES expression .)
-    TIMES           reduce using rule 9 (expression -> expression TIMES expression .)
-    DIVIDE          reduce using rule 9 (expression -> expression TIMES expression .)
-    EQ              reduce using rule 9 (expression -> expression TIMES expression .)
-    GT              reduce using rule 9 (expression -> expression TIMES expression .)
-    LT              reduce using rule 9 (expression -> expression TIMES expression .)
-    GE              reduce using rule 9 (expression -> expression TIMES expression .)
-    LE              reduce using rule 9 (expression -> expression TIMES expression .)
-    NE              reduce using rule 9 (expression -> expression TIMES expression .)
-    $end            reduce using rule 9 (expression -> expression TIMES expression .)
-    RPAREN          reduce using rule 9 (expression -> expression TIMES expression .)
-    TO              reduce using rule 9 (expression -> expression TIMES expression .)
-    POWER           shift and go to state 20
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-  ! POWER           [ reduce using rule 9 (expression -> expression TIMES expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 17 ]
-  ! TIMES           [ shift and go to state 18 ]
-  ! DIVIDE          [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 21 ]
-  ! GT              [ shift and go to state 22 ]
-  ! LT              [ shift and go to state 23 ]
-  ! GE              [ shift and go to state 24 ]
-  ! LE              [ shift and go to state 25 ]
-  ! NE              [ shift and go to state 26 ]
-
+    expression                     shift and go to state 49
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 33
 
-    (10) expression -> expression DIVIDE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (23) comp_expr -> expression NE . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
 
-    PLUS            reduce using rule 10 (expression -> expression DIVIDE expression .)
-    MINUS           reduce using rule 10 (expression -> expression DIVIDE expression .)
-    TIMES           reduce using rule 10 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 10 (expression -> expression DIVIDE expression .)
-    EQ              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    GT              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    LT              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    GE              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    LE              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    NE              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    $end            reduce using rule 10 (expression -> expression DIVIDE expression .)
-    RPAREN          reduce using rule 10 (expression -> expression DIVIDE expression .)
-    TO              reduce using rule 10 (expression -> expression DIVIDE expression .)
-    POWER           shift and go to state 20
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
 
-  ! POWER           [ reduce using rule 10 (expression -> expression DIVIDE expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 17 ]
-  ! TIMES           [ shift and go to state 18 ]
-  ! DIVIDE          [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 21 ]
-  ! GT              [ shift and go to state 22 ]
-  ! LT              [ shift and go to state 23 ]
-  ! GE              [ shift and go to state 24 ]
-  ! LE              [ shift and go to state 25 ]
-  ! NE              [ shift and go to state 26 ]
-
+    expression                     shift and go to state 50
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
 
 state 34
 
-    (11) expression -> expression POWER expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (15) expression -> LPAREN expression . RPAREN
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    PLUS            reduce using rule 11 (expression -> expression POWER expression .)
-    MINUS           reduce using rule 11 (expression -> expression POWER expression .)
-    TIMES           reduce using rule 11 (expression -> expression POWER expression .)
-    DIVIDE          reduce using rule 11 (expression -> expression POWER expression .)
-    EQ              reduce using rule 11 (expression -> expression POWER expression .)
-    GT              reduce using rule 11 (expression -> expression POWER expression .)
-    LT              reduce using rule 11 (expression -> expression POWER expression .)
-    GE              reduce using rule 11 (expression -> expression POWER expression .)
-    LE              reduce using rule 11 (expression -> expression POWER expression .)
-    NE              reduce using rule 11 (expression -> expression POWER expression .)
-    $end            reduce using rule 11 (expression -> expression POWER expression .)
-    RPAREN          reduce using rule 11 (expression -> expression POWER expression .)
-    TO              reduce using rule 11 (expression -> expression POWER expression .)
-    POWER           shift and go to state 20
-
-  ! POWER           [ reduce using rule 11 (expression -> expression POWER expression .) ]
-  ! PLUS            [ shift and go to state 16 ]
-  ! MINUS           [ shift and go to state 17 ]
-  ! TIMES           [ shift and go to state 18 ]
-  ! DIVIDE          [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 21 ]
-  ! GT              [ shift and go to state 22 ]
-  ! LT              [ shift and go to state 23 ]
-  ! GE              [ shift and go to state 24 ]
-  ! LE              [ shift and go to state 25 ]
-  ! NE              [ shift and go to state 26 ]
+    RPAREN          shift and go to state 51
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
 
 
 state 35
 
-    (15) comp_expr -> expression EQ expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (3) ask -> TEXT EXPECTING . INPUT AND DATATYPE
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 15 (comp_expr -> expression EQ expression .)
-    RPAREN          reduce using rule 15 (comp_expr -> expression EQ expression .)
-    TO              reduce using rule 15 (comp_expr -> expression EQ expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
-
-  ! PLUS            [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! MINUS           [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! TIMES           [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! DIVIDE          [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! POWER           [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! EQ              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! GT              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! LT              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! GE              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! LE              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
-  ! NE              [ reduce using rule 15 (comp_expr -> expression EQ expression .) ]
+    INPUT           shift and go to state 52
 
 
 state 36
 
-    (16) comp_expr -> expression GT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (4) random_statement -> RANDOM DATATYPE . FROM expression TO expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 16 (comp_expr -> expression GT expression .)
-    RPAREN          reduce using rule 16 (comp_expr -> expression GT expression .)
-    TO              reduce using rule 16 (comp_expr -> expression GT expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
-
-  ! PLUS            [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! MINUS           [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! TIMES           [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! DIVIDE          [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! POWER           [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! EQ              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! GT              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! LT              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! GE              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! LE              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
-  ! NE              [ reduce using rule 16 (comp_expr -> expression GT expression .) ]
+    FROM            shift and go to state 53
 
 
 state 37
 
-    (17) comp_expr -> expression LT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (6) statement -> var_assignment TO expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 17 (comp_expr -> expression LT expression .)
-    RPAREN          reduce using rule 17 (comp_expr -> expression LT expression .)
-    TO              reduce using rule 17 (comp_expr -> expression LT expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
-
-  ! PLUS            [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! MINUS           [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! TIMES           [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! DIVIDE          [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! POWER           [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! EQ              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! GT              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! LT              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! GE              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! LE              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
-  ! NE              [ reduce using rule 17 (comp_expr -> expression LT expression .) ]
+    $end            reduce using rule 6 (statement -> var_assignment TO expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
 
 
 state 38
 
-    (18) comp_expr -> expression GE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (8) statement -> var_assignment TO ask .
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 18 (comp_expr -> expression GE expression .)
-    RPAREN          reduce using rule 18 (comp_expr -> expression GE expression .)
-    TO              reduce using rule 18 (comp_expr -> expression GE expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
-
-  ! PLUS            [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! MINUS           [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! TIMES           [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! DIVIDE          [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! POWER           [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! EQ              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! GT              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! LT              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! GE              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! LE              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
-  ! NE              [ reduce using rule 18 (comp_expr -> expression GE expression .) ]
+    $end            reduce using rule 8 (statement -> var_assignment TO ask .)
 
 
 state 39
 
-    (19) comp_expr -> expression LE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (9) statement -> IF comp_expr THEN . statement
+    (1) statement -> . OUTPUT expression
+    (2) statement -> . OUTPUT ask
+    (6) statement -> . var_assignment TO expression
+    (7) statement -> . var_assignment
+    (8) statement -> . var_assignment TO ask
+    (9) statement -> . IF comp_expr THEN statement
+    (5) var_assignment -> . SET IDENTIFIER
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 19 (comp_expr -> expression LE expression .)
-    RPAREN          reduce using rule 19 (comp_expr -> expression LE expression .)
-    TO              reduce using rule 19 (comp_expr -> expression LE expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    OUTPUT          shift and go to state 2
+    IF              shift and go to state 4
+    SET             shift and go to state 5
 
-  ! PLUS            [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! MINUS           [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! TIMES           [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! DIVIDE          [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! POWER           [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! EQ              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! GT              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! LT              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! GE              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! LE              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-  ! NE              [ reduce using rule 19 (comp_expr -> expression LE expression .) ]
-
+    statement                      shift and go to state 54
+    var_assignment                 shift and go to state 3
 
 state 40
 
-    (20) comp_expr -> expression NE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (10) expression -> expression PLUS expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 20 (comp_expr -> expression NE expression .)
-    RPAREN          reduce using rule 20 (comp_expr -> expression NE expression .)
-    TO              reduce using rule 20 (comp_expr -> expression NE expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    PLUS            reduce using rule 10 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 10 (expression -> expression PLUS expression .)
+    EQ              reduce using rule 10 (expression -> expression PLUS expression .)
+    GT              reduce using rule 10 (expression -> expression PLUS expression .)
+    LT              reduce using rule 10 (expression -> expression PLUS expression .)
+    GE              reduce using rule 10 (expression -> expression PLUS expression .)
+    LE              reduce using rule 10 (expression -> expression PLUS expression .)
+    NE              reduce using rule 10 (expression -> expression PLUS expression .)
+    $end            reduce using rule 10 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 10 (expression -> expression PLUS expression .)
+    THEN            reduce using rule 10 (expression -> expression PLUS expression .)
+    TO              reduce using rule 10 (expression -> expression PLUS expression .)
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
 
-  ! PLUS            [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! MINUS           [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! TIMES           [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! DIVIDE          [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! POWER           [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! EQ              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! GT              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! LT              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! GE              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! LE              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
-  ! NE              [ reduce using rule 20 (comp_expr -> expression NE expression .) ]
+  ! TIMES           [ reduce using rule 10 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 10 (expression -> expression PLUS expression .) ]
+  ! POWER           [ reduce using rule 10 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! EQ              [ shift and go to state 28 ]
+  ! GT              [ shift and go to state 29 ]
+  ! LT              [ shift and go to state 30 ]
+  ! GE              [ shift and go to state 31 ]
+  ! LE              [ shift and go to state 32 ]
+  ! NE              [ shift and go to state 33 ]
 
 
 state 41
 
-    (12) expression -> LPAREN expression RPAREN .
+    (11) expression -> expression MINUS expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    PLUS            reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    TIMES           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    POWER           reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    EQ              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    GT              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    LT              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    GE              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    LE              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    NE              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    $end            reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 12 (expression -> LPAREN expression RPAREN .)
-    TO              reduce using rule 12 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 11 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 11 (expression -> expression MINUS expression .)
+    EQ              reduce using rule 11 (expression -> expression MINUS expression .)
+    GT              reduce using rule 11 (expression -> expression MINUS expression .)
+    LT              reduce using rule 11 (expression -> expression MINUS expression .)
+    GE              reduce using rule 11 (expression -> expression MINUS expression .)
+    LE              reduce using rule 11 (expression -> expression MINUS expression .)
+    NE              reduce using rule 11 (expression -> expression MINUS expression .)
+    $end            reduce using rule 11 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 11 (expression -> expression MINUS expression .)
+    THEN            reduce using rule 11 (expression -> expression MINUS expression .)
+    TO              reduce using rule 11 (expression -> expression MINUS expression .)
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+
+  ! TIMES           [ reduce using rule 11 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 11 (expression -> expression MINUS expression .) ]
+  ! POWER           [ reduce using rule 11 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! EQ              [ shift and go to state 28 ]
+  ! GT              [ shift and go to state 29 ]
+  ! LT              [ shift and go to state 30 ]
+  ! GE              [ shift and go to state 31 ]
+  ! LE              [ shift and go to state 32 ]
+  ! NE              [ shift and go to state 33 ]
 
 
 state 42
 
-    (2) random_statement -> RANDOM DATATYPE FROM . expression TO expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (12) expression -> expression TIMES expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    PLUS            reduce using rule 12 (expression -> expression TIMES expression .)
+    MINUS           reduce using rule 12 (expression -> expression TIMES expression .)
+    TIMES           reduce using rule 12 (expression -> expression TIMES expression .)
+    DIVIDE          reduce using rule 12 (expression -> expression TIMES expression .)
+    EQ              reduce using rule 12 (expression -> expression TIMES expression .)
+    GT              reduce using rule 12 (expression -> expression TIMES expression .)
+    LT              reduce using rule 12 (expression -> expression TIMES expression .)
+    GE              reduce using rule 12 (expression -> expression TIMES expression .)
+    LE              reduce using rule 12 (expression -> expression TIMES expression .)
+    NE              reduce using rule 12 (expression -> expression TIMES expression .)
+    $end            reduce using rule 12 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 12 (expression -> expression TIMES expression .)
+    THEN            reduce using rule 12 (expression -> expression TIMES expression .)
+    TO              reduce using rule 12 (expression -> expression TIMES expression .)
+    POWER           shift and go to state 27
 
-    expression                     shift and go to state 43
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+  ! POWER           [ reduce using rule 12 (expression -> expression TIMES expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! TIMES           [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
+  ! EQ              [ shift and go to state 28 ]
+  ! GT              [ shift and go to state 29 ]
+  ! LT              [ shift and go to state 30 ]
+  ! GE              [ shift and go to state 31 ]
+  ! LE              [ shift and go to state 32 ]
+  ! NE              [ shift and go to state 33 ]
+
 
 state 43
 
-    (2) random_statement -> RANDOM DATATYPE FROM expression . TO expression
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (13) expression -> expression DIVIDE expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    TO              shift and go to state 44
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    PLUS            reduce using rule 13 (expression -> expression DIVIDE expression .)
+    MINUS           reduce using rule 13 (expression -> expression DIVIDE expression .)
+    TIMES           reduce using rule 13 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 13 (expression -> expression DIVIDE expression .)
+    EQ              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    GT              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    LT              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    GE              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    LE              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    NE              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    $end            reduce using rule 13 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 13 (expression -> expression DIVIDE expression .)
+    THEN            reduce using rule 13 (expression -> expression DIVIDE expression .)
+    TO              reduce using rule 13 (expression -> expression DIVIDE expression .)
+    POWER           shift and go to state 27
+
+  ! POWER           [ reduce using rule 13 (expression -> expression DIVIDE expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! TIMES           [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
+  ! EQ              [ shift and go to state 28 ]
+  ! GT              [ shift and go to state 29 ]
+  ! LT              [ shift and go to state 30 ]
+  ! GE              [ shift and go to state 31 ]
+  ! LE              [ shift and go to state 32 ]
+  ! NE              [ shift and go to state 33 ]
 
 
 state 44
 
-    (2) random_statement -> RANDOM DATATYPE FROM expression TO . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression TIMES expression
-    (10) expression -> . expression DIVIDE expression
-    (11) expression -> . expression POWER expression
-    (12) expression -> . LPAREN expression RPAREN
-    (13) expression -> . YES
-    (14) expression -> . NO
-    (21) expression -> . comp_expr
-    (22) expression -> . NUMBER
-    (23) expression -> . IDENTIFIER
-    (24) expression -> . random_statement
-    (15) comp_expr -> . expression EQ expression
-    (16) comp_expr -> . expression GT expression
-    (17) comp_expr -> . expression LT expression
-    (18) comp_expr -> . expression GE expression
-    (19) comp_expr -> . expression LE expression
-    (20) comp_expr -> . expression NE expression
-    (2) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+    (14) expression -> expression POWER expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
-    LPAREN          shift and go to state 6
-    YES             shift and go to state 7
-    NO              shift and go to state 8
-    NUMBER          shift and go to state 10
-    IDENTIFIER      shift and go to state 11
-    RANDOM          shift and go to state 13
+    PLUS            reduce using rule 14 (expression -> expression POWER expression .)
+    MINUS           reduce using rule 14 (expression -> expression POWER expression .)
+    TIMES           reduce using rule 14 (expression -> expression POWER expression .)
+    DIVIDE          reduce using rule 14 (expression -> expression POWER expression .)
+    EQ              reduce using rule 14 (expression -> expression POWER expression .)
+    GT              reduce using rule 14 (expression -> expression POWER expression .)
+    LT              reduce using rule 14 (expression -> expression POWER expression .)
+    GE              reduce using rule 14 (expression -> expression POWER expression .)
+    LE              reduce using rule 14 (expression -> expression POWER expression .)
+    NE              reduce using rule 14 (expression -> expression POWER expression .)
+    $end            reduce using rule 14 (expression -> expression POWER expression .)
+    RPAREN          reduce using rule 14 (expression -> expression POWER expression .)
+    THEN            reduce using rule 14 (expression -> expression POWER expression .)
+    TO              reduce using rule 14 (expression -> expression POWER expression .)
+    POWER           shift and go to state 27
 
-    expression                     shift and go to state 45
-    comp_expr                      shift and go to state 9
-    random_statement               shift and go to state 12
+  ! POWER           [ reduce using rule 14 (expression -> expression POWER expression .) ]
+  ! PLUS            [ shift and go to state 23 ]
+  ! MINUS           [ shift and go to state 24 ]
+  ! TIMES           [ shift and go to state 25 ]
+  ! DIVIDE          [ shift and go to state 26 ]
+  ! EQ              [ shift and go to state 28 ]
+  ! GT              [ shift and go to state 29 ]
+  ! LT              [ shift and go to state 30 ]
+  ! GE              [ shift and go to state 31 ]
+  ! LE              [ shift and go to state 32 ]
+  ! NE              [ shift and go to state 33 ]
+
 
 state 45
 
-    (2) random_statement -> RANDOM DATATYPE FROM expression TO expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . TIMES expression
-    (10) expression -> expression . DIVIDE expression
-    (11) expression -> expression . POWER expression
-    (15) comp_expr -> expression . EQ expression
-    (16) comp_expr -> expression . GT expression
-    (17) comp_expr -> expression . LT expression
-    (18) comp_expr -> expression . GE expression
-    (19) comp_expr -> expression . LE expression
-    (20) comp_expr -> expression . NE expression
+    (18) comp_expr -> expression EQ expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
@@ -1495,102 +1322,521 @@ state 45
   ! shift/reduce conflict for GE resolved as shift
   ! shift/reduce conflict for LE resolved as shift
   ! shift/reduce conflict for NE resolved as shift
-    $end            reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
-    RPAREN          reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
-    TO              reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
-    PLUS            shift and go to state 16
-    MINUS           shift and go to state 17
-    TIMES           shift and go to state 18
-    DIVIDE          shift and go to state 19
-    POWER           shift and go to state 20
-    EQ              shift and go to state 21
-    GT              shift and go to state 22
-    LT              shift and go to state 23
-    GE              shift and go to state 24
-    LE              shift and go to state 25
-    NE              shift and go to state 26
+    $end            reduce using rule 18 (comp_expr -> expression EQ expression .)
+    THEN            reduce using rule 18 (comp_expr -> expression EQ expression .)
+    RPAREN          reduce using rule 18 (comp_expr -> expression EQ expression .)
+    TO              reduce using rule 18 (comp_expr -> expression EQ expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
 
-  ! PLUS            [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! MINUS           [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! TIMES           [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! DIVIDE          [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! POWER           [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! EQ              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! GT              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! LT              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! GE              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! LE              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
-  ! NE              [ reduce using rule 2 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! PLUS            [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! MINUS           [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! TIMES           [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! DIVIDE          [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! POWER           [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! EQ              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! GT              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! LT              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! GE              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! LE              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+  ! NE              [ reduce using rule 18 (comp_expr -> expression EQ expression .) ]
+
+
+state 46
+
+    (19) comp_expr -> expression GT expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 19 (comp_expr -> expression GT expression .)
+    THEN            reduce using rule 19 (comp_expr -> expression GT expression .)
+    RPAREN          reduce using rule 19 (comp_expr -> expression GT expression .)
+    TO              reduce using rule 19 (comp_expr -> expression GT expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! MINUS           [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! TIMES           [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! DIVIDE          [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! POWER           [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! EQ              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! GT              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! LT              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! GE              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! LE              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+  ! NE              [ reduce using rule 19 (comp_expr -> expression GT expression .) ]
+
+
+state 47
+
+    (20) comp_expr -> expression LT expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 20 (comp_expr -> expression LT expression .)
+    THEN            reduce using rule 20 (comp_expr -> expression LT expression .)
+    RPAREN          reduce using rule 20 (comp_expr -> expression LT expression .)
+    TO              reduce using rule 20 (comp_expr -> expression LT expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! MINUS           [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! TIMES           [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! DIVIDE          [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! POWER           [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! EQ              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! GT              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! LT              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! GE              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! LE              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+  ! NE              [ reduce using rule 20 (comp_expr -> expression LT expression .) ]
+
+
+state 48
+
+    (21) comp_expr -> expression GE expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 21 (comp_expr -> expression GE expression .)
+    THEN            reduce using rule 21 (comp_expr -> expression GE expression .)
+    RPAREN          reduce using rule 21 (comp_expr -> expression GE expression .)
+    TO              reduce using rule 21 (comp_expr -> expression GE expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! MINUS           [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! TIMES           [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! DIVIDE          [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! POWER           [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! EQ              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! GT              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! LT              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! GE              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! LE              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+  ! NE              [ reduce using rule 21 (comp_expr -> expression GE expression .) ]
+
+
+state 49
+
+    (22) comp_expr -> expression LE expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 22 (comp_expr -> expression LE expression .)
+    THEN            reduce using rule 22 (comp_expr -> expression LE expression .)
+    RPAREN          reduce using rule 22 (comp_expr -> expression LE expression .)
+    TO              reduce using rule 22 (comp_expr -> expression LE expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! MINUS           [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! TIMES           [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! DIVIDE          [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! POWER           [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! EQ              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! GT              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! LT              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! GE              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! LE              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+  ! NE              [ reduce using rule 22 (comp_expr -> expression LE expression .) ]
+
+
+state 50
+
+    (23) comp_expr -> expression NE expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 23 (comp_expr -> expression NE expression .)
+    THEN            reduce using rule 23 (comp_expr -> expression NE expression .)
+    RPAREN          reduce using rule 23 (comp_expr -> expression NE expression .)
+    TO              reduce using rule 23 (comp_expr -> expression NE expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! MINUS           [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! TIMES           [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! DIVIDE          [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! POWER           [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! EQ              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! GT              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! LT              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! GE              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! LE              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+  ! NE              [ reduce using rule 23 (comp_expr -> expression NE expression .) ]
+
+
+state 51
+
+    (15) expression -> LPAREN expression RPAREN .
+
+    PLUS            reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    POWER           reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    EQ              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    GT              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    LT              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    GE              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    LE              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    NE              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    $end            reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    THEN            reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+    TO              reduce using rule 15 (expression -> LPAREN expression RPAREN .)
+
+
+state 52
+
+    (3) ask -> TEXT EXPECTING INPUT . AND DATATYPE
+
+    AND             shift and go to state 55
+
+
+state 53
+
+    (4) random_statement -> RANDOM DATATYPE FROM . expression TO expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
+
+    expression                     shift and go to state 56
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
+
+state 54
+
+    (9) statement -> IF comp_expr THEN statement .
+
+    $end            reduce using rule 9 (statement -> IF comp_expr THEN statement .)
+
+
+state 55
+
+    (3) ask -> TEXT EXPECTING INPUT AND . DATATYPE
+
+    DATATYPE        shift and go to state 57
+
+
+state 56
+
+    (4) random_statement -> RANDOM DATATYPE FROM expression . TO expression
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+    TO              shift and go to state 58
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+
+state 57
+
+    (3) ask -> TEXT EXPECTING INPUT AND DATATYPE .
+
+    $end            reduce using rule 3 (ask -> TEXT EXPECTING INPUT AND DATATYPE .)
+
+
+state 58
+
+    (4) random_statement -> RANDOM DATATYPE FROM expression TO . expression
+    (10) expression -> . expression PLUS expression
+    (11) expression -> . expression MINUS expression
+    (12) expression -> . expression TIMES expression
+    (13) expression -> . expression DIVIDE expression
+    (14) expression -> . expression POWER expression
+    (15) expression -> . LPAREN expression RPAREN
+    (16) expression -> . YES
+    (17) expression -> . NO
+    (24) expression -> . comp_expr
+    (25) expression -> . NUMBER
+    (26) expression -> . IDENTIFIER
+    (27) expression -> . random_statement
+    (28) expression -> . TEXT
+    (29) expression -> . INPUT
+    (18) comp_expr -> . expression EQ expression
+    (19) comp_expr -> . expression GT expression
+    (20) comp_expr -> . expression LT expression
+    (21) comp_expr -> . expression GE expression
+    (22) comp_expr -> . expression LE expression
+    (23) comp_expr -> . expression NE expression
+    (4) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+
+    LPAREN          shift and go to state 8
+    YES             shift and go to state 9
+    NO              shift and go to state 10
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 13
+    TEXT            shift and go to state 21
+    INPUT           shift and go to state 16
+    RANDOM          shift and go to state 17
+
+    expression                     shift and go to state 59
+    comp_expr                      shift and go to state 11
+    random_statement               shift and go to state 14
+
+state 59
+
+    (4) random_statement -> RANDOM DATATYPE FROM expression TO expression .
+    (10) expression -> expression . PLUS expression
+    (11) expression -> expression . MINUS expression
+    (12) expression -> expression . TIMES expression
+    (13) expression -> expression . DIVIDE expression
+    (14) expression -> expression . POWER expression
+    (18) comp_expr -> expression . EQ expression
+    (19) comp_expr -> expression . GT expression
+    (20) comp_expr -> expression . LT expression
+    (21) comp_expr -> expression . GE expression
+    (22) comp_expr -> expression . LE expression
+    (23) comp_expr -> expression . NE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    $end            reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
+    RPAREN          reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
+    THEN            reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
+    TO              reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+    POWER           shift and go to state 27
+    EQ              shift and go to state 28
+    GT              shift and go to state 29
+    LT              shift and go to state 30
+    GE              shift and go to state 31
+    LE              shift and go to state 32
+    NE              shift and go to state 33
+
+  ! PLUS            [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! MINUS           [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! TIMES           [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! DIVIDE          [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! POWER           [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! EQ              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! GT              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! LT              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! GE              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! LE              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+  ! NE              [ reduce using rule 4 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 35 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 35 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 35 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 35 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 35 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 35 resolved as shift
-WARNING: shift/reduce conflict for GT in state 35 resolved as shift
-WARNING: shift/reduce conflict for LT in state 35 resolved as shift
-WARNING: shift/reduce conflict for GE in state 35 resolved as shift
-WARNING: shift/reduce conflict for LE in state 35 resolved as shift
-WARNING: shift/reduce conflict for NE in state 35 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 36 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 36 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 36 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 36 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 36 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 36 resolved as shift
-WARNING: shift/reduce conflict for GT in state 36 resolved as shift
-WARNING: shift/reduce conflict for LT in state 36 resolved as shift
-WARNING: shift/reduce conflict for GE in state 36 resolved as shift
-WARNING: shift/reduce conflict for LE in state 36 resolved as shift
-WARNING: shift/reduce conflict for NE in state 36 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 37 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 37 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 37 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 37 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 37 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 37 resolved as shift
-WARNING: shift/reduce conflict for GT in state 37 resolved as shift
-WARNING: shift/reduce conflict for LT in state 37 resolved as shift
-WARNING: shift/reduce conflict for GE in state 37 resolved as shift
-WARNING: shift/reduce conflict for LE in state 37 resolved as shift
-WARNING: shift/reduce conflict for NE in state 37 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 38 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 38 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 38 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 38 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 38 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 38 resolved as shift
-WARNING: shift/reduce conflict for GT in state 38 resolved as shift
-WARNING: shift/reduce conflict for LT in state 38 resolved as shift
-WARNING: shift/reduce conflict for GE in state 38 resolved as shift
-WARNING: shift/reduce conflict for LE in state 38 resolved as shift
-WARNING: shift/reduce conflict for NE in state 38 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 39 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 39 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 39 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 39 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 39 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 39 resolved as shift
-WARNING: shift/reduce conflict for GT in state 39 resolved as shift
-WARNING: shift/reduce conflict for LT in state 39 resolved as shift
-WARNING: shift/reduce conflict for GE in state 39 resolved as shift
-WARNING: shift/reduce conflict for LE in state 39 resolved as shift
-WARNING: shift/reduce conflict for NE in state 39 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 40 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 40 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 40 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 40 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 40 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 40 resolved as shift
-WARNING: shift/reduce conflict for GT in state 40 resolved as shift
-WARNING: shift/reduce conflict for LT in state 40 resolved as shift
-WARNING: shift/reduce conflict for GE in state 40 resolved as shift
-WARNING: shift/reduce conflict for LE in state 40 resolved as shift
-WARNING: shift/reduce conflict for NE in state 40 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 45 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 45 resolved as shift
 WARNING: shift/reduce conflict for TIMES in state 45 resolved as shift
@@ -1602,3 +1848,69 @@ WARNING: shift/reduce conflict for LT in state 45 resolved as shift
 WARNING: shift/reduce conflict for GE in state 45 resolved as shift
 WARNING: shift/reduce conflict for LE in state 45 resolved as shift
 WARNING: shift/reduce conflict for NE in state 45 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 46 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 46 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 46 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 46 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 46 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 46 resolved as shift
+WARNING: shift/reduce conflict for GT in state 46 resolved as shift
+WARNING: shift/reduce conflict for LT in state 46 resolved as shift
+WARNING: shift/reduce conflict for GE in state 46 resolved as shift
+WARNING: shift/reduce conflict for LE in state 46 resolved as shift
+WARNING: shift/reduce conflict for NE in state 46 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 47 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 47 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 47 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 47 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 47 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 47 resolved as shift
+WARNING: shift/reduce conflict for GT in state 47 resolved as shift
+WARNING: shift/reduce conflict for LT in state 47 resolved as shift
+WARNING: shift/reduce conflict for GE in state 47 resolved as shift
+WARNING: shift/reduce conflict for LE in state 47 resolved as shift
+WARNING: shift/reduce conflict for NE in state 47 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 48 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 48 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 48 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 48 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 48 resolved as shift
+WARNING: shift/reduce conflict for GT in state 48 resolved as shift
+WARNING: shift/reduce conflict for LT in state 48 resolved as shift
+WARNING: shift/reduce conflict for GE in state 48 resolved as shift
+WARNING: shift/reduce conflict for LE in state 48 resolved as shift
+WARNING: shift/reduce conflict for NE in state 48 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 49 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 49 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 49 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 49 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 49 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 49 resolved as shift
+WARNING: shift/reduce conflict for GT in state 49 resolved as shift
+WARNING: shift/reduce conflict for LT in state 49 resolved as shift
+WARNING: shift/reduce conflict for GE in state 49 resolved as shift
+WARNING: shift/reduce conflict for LE in state 49 resolved as shift
+WARNING: shift/reduce conflict for NE in state 49 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 50 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 50 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 50 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 50 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 50 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 50 resolved as shift
+WARNING: shift/reduce conflict for GT in state 50 resolved as shift
+WARNING: shift/reduce conflict for LT in state 50 resolved as shift
+WARNING: shift/reduce conflict for GE in state 50 resolved as shift
+WARNING: shift/reduce conflict for LE in state 50 resolved as shift
+WARNING: shift/reduce conflict for NE in state 50 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 59 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 59 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 59 resolved as shift
+WARNING: shift/reduce conflict for GT in state 59 resolved as shift
+WARNING: shift/reduce conflict for LT in state 59 resolved as shift
+WARNING: shift/reduce conflict for GE in state 59 resolved as shift
+WARNING: shift/reduce conflict for LE in state 59 resolved as shift
+WARNING: shift/reduce conflict for NE in state 59 resolved as shift

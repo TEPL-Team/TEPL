@@ -19,6 +19,9 @@ def run():
     run_button = tk.Button(root, text="Run Interpreter", command=run_interpreter)
     run_button.pack(pady=10)
 
+    exit_button = tk.Button(root, text="Exit", command=root.destroy)
+    exit_button.pack(pady=10)
+
     output_area = tk.Text(root, wrap=tk.WORD, width=80, height=10)
     output_area.pack(padx=10, pady=10)
     output_area.config(state=tk.DISABLED)

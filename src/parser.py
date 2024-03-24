@@ -16,8 +16,16 @@ precedence = (
 def p_statement_output(p):
     '''
     statement : OUTPUT expression
+              | OUTPUT ask
     '''
     p[0] = ('OUTPUT', p[2])
+
+
+def p_ask_statement(p):
+    '''
+    ask : TEXT EXPECTING INPUT AND DATATYPE
+    '''
+    p[0] = ('ASK', p[1], p[5])
 
 
 def p_random_statement(p):
@@ -25,13 +33,6 @@ def p_random_statement(p):
     random_statement : RANDOM DATATYPE FROM expression TO expression
     '''
     p[0] = ('RANDOM', p[2], p[4], p[6])
-
-
-def p_type_statement(p):
-    '''
-    type_statement : TYPE DATATYPE
-    '''
-    p[0] = ('TYPE', p[2])
 
 
 def p_statement_var_assignment(p):
@@ -45,11 +46,19 @@ def p_statement_assignment(p):
     '''
     statement : var_assignment TO expression
               | var_assignment 
+              | var_assignment TO ask
     '''
     if len(p) == 2:
         p[0] = ('SET', p[1][1], None)
     elif len(p) == 4:
         p[0] = ('SET', p[1][1], p[3])
+
+
+def p_statement_if(p):
+    '''
+    statement : IF comp_expr THEN statement
+    '''
+    p[0] = ('IF', p[2], p[4])
 
 
 def p_expression_binop(p):
@@ -110,13 +119,22 @@ def p_expression_random(p):
     p[0] = p[1]
 
 
-# Error rule for syntax errors
+def p_expression_text(p):
+    'expression : TEXT'
+    p[0] = ('TEXT', p[1])
+
+
+def p_expression_input(p):
+    'expression : INPUT'
+    p[0] = ('INPUT')
+
+
 def p_error(p):
     global __error__
     if p:
         print(f"Syntax error at '{p.value}'!")
     else:
-        print("Syntax error at EOF")
+        print("Syntax error at EOF!")
     __error__ = True
 
 
