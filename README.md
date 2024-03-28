@@ -1,6 +1,6 @@
 ### TEPL - Textual Educational Programming Language
 
-TEPL is a simple educational programming language aimed at beginners to learn basic programming concepts.
+TEPL is a simple educational programming language aimed at beginners to learn basic programming concepts. It provides a user-friendly interface for practicing programming. TEPL supports basic arithmetic calculations, variable support, logic operators, booleans, math operators if statements and input statements. 
 
 ### Features:
 - Basic arithmetic calculations (Completed)
