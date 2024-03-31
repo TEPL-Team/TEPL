@@ -61,6 +61,13 @@ def p_statement_if(p):
     p[0] = ('IF', p[2], p[4])
 
 
+def p_expr_if(p):
+    '''
+    expression : expression IF comp_expr
+    '''
+    p[0] = ('IF', p[1], 'EXPR', p[3])
+
+
 def p_expression_binop(p):
     '''
     expression : expression PLUS expression

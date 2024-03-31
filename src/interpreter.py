@@ -46,7 +46,6 @@ __input__ = None
 
 def interpret(ast: tuple | list) -> Any:
     global vars, __input__, __error__
-    print(ast)
     if __error__:
         return
 
@@ -70,6 +69,15 @@ def interpret(ast: tuple | list) -> Any:
         statement = interpret(ast[2])
         if cond == 'YES' and statement is not None:
             print(statement)
+            return
+
+        if ast[2] == 'EXPR':
+            result = interpret(ast[1])
+            cond = interpret(ast[3])
+            if cond == 'YES' and result is not None:
+                return result
+            elif cond == 'NO' and result is not None:
+                return 
 
     elif ast[0] == 'IDENTIFIER':
         if ast[1] in vars:

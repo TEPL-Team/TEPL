@@ -5,6 +5,7 @@ from lexer import lexer
 from gui import run
 
 __version__ = '1.00.00'
+__mode__ = 'interpret' # 'interpret'|'parse'|'tokenize'
 
 
 def run_script(filename):
@@ -20,6 +21,7 @@ def run_script(filename):
 
 
 def main():
+    global __mode__
     _parser = argparse.ArgumentParser(description="TEPL Interpreter")
     _parser.add_argument("--run", help="Execute TEPL script from a file")
     args = _parser.parse_args()
@@ -46,6 +48,7 @@ def main():
                     --version: view the version
                     --changelog: view the changelog
                     --license: view the license
+                    --mode: change the mode (interpret, parse, tokenize)
                 ''')
             elif text == '--ide':
                 print('Opening the IDE...')
@@ -72,6 +75,25 @@ V1.00.00 update: https://github.com/TENTHER101/TEPL/releases/tag/v1.00.00''')
                 print('''Documentation: https://tepl.vercel.app/docs
 You may need to go to: https://tepl.vercel.app first and then move to the docs tab. 
                 ''')
+            elif text == '--mode':
+                print('''Current mode: {__mode__}
+Modes:
+    interpret: interprets the script
+    parse: parses the script
+    tokenize: tokenizes the script''')
+                nm = input('Enter the new mode(press enter to exit): ')
+                if nm:
+                    if nm == 'interpret':
+                        __mode__ = 'interpret'
+                    elif nm == 'parse':
+                        __mode__ = 'parse'
+                    elif nm == 'tokenize':
+                        __mode__ = 'tokenize'
+                    else:
+                        print(f'{nm} is not a valid mode!')
+                else: 
+                    print('Exiting...')
+                pass
             else:
                 result = parser.parse(text, lexer=lexer)
                 if result and not __error__:
