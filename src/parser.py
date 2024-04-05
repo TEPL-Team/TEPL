@@ -136,7 +136,7 @@ def p_expression_input(p):
 def p_error(p):
     global __error__
     if p:
-        print(f"Syntax error at '{p.value}'!")
+        print(f"Syntax error at '{p.value}', on line '{p.lineno}'!")
     else:
         print("Syntax error at EOF!")
     __error__ = True
