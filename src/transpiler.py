@@ -1,0 +1,93 @@
+from parser import parser
+from parser import __error__
+from nodes import *
+
+
+def transpile(ast):
+    compiled_code = []
+    compiled_code.append('import random')
+    compiled_code.append('INPUT = None')
+
+    if isinstance(ast, list):
+        for node in ast:
+            if isinstance(node, Output):
+                compiled_code.append(compile_output(node))
+            elif isinstance(node, If):
+                compiled_code.append(compile_if(node))
+            elif isinstance(node, Assignment):
+                compiled_code.append(compile_assignment(node))
+
+    else:
+        if isinstance(ast, Output):
+            compiled_code.append(compile_output(ast))
+        elif isinstance(ast, If):
+            compiled_code.append(compile_if(ast))
+        elif isinstance(ast, Assignment):
+            compiled_code.append(compile_assignment(ast))
+        else:
+            raise TypeError(
+                "Invalid AST root node. Expecting an 'Output' node or list of statements."
+            )
+
+    return '\n'.join(compiled_code)
+
+
+def transpile_stmt(stmt):
+    if isinstance(stmt, Output):
+        return compile_output(stmt)
+
+    elif isinstance(stmt, If):
+        return compile_if(stmt)
+
+    elif isinstance(stmt, Assignment):
+        return compile_assignment(stmt)
+
+
+def compile_output(node):
+    expr_code = compile_expr(node.expr)
+    if str(expr_code).startswith('input('):
+        return f"INPUT = {expr_code}\nprint(INPUT)"
+    else:
+        return f"print({expr_code})"
+
+
+def compile_assignment(node):
+    name = compile_expr(node.name)
+    value = compile_expr(node.value)
+    return f"{name} = {value}"
+
+
+def compile_if(node):
+    comp = compile_expr(node.condition)
+    body = transpile_stmt(node.body)
+    return f"if {comp}:\n    {body}"
+
+
+def compile_expr(expr):
+    if isinstance(expr, list):
+        # If the expression is a list, compile each element in the list
+        return ', '.join([compile_expr(e) for e in expr])
+    elif isinstance(expr, Number):
+        return int(expr.value)
+    elif isinstance(expr, BinOp):
+        left_code = compile_expr(expr.left)
+        right_code = compile_expr(expr.right)
+        return f"{int(left_code)} {expr.op} {int(right_code)}"
+    elif isinstance(expr, Identifier):
+        return f"{expr.name}"
+    elif isinstance(expr, Boolean):
+        return 'True' if expr.value.lower() == 'YES' else 'False'
+    elif isinstance(expr, Text):
+        return f"{str(expr.text)}"
+    elif isinstance(expr, Input):
+        return f"input({expr.q})"
+    elif isinstance(expr, Random):
+        return f"random.randint({int(expr._from.value)}, {int(expr.to.value)})"
+    elif isinstance(expr, Input_Expr):
+        return 'INPUT'
+    elif isinstance(expr, Comparism):
+        left_code = compile_expr(expr.left)
+        right_code = compile_expr(expr.right)
+        return f"{left_code} {expr.op} {right_code}"
+    else:
+        raise TypeError(f"Unknown expression type: {expr}")

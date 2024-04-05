@@ -55,7 +55,7 @@ def t_IDENTIFIER(t):
 t_ignore = ' \t'
 
 
-# A rule for new lines 
+# A rule for new lines
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
