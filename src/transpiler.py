@@ -26,7 +26,7 @@ def transpile(ast):
             compiled_code.append(compile_assignment(ast))
         else:
             raise TypeError(
-                "Invalid AST root node. Expecting an 'Output' node or list of statements."
+                "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "+str(type(ast))
             )
 
     return '\n'.join(compiled_code)
@@ -72,7 +72,7 @@ def compile_expr(expr):
     elif isinstance(expr, BinOp):
         left_code = compile_expr(expr.left)
         right_code = compile_expr(expr.right)
-        return f"{int(left_code)} {expr.op} {int(right_code)}"
+        return f"{left_code} {expr.op} {right_code}"
     elif isinstance(expr, Identifier):
         return f"{expr.name}"
     elif isinstance(expr, Boolean):
@@ -82,7 +82,7 @@ def compile_expr(expr):
     elif isinstance(expr, Input):
         return f"input({expr.q})"
     elif isinstance(expr, Random):
-        return f"random.randint({int(expr._from.value)}, {int(expr.to.value)})"
+        return f"random.randint({expr._from.value}, {expr.to.value})"
     elif isinstance(expr, Input_Expr):
         return 'INPUT'
     elif isinstance(expr, Comparism):

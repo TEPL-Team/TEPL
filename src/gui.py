@@ -1,11 +1,17 @@
 import tkinter as tk
 from transpiler import transpile
 from parser import parser, __error__
+from lexer import lexer
 
 def run():
     def run_transpiler():
+        result = ''
         code = editor.get("1.0", tk.END)
-        result = transpile(parser.parse(code))
+        ast = parser.parse(code, lexer=lexer)
+        if ast and not __error__:
+            result = transpile(ast)
+        else:
+            return
         result = f'{str(exec(result))}'
         output_area.config(state=tk.NORMAL)
         output_area.delete("1.0", tk.END)

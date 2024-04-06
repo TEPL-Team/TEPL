@@ -4,7 +4,7 @@ from lexer import lexer
 from gui import run
 from transpiler import transpile
 
-__version__ = '1.00.00'
+__version__ = '1.31.20'
 __mode__ = 'execute'  # 'execute' | 'transpile'|'parse'|'tokenize'
 
 
@@ -13,8 +13,11 @@ def run_script(filename):
         with open(filename, 'r') as file:
             script = file.read()
             result = parser.parse(script, lexer=lexer)
-            result = transpile(result)
-            exec(result)
+            if result and not __error__:
+                transpiled_code = transpile(result)
+            else:
+                return
+            exec(transpiled_code)
     except FileNotFoundError:
         print(f"File '{filename}' not found.")
     except Exception as e:
@@ -52,18 +55,52 @@ def main():
                     --mode: change the mode (transpile, parse, tokenize)
                 ''')
             elif text == '--ide':
-                print('WARNING: IDE IS CURRENTLY NOT WORKING PROPERLY, USE CONSOLE INSTEAD')
+                print(
+                    'WARNING: IDE IS CURRENTLY NOT WORKING PROPERLY, USE CONSOLE INSTEAD'
+                )
                 print('Opening the IDE...')
                 run()
                 print('Exiting the IDE...')
             elif text == '--run':
                 file_path = input('Enter the file path: ')
-                run_script(file_path)
+                with open(file_path, "r") as file:
+                    data = file.read()
+
+                if __mode__ == 'execute':
+                    ast = parser.parse(data, lexer=lexer)
+                    compiled_code = transpile(ast)
+                    if compiled_code is not None:
+                        exec(compiled_code)
+                    else:
+                        print(
+                            "\nCannot execute. Compiled code is None. Please compile the AST first."
+                        )
+                elif __mode__ == 'transpile':
+                    ast = parser.parse(data, lexer=lexer)
+                    compiled_code = transpile(ast)
+                    if compiled_code is not None:
+                        print(compiled_code)
+                    else:
+                        print(
+                            "\nCannot execute. Compiled code is None. Please compile the AST first."
+                        )
+                elif __mode__ == 'parse':
+                    ast = parser.parse(data, lexer=lexer)
+                    print(ast)
+                elif __mode__ == 'tokenize':
+                    tokens = lexer.input(data)
+                    while True:
+                        tok = lexer.token()
+                        if not tok:
+                            break  # No more input
+                        print('Token, Type:' + str(tok.type) + '   Value:' +
+                              str(tok.value) + '  \tLine #:' +
+                              str(tok.lineno) + ' Position:' + str(tok.lexpos))
             elif text == '--exit':
                 print('Exiting...')
                 exit(0)
             elif text == '--version':
-                print(f'TEPL Interpreter {__version__}')
+                print(f'TEPL Transpiler {__version__}')
             elif text == '--changelog':
                 print(
                     '''V0.75.00 update: https://github.com/TENTHER101/TEPL/releases/tag/v0.75.00 
@@ -83,6 +120,7 @@ You may need to go to: https://tepl.vercel.app first and then move to the docs t
             elif text == '--mode':
                 print(f'''Current mode: {__mode__}
 Modes:
+    execute: executes transpiled code
     transpile: transpiles the script
     parse: parses the script
     tokenize: tokenizes the script''')
@@ -102,37 +140,41 @@ Modes:
                     print('Exiting...')
                 pass
             else:
-                if __mode__ == 'execute':
-                    result = parser.parse(text, lexer=lexer)
-                    if result and not __error__:
-                        transpiled_code = transpile(result)
-                    else: 
-                        break
+                try:
+                    if __mode__ == 'execute':
+                        result = parser.parse(text, lexer=lexer)
+                        if result and not __error__:
+                            transpiled_code = transpile(result)
+                        else:
+                            break
 
-                    exec(transpiled_code)
-                elif __mode__ == 'transpile':
-                    result = parser.parse(text, lexer=lexer)
-                    if result and not __error__:
-                        transpiled_code = transpile(result)
-                        if transpiled_code is not None:
-                            print(transpiled_code)
-                    else:
-                        break
-                elif __mode__ == 'parse':
-                    result = parser.parse(text, lexer=lexer)
-                    if result:
-                        print(result)
-                    else:
-                        break
-                elif __mode__ == 'tokenize':
-                    lexer.input(text)
-                    while True:
-                        tok = lexer.token()
-                        if not tok:
-                            break  # No more input
-                        print('Token, Type:' + str(tok.type) + '   Value:' +
-                              str(tok.value) + '  \tLine #:' +
-                              str(tok.lineno) + ' Position:' + str(tok.lexpos))
+                        exec(transpiled_code)
+                    elif __mode__ == 'transpile':
+                        result = parser.parse(text, lexer=lexer)
+                        if result and not __error__:
+                            transpiled_code = transpile(result)
+                            if transpiled_code is not None:
+                                print(transpiled_code)
+                        else:
+                            break
+                    elif __mode__ == 'parse':
+                        result = parser.parse(text, lexer=lexer)
+                        if result:
+                            print(result)
+                        else:
+                            break
+                    elif __mode__ == 'tokenize':
+                        lexer.input(text)
+                        while True:
+                            tok = lexer.token()
+                            if not tok:
+                                break  # No more input
+                            print('Token, Type:' + str(tok.type) +
+                                  '   Value:' + str(tok.value) +
+                                  '  \tLine #:' + str(tok.lineno) +
+                                  ' Position:' + str(tok.lexpos))
+                except Exception as e:
+                    print(f"Error: {e}")
 
 
 if __name__ == "__main__":

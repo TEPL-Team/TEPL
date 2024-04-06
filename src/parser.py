@@ -4,12 +4,18 @@ from lexer import tokens
 
 __error__ = False
 
-# Define precedence and associativity
-precedence = (('left', 'PLUS', 'MINUS'), ('left', 'TIMES', 'DIVIDE'),
-              ('right', 'POWER'), ('left', 'LPAREN', 'RPAREN'))
-
 
 # Define grammar rules
+def p_statements(p):
+    '''
+    statements : statement
+               | statements statement
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
+
 def p_statement_output(p):
     '''
     statement : OUTPUT expression
@@ -59,10 +65,10 @@ def p_statement_if(p):
 
 
 #def p_expr_if(p):
- #   '''
-  #  expression : expression IF comp_expr
-   # '''
-    #p[0] = ('IF', p[1], 'EXPR', p[3])
+#   '''
+#  expression : expression IF comp_expr
+# '''
+#p[0] = ('IF', p[1], 'EXPR', p[3])
 
 
 def p_expression_binop(p):
