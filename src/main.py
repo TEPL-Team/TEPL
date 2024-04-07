@@ -4,7 +4,7 @@ from lexer import lexer
 from gui import run
 from transpiler import transpile
 
-__version__ = '1.31.20'
+__version__ = '1.35.00'
 __mode__ = 'execute'  # 'execute' | 'transpile'|'parse'|'tokenize'
 
 
@@ -86,7 +86,9 @@ def main():
                         )
                 elif __mode__ == 'parse':
                     ast = parser.parse(data, lexer=lexer)
-                    print(ast)
+
+                    for node in ast:
+                        print(node)
                 elif __mode__ == 'tokenize':
                     tokens = lexer.input(data)
                     while True:
