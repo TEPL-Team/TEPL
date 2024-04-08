@@ -60,7 +60,10 @@ def compile_assignment(node):
 def compile_if(node):
     comp = compile_expr(node.condition)
     body = transpile_stmt(node.body)
-    return f"if {comp}:\n    {body}"
+    if isinstance(node.body, list):
+        body = '\n'.join(str(body))
+    
+    return f"if {comp}:\n\t{body}"
 
 
 def compile_expr(expr):
@@ -80,7 +83,16 @@ def compile_expr(expr):
     elif isinstance(expr, Text):
         return f"{str(expr.text)}"
     elif isinstance(expr, Input):
-        return f"input({expr.q})"
+        if expr.t.upper() == 'NUM':
+            return f"int(input({expr.q}))"
+        elif expr.t.upper() == 'DEC':
+            pass
+        elif expr.t.upper() == 'TXT':
+            return f"input({expr.q})"
+        elif expr.t.upper() == 'BOOL':
+            return f"bool(input({expr.q}))"
+        else:
+            return print(f"TypeError: {expr.t} is not a valid data type, only NUM, TXT, and BOOL are valid!")
     elif isinstance(expr, Random):
         return f"random.randint({expr._from.value}, {expr.to.value})"
     elif isinstance(expr, Input_Expr):

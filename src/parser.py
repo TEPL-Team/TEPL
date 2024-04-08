@@ -16,6 +16,14 @@ def p_statements(p):
     else:
         p[0] = p[1] + [p[2]]
 
+
+def p_end_statement(p):
+    '''
+    end_statement : END IF
+    '''
+    p[0] = EndStatement(p[2])
+
+
 def p_statement_output(p):
     '''
     statement : OUTPUT expression
@@ -59,9 +67,10 @@ def p_statement_assignment(p):
 
 def p_statement_if(p):
     '''
-    statement : IF comp_expr THEN statement
+    statement : IF comp_expr THEN statement end_statement
     '''
-    p[0] = If(p[2], p[4])
+    if isinstance(p[5], EndStatement):
+        p[0] = If(p[2], p[4])
 
 
 #def p_expr_if(p):

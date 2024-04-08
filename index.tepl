@@ -1,2 +1,12 @@
-SET x TO 5
-OUTPUT x + 3
+SET user to 'Enter a number from 0 to 1000: ' expecting input and num
+set secret to random NUM from 0 TO 1000
+
+outPUT user
+OUTPUT secret
+
+if user > secret then output 'User is greater than secret!' end if
+if secret > user then output 'Secret is greater than user!' end if
+
+if 5 > 3 then 
+    output 5
+end if

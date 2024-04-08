@@ -1,14 +1,33 @@
 import ply.lex as lex
 
-# Define tokens and keywords
-keywords = ('OUTPUT', 'TO', 'SET', 'RANDOM', 'FROM', 'IF', 'THEN', 'INPUT',
-            'EXPECTING', 'AND')
-
-tokens = ('NUMBER', 'TEXT', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'LPAREN',
-          'RPAREN', 'POWER', 'IDENTIFIER', 'EQ', 'GT', 'LT', 'GE', 'LE', 'NE',
-          'DATATYPE', 'YES', 'NO') + keywords
+# Dictionary of keywords
+keywords = {
+    'OUTPUT': 'OUTPUT',
+    'TO': 'TO',
+    'SET': 'SET',
+    'RANDOM': 'RANDOM',
+    'FROM': 'FROM',
+    'IF': 'IF',
+    'THEN': 'THEN',
+    'INPUT': 'INPUT',
+    'EXPECTING': 'EXPECTING',
+    'AND': 'AND',
+    'END': 'END',
+    'YES': 'YES',
+    'NO': 'NO',
+    'NUM': 'DATATYPE',
+    'DEC': 'DATATYPE',
+    'TXT': 'DATATYPE'
+}
 
 # Regular expression rules for tokens
+tokens = [
+    'NUMBER', 'TEXT', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'LPAREN', 'RPAREN',
+    'POWER', 'IDENTIFIER', 'EQ', 'GT', 'LT', 'GE', 'LE', 'NE', 'DATATYPE',
+    'YES', 'NO'
+] + list(keywords.values())  # Include keywords in tokens
+
+# Arithmetic Operators
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -16,38 +35,41 @@ t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_POWER = r'\^'
+
+# Comparison Operators
 t_EQ = r'=='
 t_GT = r'>'
 t_LT = r'<'
 t_GE = r'>='
 t_LE = r'<='
 t_NE = r'!='
+
+# Boolean Values
 t_YES = r'YES'
 t_NO = r'NO'
+
+# Data Types
 t_DATATYPE = r'(NUM|DEC|TXT)'
 
 
-# Define a rule for numbers (integers)
+# Rule for numbers (integers)
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
 
-# Define a rule for texts (strings)
+# Rule for texts (strings)
 def t_TEXT(t):
-    r'(\'([^\\\n]|(\\.))*?\')|(\"([^\\\n]|(\\.))*?\")'
+    r'(\'([^\\\'\n]|(\\.))*?\')|(\"([^\\\"\n]|(\\.))*?\")'
     t.value = str(t.value)
     return t
 
 
-# Define a rule for keywords and identifiers
+# Rule for identifiers
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = t.value.upper() if t.value.upper() in keywords else \
-             'DATATYPE' if t.value.upper() in ['DEC', 'NUM', 'TXT'] else \
-             t.value.upper() if t.value.upper() in ['YES', 'NO'] else \
-             'IDENTIFIER'
+    t.type = keywords.get(t.value.upper(), 'IDENTIFIER')
     return t
 
 
@@ -55,7 +77,7 @@ def t_IDENTIFIER(t):
 t_ignore = ' \t'
 
 
-# A rule for new lines
+# Rule for new lines
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)

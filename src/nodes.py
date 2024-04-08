@@ -115,6 +115,16 @@ class If(Stmt):
         return f"If({self.condition} {self.body})"
 
 
+class EndStatement(Stmt):
+
+    def __init__(self, ended):
+        self.type = "end"
+        self.ended = ended
+
+    def __repr__(self):
+        return f"End({self.ended})"
+
+
 class Text(Expr):
 
     def __init__(self, text):
