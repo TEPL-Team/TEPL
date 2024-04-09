@@ -33,6 +33,8 @@ def transpile(ast):
 
 
 def transpile_stmt(stmt):
+    if isinstance(stmt, list):
+        return '\n'.join([transpile_stmt(s) for s in stmt])
     if isinstance(stmt, Output):
         return compile_output(stmt)
 
@@ -60,8 +62,15 @@ def compile_assignment(node):
 def compile_if(node):
     comp = compile_expr(node.condition)
     body = transpile_stmt(node.body)
-    if isinstance(node.body, list):
-        body = '\n'.join(str(body))
+    elsed = node.conelse
+    #if isinstance(node.body, list):
+     #   body = '\n'.join(str(body))
+
+    if elsed:
+        else_body = transpile_stmt(node.elsebody)
+        return f"if {comp}:\n\t{body}\nelse:\n\t{else_body}"
+    else:
+        pass
     
     return f"if {comp}:\n\t{body}"
 

@@ -106,13 +106,18 @@ class Comparism(Expr):
 
 class If(Stmt):
 
-    def __init__(self, condition: Comparism, body):
+    def __init__(self, condition: Comparism, body, Conelse=False, Else_Body=None):
         self.type = "if"
         self.condition = condition
         self.body = body
+        self.conelse = Conelse
+        self.elsebody = Else_Body
 
     def __repr__(self):
-        return f"If({self.condition} {self.body})"
+        if self.elsebody is None:
+            return f"If({self.condition} {self.body})"
+        else:
+            return f"If({self.condition} {self.body} Else {self.elsebody})"
 
 
 class EndStatement(Stmt):

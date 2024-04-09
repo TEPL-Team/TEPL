@@ -9,4 +9,6 @@ if secret > user then output 'Secret is greater than user!' end if
 
 if 5 > 3 then 
     output 5
+else then
+    output 3
 end if

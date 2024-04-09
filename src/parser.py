@@ -68,9 +68,21 @@ def p_statement_assignment(p):
 def p_statement_if(p):
     '''
     statement : IF comp_expr THEN statement end_statement
+              | IF comp_expr THEN statement ELSE THEN statement end_statement
     '''
     if isinstance(p[5], EndStatement):
-        p[0] = If(p[2], p[4])
+        if p[5].ended.upper() == 'IF':
+            p[0] = If(p[2], p[4])
+        else:
+            return print(
+                f'SyntaxError: expected "IF", but got {p[5].ended.upper()} on line {p.lineno}!'
+            )
+    elif p[5].upper() == 'ELSE':
+        if (isinstance(p[8], EndStatement)) and p[8].ended.upper() == 'IF':
+            p[0] = If(p[2], p[4], True, p[7])
+    else:
+        return print('SyntaxError: expected "end if", but got "' + p[5] +
+                     f'" on line {p.lineno}!')
 
 
 #def p_expr_if(p):
