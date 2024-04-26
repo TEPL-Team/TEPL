@@ -18,7 +18,8 @@ keywords = {
     'NUM': 'DATATYPE',
     'DEC': 'DATATYPE',
     'TXT': 'DATATYPE',
-    'ELSE': 'ELSE'
+    'ELSE': 'ELSE',
+    'ELSEIF': 'ELSEIF'
 }
 
 # Regular expression rules for tokens

@@ -3,7 +3,9 @@ from transpiler import transpile
 from parser import parser, __error__
 from lexer import lexer
 
+
 def run():
+
     def run_transpiler():
         result = ''
         code = editor.get("1.0", tk.END)

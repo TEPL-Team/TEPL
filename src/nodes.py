@@ -106,7 +106,11 @@ class Comparism(Expr):
 
 class If(Stmt):
 
-    def __init__(self, condition: Comparism, body, Conelse=False, Else_Body=None):
+    def __init__(self,
+                 condition: Comparism,
+                 body,
+                 Conelse=False,
+                 Else_Body=None):
         self.type = "if"
         self.condition = condition
         self.body = body

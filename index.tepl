@@ -1,14 +1,10 @@
-SET user to 'Enter a number from 0 to 1000: ' expecting input and num
-set secret to random NUM from 0 TO 1000
-
-outPUT user
-OUTPUT secret
-
-if user > secret then output 'User is greater than secret!' end if
-if secret > user then output 'Secret is greater than user!' end if
-
-if 5 > 3 then 
-    output 5
-else then
-    output 3
-end if
+OUTPUT 5 + 3 * 2
+SET x TO 0
+SET y TO 10
+IF x > y THEN
+    OUTPUT "x is greater than y"
+    OUTPUT "UM"
+ELSE THEN
+    OUTPUT "x is not greater than y"
+    OUTPUT "MU"
+END IF

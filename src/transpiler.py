@@ -26,8 +26,8 @@ def transpile(ast):
             compiled_code.append(compile_assignment(ast))
         else:
             raise TypeError(
-                "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "+str(type(ast))
-            )
+                "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
+                + str(type(ast)))
 
     return '\n'.join(compiled_code)
 
@@ -64,14 +64,14 @@ def compile_if(node):
     body = transpile_stmt(node.body)
     elsed = node.conelse
     #if isinstance(node.body, list):
-     #   body = '\n'.join(str(body))
+    #   body = '\n'.join(str(body))
 
     if elsed:
         else_body = transpile_stmt(node.elsebody)
         return f"if {comp}:\n\t{body}\nelse:\n\t{else_body}"
     else:
         pass
-    
+
     return f"if {comp}:\n\t{body}"
 
 
@@ -101,7 +101,9 @@ def compile_expr(expr):
         elif expr.t.upper() == 'BOOL':
             return f"bool(input({expr.q}))"
         else:
-            return print(f"TypeError: {expr.t} is not a valid data type, only NUM, TXT, and BOOL are valid!")
+            return print(
+                f"TypeError: {expr.t} is not a valid data type, only NUM, TXT, and BOOL are valid!"
+            )
     elif isinstance(expr, Random):
         return f"random.randint({expr._from.value}, {expr.to.value})"
     elif isinstance(expr, Input_Expr):
