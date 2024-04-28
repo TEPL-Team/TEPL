@@ -19,7 +19,10 @@ keywords = {
     'DEC': 'DATATYPE',
     'TXT': 'DATATYPE',
     'ELSE': 'ELSE',
-    'ELSEIF': 'ELSEIF'
+    'ELSEIF': 'ELSEIF',
+    'IN': 'IN',
+    'NOT': 'NOT',
+    'OR': 'OR'
 }
 
 # Regular expression rules for tokens

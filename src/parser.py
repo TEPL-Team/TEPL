@@ -131,8 +131,15 @@ def p_comp_expr(p):
                | expression GE expression
                | expression LE expression
                | expression NE expression
+               | comp_expr AND comp_expr
+               | comp_expr OR comp_expr
+               | NOT expression
+               | expression IN expression
     '''
-    p[0] = Comparism(p[1], p[2], p[3])
+    if len(p) >= 3:
+        p[0] = Comparism(p[1], p[2], p[3])
+    elif len(p) <= 2:
+        p[0] = Comparism(None, p[1], p[2])
 
 
 def p_expression_comp_expr(p):

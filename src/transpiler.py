@@ -109,8 +109,26 @@ def compile_expr(expr):
     elif isinstance(expr, Input_Expr):
         return 'INPUT'
     elif isinstance(expr, Comparism):
-        left_code = compile_expr(expr.left)
-        right_code = compile_expr(expr.right)
-        return f"{left_code} {expr.op} {right_code}"
+        if expr.left is None:
+            left = compile_expr(expr.left)
+            right = compile_expr(expr.right)
+            if expr.op in ['>', '<', '>=', '<=', '==', '!=']:
+                return print(f"Error: {expr.op} is not a valid operator in expression, {expr}!")
+            else:
+                match expr.op:
+                    case 'AND':
+                        return f"({left} and {right})"
+                    case 'OR':
+                        return f"({left} or {right})"
+                    case 'NOT':
+                        return f"not {right}"
+                    case 'IN':
+                        return f"({left} in {right})"
+                    case _:
+                        return print(f"Error: {expr.op} is not a valid operator in expression, {expr}!")
+        else:
+            left_code = compile_expr(expr.left)
+            right_code = compile_expr(expr.right)
+            return f"{left_code} {expr.op} {right_code}"
     else:
         raise TypeError(f"Unknown expression type: {expr}")
