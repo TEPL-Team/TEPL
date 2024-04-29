@@ -22,7 +22,10 @@ keywords = {
     'ELSEIF': 'ELSEIF',
     'IN': 'IN',
     'NOT': 'NOT',
-    'OR': 'OR'
+    'OR': 'OR',
+    'REPEAT': 'REPEAT',
+    'UNTIL': 'UNTIL',
+    'PAUSE': 'PAUSE'
 }
 
 # Regular expression rules for tokens

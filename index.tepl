@@ -1,10 +1,23 @@
-OUTPUT 5 + 3 * 2
-SET x TO 0
-SET y TO 10
-IF x > y THEN
-    OUTPUT "x is greater than y"
-    OUTPUT "UM"
-ELSE THEN
-    OUTPUT "x is not greater than y"
-    OUTPUT "MU"
-END IF
+set i to 0
+
+repeat
+    output i
+    set i to i + 1
+until i > 10
+
+output i + 1
+
+
+set name to "Enter your name: " expecting input and txt
+
+if name == 'VALUEX' then
+    output 'Hello, admin!'
+    output 'What would you like to do next?'
+else then
+    output 'Hello, world!'
+    output 'Time for you to go!'
+end if
+
+output "A small pause..."
+pause 2
+output "Over!"

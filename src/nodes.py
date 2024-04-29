@@ -151,3 +151,24 @@ class Input_Expr(Expr):
 
     def __repr__(self):
         return f"Input_Expr"
+
+
+class Repeat(Stmt):
+
+    def __init__(self, body, condition: Comparism):
+        self.type = "repeat"
+        self.body = body
+        self.condition = condition
+
+    def __repr__(self):
+        return f"Repeat({self.body} Until {self.condition})"
+
+
+class Pause(Stmt):
+
+    def __init__(self, time):
+        self.type = "pause"
+        self.time = time
+
+    def __repr__(self):
+        return f"Pause({self.time})"

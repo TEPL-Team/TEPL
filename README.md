@@ -35,7 +35,7 @@ Number guesser game.
 ```tepl
 PC this is a comment, and this is an example of a basic number guessing game CP
 
-while YES repeat
+repeat
     set guess to 'Enter a number from 0 to 100: ' expecting input and num
     set secret to random num from 0 to 100
     if guess > 100 OR guess < 0 then
@@ -46,5 +46,5 @@ while YES repeat
         output $"You got it right! The secret number was $secret!"
     end if
     pause
-end repeat
+until NO
 ```

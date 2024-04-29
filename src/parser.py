@@ -75,7 +75,7 @@ def p_if_then(p):
 def p_statement_if(p):
     '''
     statement : if_then end_statement
-              | if_then ELSE THEN statement end_statement
+              | if_then ELSE THEN statements end_statement
     '''
     if isinstance(p[2], EndStatement):
         if p[2].ended.upper() == 'IF':
@@ -90,6 +90,20 @@ def p_statement_if(p):
     else:
         return print('SyntaxError: expected "end if", but got "' + p[5] +
                      f'" on line {p.lineno}!')
+
+
+def p_statement_repeat(p):
+    '''
+    statement : REPEAT statements UNTIL expression
+    '''
+    p[0] = Repeat(p[2], p[4])
+
+
+def p_statement_pause(p):
+    '''
+    statement : PAUSE expression
+    '''
+    p[0] = Pause(p[2])
 
 
 #def p_expr_if(p):
