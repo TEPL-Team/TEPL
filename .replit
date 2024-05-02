@@ -14,10 +14,5 @@ language = "python3"
 run = ["python3", "main.py"]
 # run ["tepl", "index.tepl"]
 deploymentTarget = "cloudrun"
-
-[[ports]]
-localPort = 39717
-externalPort = 80
-exposeLocalhost = true
 # [gitHubImport]
 # requiredFiles = [".replit", "replit.nix", ".ccls-cache"]
