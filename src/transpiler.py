@@ -23,6 +23,15 @@ def transpile(ast):
             elif isinstance(node, Pause):
                 compiled_code.append(compile_pause(node))
 
+            elif isinstance(node, Function):
+                compiled_code.append(compile_function(node))
+            elif isinstance(node, While):
+                compiled_code.append(compile_while(node))
+            else:
+                raise TypeError(
+                    "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
+                    + str(type(ast)))
+
     else:
         if isinstance(ast, Output):
             compiled_code.append(compile_output(ast))
@@ -34,6 +43,10 @@ def transpile(ast):
             compiled_code.append(compile_repeat(ast))
         elif isinstance(ast, Pause):
             compiled_code.append(compile_pause(ast))
+        elif isinstance(ast, Function):
+            compiled_code.append(compile_function(ast))
+        elif isinstance(ast, While):
+            compiled_code.append(compile_while(ast))
         else:
             raise TypeError(
                 "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -98,6 +111,18 @@ def compile_repeat(stmt, indent_level=0):
 
 def compile_pause(stmt, indent_level=0):
     return f"{'    ' * indent_level}time.sleep({compile_expr(stmt.time)})"
+
+
+def compile_function(stmt, ident_level=0):
+    name = stmt.name
+    body = transpile_stmt(stmt.body, ident_level + 1)
+    return f"{'    ' * ident_level}def {name}():\n{body}"
+
+
+def compile_while(stmt, indent_level=0):
+    comp = compile_expr(stmt.condition)
+    body = transpile_stmt(stmt.body, indent_level + 1)
+    return f"{'    ' * indent_level}while {comp}:\n{body}"
 
 
 def compile_expr(expr):

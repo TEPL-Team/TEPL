@@ -19,9 +19,9 @@ def p_statements(p):
 
 def p_end_statement(p):
     '''
-    end_statement : END IF
+    end_statement : END
     '''
-    p[0] = EndStatement(p[2])
+    p[0] = EndStatement()
 
 
 def p_statement_output(p):
@@ -58,10 +58,11 @@ def p_statement_assignment(p):
     statement : var_assignment TO expression
               | var_assignment 
               | var_assignment TO ask
+              | var_assignment TO items type_stmt
     '''
     if len(p) == 2:
         p[0] = Assignment(p[1], None)
-    elif len(p) == 4:
+    elif len(p) == 4 or len(p) > 6:
         p[0] = Assignment(p[1], p[3])
 
 
@@ -78,14 +79,9 @@ def p_statement_if(p):
               | if_then ELSE THEN statements end_statement
     '''
     if isinstance(p[2], EndStatement):
-        if p[2].ended.upper() == 'IF':
-            p[0] = If(p[1].condition, p[1].body)
-        else:
-            return print(
-                f'SyntaxError: expected "IF", but got {p[5].ended.upper()} on line {p.lineno}!'
-            )
+        p[0] = If(p[1].condition, p[1].body)
     elif p[2].upper() == 'ELSE':
-        if (isinstance(p[5], EndStatement)) and p[5].ended.upper() == 'IF':
+        if isinstance(p[5], EndStatement):
             p[0] = If(p[1].condition, p[1].body, True, p[4])
     else:
         return print('SyntaxError: expected "end if", but got "' + p[5] +
@@ -106,11 +102,36 @@ def p_statement_pause(p):
     p[0] = Pause(p[2])
 
 
-#def p_expr_if(p):
-#   '''
-#  expression : expression IF comp_expr
-# '''
-#p[0] = ('IF', p[1], 'EXPR', p[3])
+def p_statement_type(p):
+    '''
+    type_stmt : TYPE DATATYPE
+    '''
+    p[0] = Type(p[2])
+
+
+def p_statement_function(p):
+    '''
+    statement : FUNCTION IDENTIFIER MEANS statements end_statement
+    '''
+    p[0] = Function(p[2], p[4])
+
+
+def p_statement_while(p):
+    '''
+    statement : WHILE expression DO statements end_statement
+    '''
+    p[0] = While(p[2], p[4])
+
+
+def p_expressions(p):
+    '''
+    items : expression
+          | items expression
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
 
 
 def p_expression_binop(p):

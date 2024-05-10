@@ -107,31 +107,41 @@ class Comparism(Expr):
 class If(Stmt):
 
     def __init__(self,
-                 condition: Comparism,
+                 condition,
                  body,
                  Conelse=False,
-                 Else_Body=None):
+                 Else_Body=None,
+                 elseifcon=False,
+                 elseifbody=None,
+                 conelseif=False):
         self.type = "if"
         self.condition = condition
         self.body = body
         self.conelse = Conelse
         self.elsebody = Else_Body
+        self.elseifcon = elseifcon
+        self.elseifbody = elseifbody
+        self.conelseif = conelseif
 
     def __repr__(self):
         if self.elsebody is None:
             return f"If({self.condition} {self.body})"
+        elif self.elseifbody is not None:
+            if self.elsebody is None:
+                return f"If({self.condition} {self.body} Elseif {self.elseifcon} {self.elseifbody})"
+            else:
+                return f"If({self.condition} {self.body} Elseif {self.elseifcon} {self.elseifbody} Else {self.elsebody})"
         else:
             return f"If({self.condition} {self.body} Else {self.elsebody})"
 
 
 class EndStatement(Stmt):
 
-    def __init__(self, ended):
+    def __init__(self):
         self.type = "end"
-        self.ended = ended
 
     def __repr__(self):
-        return f"End({self.ended})"
+        return f"End()"
 
 
 class Text(Expr):
@@ -155,7 +165,7 @@ class Input_Expr(Expr):
 
 class Repeat(Stmt):
 
-    def __init__(self, body, condition: Comparism):
+    def __init__(self, body, condition):
         self.type = "repeat"
         self.body = body
         self.condition = condition
@@ -172,3 +182,44 @@ class Pause(Stmt):
 
     def __repr__(self):
         return f"Pause({self.time})"
+
+
+
+class Type(Stmt):
+
+    def __init__(self, type):
+        self.type = "type"
+        self.t_type = type
+
+
+    def __repr__(self):
+        return f"Type({self.t_type})"
+
+
+class List(Expr):
+    def __init__(self, expr):
+        self.type = "list"
+        self.expr = expr
+
+    def __repr__(self):
+        return f"List({self.expr})"
+
+
+class Function(Stmt):
+    def __init__(self, name: Identifier, body):
+        self.type = "function"
+        self.name = name
+        self.body = body
+
+    def __repr__(self):
+        return f"Function({self.name} {self.body})"
+
+
+class While(Stmt):
+    def __init__(self, condition, body):
+        self.type = "while"
+        self.condition = condition
+        self.body = body
+
+    def __repr__(self):
+        return f"While({self.condition} {self.body})"

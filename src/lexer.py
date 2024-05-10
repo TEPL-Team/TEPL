@@ -25,7 +25,14 @@ keywords = {
     'OR': 'OR',
     'REPEAT': 'REPEAT',
     'UNTIL': 'UNTIL',
-    'PAUSE': 'PAUSE'
+    'PAUSE': 'PAUSE',
+    'TYPE': 'TYPE',
+    'LIST': 'DATATYPE',
+    'FUNCTION': 'FUNCTION',
+    'MEANS': 'MEANS', 
+    'RETURN': 'RETURN',
+    'WHILE': 'WHILE',
+    'DO': 'DO'
 }
 
 # Regular expression rules for tokens
