@@ -4,6 +4,7 @@ while i < 10 do
     set i to i + 1
 end
 
+
 set i to 0
 
 repeat
@@ -23,6 +24,7 @@ else then
     output 'Hello, world!'
     output 'Time for you to go!'
 end
+
 
 output "A small pause..."
 pause 2
