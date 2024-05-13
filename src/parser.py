@@ -139,10 +139,10 @@ def p_statement_exit(p):
 
 def p_expression_letter(p):
     '''
-    expression : DATATYPE FROM expression TO expression
+    expression : DATATYPE FROM expression TO expression FROM expression
     '''
-    if p[1] == 'TXT':
-        p[0] = Substring(p[3], p[5])
+    if p[1].upper() == 'TXT':
+        p[0] = Substring(p[3], p[5], p[7])
     else:
         return print("SyntaxError: expected 'TXT', but got '" + p[1] + "'!")
 

@@ -216,5 +216,10 @@ def compile_expr(expr):
             left_code = compile_expr(expr.left)
             right_code = compile_expr(expr.right)
             return f"{left_code} {expr.op} {right_code}"
+    elif isinstance(expr, Substring):
+        from_expr = compile_expr(expr.from_expr)
+        to_expr = compile_expr(expr.to_expr)
+        string = compile_expr(expr.string)
+        return f"{string}[{from_expr}:{to_expr}]"
     else:
         raise TypeError(f"Unknown expression type: {expr}")

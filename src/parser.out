@@ -30,7 +30,7 @@ Rule 19    statement -> FUNCTION IDENTIFIER MEANS statements end_statement
 Rule 20    statement -> WHILE expression DO statements end_statement
 Rule 21    statement -> FOREVER DO statements end_statement
 Rule 22    statement -> EXIT LOOP
-Rule 23    expression -> DATATYPE FROM expression TO expression
+Rule 23    expression -> DATATYPE FROM expression TO expression FROM expression
 Rule 24    items -> expression
 Rule 25    items -> items expression
 Rule 26    expression -> expression PLUS expression
@@ -71,7 +71,7 @@ EQ                   : 34
 EXIT                 : 22
 EXPECTING            : 6
 FOREVER              : 21
-FROM                 : 7 23
+FROM                 : 7 23 23
 FUNCTION             : 19
 GE                   : 37
 GT                   : 35
@@ -114,7 +114,7 @@ Nonterminals, with rules where they appear
 ask                  : 5 11
 comp_expr            : 40 40 41 41 44
 end_statement        : 14 15 19 20 21
-expression           : 4 7 7 9 13 16 17 20 23 23 24 25 26 26 27 27 28 28 29 29 30 30 31 34 34 35 35 36 36 37 37 38 38 39 39 42 43 43
+expression           : 4 7 7 9 13 16 17 20 23 23 23 24 25 26 26 27 27 28 28 29 29 30 30 31 34 34 35 35 36 36 37 37 38 38 39 39 42 43 43
 if_then              : 14 15
 items                : 12 25
 random_statement     : 47
@@ -220,7 +220,7 @@ state 3
 
     (4) statement -> OUTPUT . expression
     (5) statement -> OUTPUT . ask
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -338,7 +338,7 @@ state 6
 state 7
 
     (17) statement -> PAUSE . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -390,7 +390,7 @@ state 8
 state 9
 
     (20) statement -> WHILE . expression DO statements end_statement
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -456,7 +456,7 @@ state 12
 state 13
 
     (13) if_then -> IF . expression THEN statements
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -581,7 +581,7 @@ state 16
 
 state 17
 
-    (23) expression -> DATATYPE . FROM expression TO expression
+    (23) expression -> DATATYPE . FROM expression TO expression FROM expression
 
     FROM            shift and go to state 54
 
@@ -589,7 +589,7 @@ state 17
 state 18
 
     (31) expression -> LPAREN . expression RPAREN
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -677,6 +677,7 @@ state 19
     NOT             reduce using rule 32 (expression -> YES .)
     RANDOM          reduce using rule 32 (expression -> YES .)
     TO              reduce using rule 32 (expression -> YES .)
+    FROM            reduce using rule 32 (expression -> YES .)
 
 
 state 20
@@ -725,6 +726,7 @@ state 20
     NOT             reduce using rule 33 (expression -> NO .)
     RANDOM          reduce using rule 33 (expression -> NO .)
     TO              reduce using rule 33 (expression -> NO .)
+    FROM            reduce using rule 33 (expression -> NO .)
 
 
 state 21
@@ -775,6 +777,7 @@ state 21
     NOT             reduce using rule 44 (expression -> comp_expr .)
     RANDOM          reduce using rule 44 (expression -> comp_expr .)
     TO              reduce using rule 44 (expression -> comp_expr .)
+    FROM            reduce using rule 44 (expression -> comp_expr .)
     AND             shift and go to state 56
     OR              shift and go to state 57
 
@@ -828,6 +831,7 @@ state 22
     NOT             reduce using rule 45 (expression -> NUMBER .)
     RANDOM          reduce using rule 45 (expression -> NUMBER .)
     TO              reduce using rule 45 (expression -> NUMBER .)
+    FROM            reduce using rule 45 (expression -> NUMBER .)
 
 
 state 23
@@ -876,6 +880,7 @@ state 23
     NOT             reduce using rule 46 (expression -> IDENTIFIER .)
     RANDOM          reduce using rule 46 (expression -> IDENTIFIER .)
     TO              reduce using rule 46 (expression -> IDENTIFIER .)
+    FROM            reduce using rule 46 (expression -> IDENTIFIER .)
 
 
 state 24
@@ -924,6 +929,7 @@ state 24
     NOT             reduce using rule 47 (expression -> random_statement .)
     RANDOM          reduce using rule 47 (expression -> random_statement .)
     TO              reduce using rule 47 (expression -> random_statement .)
+    FROM            reduce using rule 47 (expression -> random_statement .)
 
 
 state 25
@@ -1016,12 +1022,13 @@ state 26
     NOT             reduce using rule 49 (expression -> INPUT .)
     RANDOM          reduce using rule 49 (expression -> INPUT .)
     TO              reduce using rule 49 (expression -> INPUT .)
+    FROM            reduce using rule 49 (expression -> INPUT .)
 
 
 state 27
 
     (42) comp_expr -> NOT . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1075,7 +1082,7 @@ state 29
     (9) statement -> var_assignment TO . expression
     (11) statement -> var_assignment TO . ask
     (12) statement -> var_assignment TO . items type_stmt
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1292,6 +1299,7 @@ state 35
     NOT             reduce using rule 48 (expression -> TEXT .)
     RANDOM          reduce using rule 48 (expression -> TEXT .)
     TO              reduce using rule 48 (expression -> TEXT .)
+    FROM            reduce using rule 48 (expression -> TEXT .)
 
 
 state 36
@@ -1442,7 +1450,7 @@ state 41
 state 42
 
     (26) expression -> expression PLUS . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1487,7 +1495,7 @@ state 42
 state 43
 
     (27) expression -> expression MINUS . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1532,7 +1540,7 @@ state 43
 state 44
 
     (28) expression -> expression TIMES . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1577,7 +1585,7 @@ state 44
 state 45
 
     (29) expression -> expression DIVIDE . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1622,7 +1630,7 @@ state 45
 state 46
 
     (30) expression -> expression POWER . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1667,7 +1675,7 @@ state 46
 state 47
 
     (34) comp_expr -> expression EQ . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1712,7 +1720,7 @@ state 47
 state 48
 
     (35) comp_expr -> expression GT . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1757,7 +1765,7 @@ state 48
 state 49
 
     (36) comp_expr -> expression LT . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1802,7 +1810,7 @@ state 49
 state 50
 
     (37) comp_expr -> expression GE . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1847,7 +1855,7 @@ state 50
 state 51
 
     (38) comp_expr -> expression LE . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1892,7 +1900,7 @@ state 51
 state 52
 
     (39) comp_expr -> expression NE . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1937,7 +1945,7 @@ state 52
 state 53
 
     (43) comp_expr -> expression IN . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -1981,8 +1989,8 @@ state 53
 
 state 54
 
-    (23) expression -> DATATYPE FROM . expression TO expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> DATATYPE FROM . expression TO expression FROM expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -2068,7 +2076,7 @@ state 56
     (41) comp_expr -> . comp_expr OR comp_expr
     (42) comp_expr -> . NOT expression
     (43) comp_expr -> . expression IN expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -2113,7 +2121,7 @@ state 57
     (41) comp_expr -> . comp_expr OR comp_expr
     (42) comp_expr -> . NOT expression
     (43) comp_expr -> . expression IN expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -2210,6 +2218,7 @@ state 59
     NOT             reduce using rule 42 (comp_expr -> NOT expression .)
     RANDOM          reduce using rule 42 (comp_expr -> NOT expression .)
     TO              reduce using rule 42 (comp_expr -> NOT expression .)
+    FROM            reduce using rule 42 (comp_expr -> NOT expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -2323,7 +2332,7 @@ state 63
     (12) statement -> var_assignment TO items . type_stmt
     (25) items -> items . expression
     (18) type_stmt -> . TYPE DATATYPE
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -2407,7 +2416,7 @@ state 64
 state 65
 
     (16) statement -> REPEAT statements UNTIL . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -2656,6 +2665,7 @@ state 70
     NOT             reduce using rule 26 (expression -> expression PLUS expression .)
     RANDOM          reduce using rule 26 (expression -> expression PLUS expression .)
     TO              reduce using rule 26 (expression -> expression PLUS expression .)
+    FROM            reduce using rule 26 (expression -> expression PLUS expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -2741,6 +2751,7 @@ state 71
     NOT             reduce using rule 27 (expression -> expression MINUS expression .)
     RANDOM          reduce using rule 27 (expression -> expression MINUS expression .)
     TO              reduce using rule 27 (expression -> expression MINUS expression .)
+    FROM            reduce using rule 27 (expression -> expression MINUS expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -2826,6 +2837,7 @@ state 72
     NOT             reduce using rule 28 (expression -> expression TIMES expression .)
     RANDOM          reduce using rule 28 (expression -> expression TIMES expression .)
     TO              reduce using rule 28 (expression -> expression TIMES expression .)
+    FROM            reduce using rule 28 (expression -> expression TIMES expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -2911,6 +2923,7 @@ state 73
     NOT             reduce using rule 29 (expression -> expression DIVIDE expression .)
     RANDOM          reduce using rule 29 (expression -> expression DIVIDE expression .)
     TO              reduce using rule 29 (expression -> expression DIVIDE expression .)
+    FROM            reduce using rule 29 (expression -> expression DIVIDE expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -2996,6 +3009,7 @@ state 74
     NOT             reduce using rule 30 (expression -> expression POWER expression .)
     RANDOM          reduce using rule 30 (expression -> expression POWER expression .)
     TO              reduce using rule 30 (expression -> expression POWER expression .)
+    FROM            reduce using rule 30 (expression -> expression POWER expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3081,6 +3095,7 @@ state 75
     NOT             reduce using rule 34 (comp_expr -> expression EQ expression .)
     RANDOM          reduce using rule 34 (comp_expr -> expression EQ expression .)
     TO              reduce using rule 34 (comp_expr -> expression EQ expression .)
+    FROM            reduce using rule 34 (comp_expr -> expression EQ expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3166,6 +3181,7 @@ state 76
     NOT             reduce using rule 35 (comp_expr -> expression GT expression .)
     RANDOM          reduce using rule 35 (comp_expr -> expression GT expression .)
     TO              reduce using rule 35 (comp_expr -> expression GT expression .)
+    FROM            reduce using rule 35 (comp_expr -> expression GT expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3251,6 +3267,7 @@ state 77
     NOT             reduce using rule 36 (comp_expr -> expression LT expression .)
     RANDOM          reduce using rule 36 (comp_expr -> expression LT expression .)
     TO              reduce using rule 36 (comp_expr -> expression LT expression .)
+    FROM            reduce using rule 36 (comp_expr -> expression LT expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3336,6 +3353,7 @@ state 78
     NOT             reduce using rule 37 (comp_expr -> expression GE expression .)
     RANDOM          reduce using rule 37 (comp_expr -> expression GE expression .)
     TO              reduce using rule 37 (comp_expr -> expression GE expression .)
+    FROM            reduce using rule 37 (comp_expr -> expression GE expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3421,6 +3439,7 @@ state 79
     NOT             reduce using rule 38 (comp_expr -> expression LE expression .)
     RANDOM          reduce using rule 38 (comp_expr -> expression LE expression .)
     TO              reduce using rule 38 (comp_expr -> expression LE expression .)
+    FROM            reduce using rule 38 (comp_expr -> expression LE expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3506,6 +3525,7 @@ state 80
     NOT             reduce using rule 39 (comp_expr -> expression NE expression .)
     RANDOM          reduce using rule 39 (comp_expr -> expression NE expression .)
     TO              reduce using rule 39 (comp_expr -> expression NE expression .)
+    FROM            reduce using rule 39 (comp_expr -> expression NE expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3591,6 +3611,7 @@ state 81
     NOT             reduce using rule 43 (comp_expr -> expression IN expression .)
     RANDOM          reduce using rule 43 (comp_expr -> expression IN expression .)
     TO              reduce using rule 43 (comp_expr -> expression IN expression .)
+    FROM            reduce using rule 43 (comp_expr -> expression IN expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -3620,7 +3641,7 @@ state 81
 
 state 82
 
-    (23) expression -> DATATYPE FROM expression . TO expression
+    (23) expression -> DATATYPE FROM expression . TO expression FROM expression
     (26) expression -> expression . PLUS expression
     (27) expression -> expression . MINUS expression
     (28) expression -> expression . TIMES expression
@@ -3695,6 +3716,7 @@ state 83
     NOT             reduce using rule 31 (expression -> LPAREN expression RPAREN .)
     RANDOM          reduce using rule 31 (expression -> LPAREN expression RPAREN .)
     TO              reduce using rule 31 (expression -> LPAREN expression RPAREN .)
+    FROM            reduce using rule 31 (expression -> LPAREN expression RPAREN .)
 
 
 state 84
@@ -3758,6 +3780,7 @@ state 84
     NOT             reduce using rule 40 (comp_expr -> comp_expr AND comp_expr .)
     RANDOM          reduce using rule 40 (comp_expr -> comp_expr AND comp_expr .)
     TO              reduce using rule 40 (comp_expr -> comp_expr AND comp_expr .)
+    FROM            reduce using rule 40 (comp_expr -> comp_expr AND comp_expr .)
     AND             shift and go to state 56
     OR              shift and go to state 57
 
@@ -3867,6 +3890,7 @@ state 86
     NOT             reduce using rule 41 (comp_expr -> comp_expr OR comp_expr .)
     RANDOM          reduce using rule 41 (comp_expr -> comp_expr OR comp_expr .)
     TO              reduce using rule 41 (comp_expr -> comp_expr OR comp_expr .)
+    FROM            reduce using rule 41 (comp_expr -> comp_expr OR comp_expr .)
     AND             shift and go to state 56
     OR              shift and go to state 57
 
@@ -3896,7 +3920,7 @@ state 87
 state 88
 
     (7) random_statement -> RANDOM DATATYPE FROM . expression TO expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -4220,8 +4244,8 @@ state 97
 
 state 98
 
-    (23) expression -> DATATYPE FROM expression TO . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> DATATYPE FROM expression TO . expression FROM expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -4379,7 +4403,7 @@ state 104
 
 state 105
 
-    (23) expression -> DATATYPE FROM expression TO expression .
+    (23) expression -> DATATYPE FROM expression TO expression . FROM expression
     (26) expression -> expression . PLUS expression
     (27) expression -> expression . MINUS expression
     (28) expression -> expression . TIMES expression
@@ -4393,48 +4417,7 @@ state 105
     (39) comp_expr -> expression . NE expression
     (43) comp_expr -> expression . IN expression
 
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-  ! shift/reduce conflict for POWER resolved as shift
-  ! shift/reduce conflict for EQ resolved as shift
-  ! shift/reduce conflict for GT resolved as shift
-  ! shift/reduce conflict for LT resolved as shift
-  ! shift/reduce conflict for GE resolved as shift
-  ! shift/reduce conflict for LE resolved as shift
-  ! shift/reduce conflict for NE resolved as shift
-  ! shift/reduce conflict for IN resolved as shift
-    OUTPUT          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    REPEAT          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    PAUSE           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    FUNCTION        reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    WHILE           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    FOREVER         reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    EXIT            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    SET             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    IF              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    $end            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    UNTIL           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    END             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    ELSE            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    DO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    THEN            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    RPAREN          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    AND             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    OR              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    TYPE            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    DATATYPE        reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    LPAREN          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    YES             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    NO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    NUMBER          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    IDENTIFIER      reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    TEXT            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    INPUT           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    NOT             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    RANDOM          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
-    TO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .)
+    FROM            shift and go to state 108
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -4447,19 +4430,6 @@ state 105
     LE              shift and go to state 51
     NE              shift and go to state 52
     IN              shift and go to state 53
-
-  ! PLUS            [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! MINUS           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! TIMES           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! DIVIDE          [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! POWER           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! EQ              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! GT              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! LT              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! GE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! LE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! NE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
-  ! IN              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression .) ]
 
 
 state 106
@@ -4484,7 +4454,7 @@ state 106
 state 107
 
     (7) random_statement -> RANDOM DATATYPE FROM expression TO . expression
-    (23) expression -> . DATATYPE FROM expression TO expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
     (26) expression -> . expression PLUS expression
     (27) expression -> . expression MINUS expression
     (28) expression -> . expression TIMES expression
@@ -4522,11 +4492,56 @@ state 107
     NOT             shift and go to state 27
     RANDOM          shift and go to state 28
 
-    expression                     shift and go to state 108
+    expression                     shift and go to state 109
     comp_expr                      shift and go to state 21
     random_statement               shift and go to state 24
 
 state 108
+
+    (23) expression -> DATATYPE FROM expression TO expression FROM . expression
+    (23) expression -> . DATATYPE FROM expression TO expression FROM expression
+    (26) expression -> . expression PLUS expression
+    (27) expression -> . expression MINUS expression
+    (28) expression -> . expression TIMES expression
+    (29) expression -> . expression DIVIDE expression
+    (30) expression -> . expression POWER expression
+    (31) expression -> . LPAREN expression RPAREN
+    (32) expression -> . YES
+    (33) expression -> . NO
+    (44) expression -> . comp_expr
+    (45) expression -> . NUMBER
+    (46) expression -> . IDENTIFIER
+    (47) expression -> . random_statement
+    (48) expression -> . TEXT
+    (49) expression -> . INPUT
+    (34) comp_expr -> . expression EQ expression
+    (35) comp_expr -> . expression GT expression
+    (36) comp_expr -> . expression LT expression
+    (37) comp_expr -> . expression GE expression
+    (38) comp_expr -> . expression LE expression
+    (39) comp_expr -> . expression NE expression
+    (40) comp_expr -> . comp_expr AND comp_expr
+    (41) comp_expr -> . comp_expr OR comp_expr
+    (42) comp_expr -> . NOT expression
+    (43) comp_expr -> . expression IN expression
+    (7) random_statement -> . RANDOM DATATYPE FROM expression TO expression
+
+    DATATYPE        shift and go to state 17
+    LPAREN          shift and go to state 18
+    YES             shift and go to state 19
+    NO              shift and go to state 20
+    NUMBER          shift and go to state 22
+    IDENTIFIER      shift and go to state 23
+    TEXT            shift and go to state 35
+    INPUT           shift and go to state 26
+    NOT             shift and go to state 27
+    RANDOM          shift and go to state 28
+
+    expression                     shift and go to state 110
+    comp_expr                      shift and go to state 21
+    random_statement               shift and go to state 24
+
+state 109
 
     (7) random_statement -> RANDOM DATATYPE FROM expression TO expression .
     (26) expression -> expression . PLUS expression
@@ -4584,6 +4599,7 @@ state 108
     NOT             reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
     RANDOM          reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
     TO              reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
+    FROM            reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .)
     PLUS            shift and go to state 42
     MINUS           shift and go to state 43
     TIMES           shift and go to state 44
@@ -4609,6 +4625,92 @@ state 108
   ! LE              [ reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
   ! NE              [ reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
   ! IN              [ reduce using rule 7 (random_statement -> RANDOM DATATYPE FROM expression TO expression .) ]
+
+
+state 110
+
+    (23) expression -> DATATYPE FROM expression TO expression FROM expression .
+    (26) expression -> expression . PLUS expression
+    (27) expression -> expression . MINUS expression
+    (28) expression -> expression . TIMES expression
+    (29) expression -> expression . DIVIDE expression
+    (30) expression -> expression . POWER expression
+    (34) comp_expr -> expression . EQ expression
+    (35) comp_expr -> expression . GT expression
+    (36) comp_expr -> expression . LT expression
+    (37) comp_expr -> expression . GE expression
+    (38) comp_expr -> expression . LE expression
+    (39) comp_expr -> expression . NE expression
+    (43) comp_expr -> expression . IN expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for POWER resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+  ! shift/reduce conflict for IN resolved as shift
+    OUTPUT          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    REPEAT          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    PAUSE           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    FUNCTION        reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    WHILE           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    FOREVER         reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    EXIT            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    SET             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    IF              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    $end            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    UNTIL           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    END             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    ELSE            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    DO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    THEN            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    RPAREN          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    AND             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    OR              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    TYPE            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    DATATYPE        reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    LPAREN          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    YES             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    NO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    NUMBER          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    IDENTIFIER      reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    TEXT            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    INPUT           reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    NOT             reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    RANDOM          reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    TO              reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    FROM            reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+    POWER           shift and go to state 46
+    EQ              shift and go to state 47
+    GT              shift and go to state 48
+    LT              shift and go to state 49
+    GE              shift and go to state 50
+    LE              shift and go to state 51
+    NE              shift and go to state 52
+    IN              shift and go to state 53
+
+  ! PLUS            [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! MINUS           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! TIMES           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! DIVIDE          [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! POWER           [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! EQ              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! GT              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! LT              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! GE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! LE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! NE              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
+  ! IN              [ reduce using rule 23 (expression -> DATATYPE FROM expression TO expression FROM expression .) ]
 
 WARNING: 
 WARNING: Conflicts:
@@ -4775,30 +4877,30 @@ WARNING: shift/reduce conflict for AND in state 84 resolved as shift
 WARNING: shift/reduce conflict for OR in state 84 resolved as shift
 WARNING: shift/reduce conflict for AND in state 86 resolved as shift
 WARNING: shift/reduce conflict for OR in state 86 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 105 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 105 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 105 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 105 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 105 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 105 resolved as shift
-WARNING: shift/reduce conflict for GT in state 105 resolved as shift
-WARNING: shift/reduce conflict for LT in state 105 resolved as shift
-WARNING: shift/reduce conflict for GE in state 105 resolved as shift
-WARNING: shift/reduce conflict for LE in state 105 resolved as shift
-WARNING: shift/reduce conflict for NE in state 105 resolved as shift
-WARNING: shift/reduce conflict for IN in state 105 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 108 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 108 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 108 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 108 resolved as shift
-WARNING: shift/reduce conflict for POWER in state 108 resolved as shift
-WARNING: shift/reduce conflict for EQ in state 108 resolved as shift
-WARNING: shift/reduce conflict for GT in state 108 resolved as shift
-WARNING: shift/reduce conflict for LT in state 108 resolved as shift
-WARNING: shift/reduce conflict for GE in state 108 resolved as shift
-WARNING: shift/reduce conflict for LE in state 108 resolved as shift
-WARNING: shift/reduce conflict for NE in state 108 resolved as shift
-WARNING: shift/reduce conflict for IN in state 108 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 109 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 109 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 109 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 109 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 109 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 109 resolved as shift
+WARNING: shift/reduce conflict for GT in state 109 resolved as shift
+WARNING: shift/reduce conflict for LT in state 109 resolved as shift
+WARNING: shift/reduce conflict for GE in state 109 resolved as shift
+WARNING: shift/reduce conflict for LE in state 109 resolved as shift
+WARNING: shift/reduce conflict for NE in state 109 resolved as shift
+WARNING: shift/reduce conflict for IN in state 109 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 110 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 110 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 110 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 110 resolved as shift
+WARNING: shift/reduce conflict for POWER in state 110 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 110 resolved as shift
+WARNING: shift/reduce conflict for GT in state 110 resolved as shift
+WARNING: shift/reduce conflict for LT in state 110 resolved as shift
+WARNING: shift/reduce conflict for GE in state 110 resolved as shift
+WARNING: shift/reduce conflict for LE in state 110 resolved as shift
+WARNING: shift/reduce conflict for NE in state 110 resolved as shift
+WARNING: shift/reduce conflict for IN in state 110 resolved as shift
 WARNING: reduce/reduce conflict in state 84 resolved using rule (comp_expr -> comp_expr AND comp_expr)
 WARNING: rejected rule (expression -> comp_expr) in state 84
 WARNING: reduce/reduce conflict in state 86 resolved using rule (comp_expr -> comp_expr OR comp_expr)

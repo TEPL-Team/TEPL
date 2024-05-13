@@ -245,10 +245,11 @@ class Exit(Stmt):
 
 
 class Substring(Stmt):
-    def __init__(self, from_expr, to_expr):
+    def __init__(self, from_expr, to_expr, string):
         self.type = "substring"
         self.from_expr = from_expr
         self.to_expr = to_expr
+        self.string = string
 
     def __repr__(self):
-        return f"Substring({self.from_expr} {self.to_expr})"
+        return f"Substring({self.from_expr} {self.to_expr} {self.string})"
