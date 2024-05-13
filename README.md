@@ -26,6 +26,7 @@ Transpiler can be found in the `src/transpiler.py` file.
 - v0.75.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v0.75.00)
 - v1.00.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.00.00)
 - v1.35.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.35.00)
+- v1.80.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.80.00)
 
 For the license information, check [here](https://github.com/TEPL-Team/TEPL/blob/main/LICENSE).
 
@@ -35,7 +36,7 @@ Number guesser game.
 ```tepl
 PC this is a comment, and this is an example of a basic number guessing game CP
 
-while YES do
+forever do
     set guess to 'Enter a number from 0 to 100: ' expecting input and num
     set secret to random num from 0 to 100
     if guess > 100 OR guess < 0 then
