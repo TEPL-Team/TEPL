@@ -25,8 +25,15 @@ def transpile(ast):
 
             elif isinstance(node, Function):
                 compiled_code.append(compile_function(node))
+            
             elif isinstance(node, While):
                 compiled_code.append(compile_while(node))
+            
+            elif isinstance(node, Forever):
+                compiled_code.append(compile_forever(node))
+
+            elif isinstance(node, Exit):
+                compiled_code.append(compile_exit(node))
             else:
                 raise TypeError(
                     "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -47,6 +54,10 @@ def transpile(ast):
             compiled_code.append(compile_function(ast))
         elif isinstance(ast, While):
             compiled_code.append(compile_while(ast))
+        elif isinstance(ast, Forever):
+            compiled_code.append(compile_forever(ast))
+        elif isinstance(ast, Exit):
+            compiled_code.append(compile_exit(ast))
         else:
             raise TypeError(
                 "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -73,6 +84,18 @@ def transpile_stmt(stmt, ident_level=0):
 
     elif isinstance(stmt, Pause):
         return compile_pause(stmt, ident_level)
+
+    elif isinstance(stmt, Function):
+        return compile_function(stmt, ident_level)
+
+    elif isinstance(stmt, While):
+        return compile_while(stmt, ident_level)
+
+    elif isinstance(stmt, Forever):
+        return compile_forever(stmt, ident_level)
+
+    elif isinstance(stmt, Exit):
+        return compile_exit(stmt, ident_level)
 
 
 def compile_output(stmt, indent_level=0):
@@ -123,6 +146,15 @@ def compile_while(stmt, indent_level=0):
     comp = compile_expr(stmt.condition)
     body = transpile_stmt(stmt.body, indent_level + 1)
     return f"{'    ' * indent_level}while {comp}:\n{body}"
+
+
+def compile_forever(stmt, indent_level=0):
+    body = transpile_stmt(stmt.body, indent_level + 1)
+    return f"{'    ' * indent_level}while True:\n{body}"
+
+
+def compile_exit(stmt, indent_level=0):
+    return f"{'    ' * indent_level}break"
 
 
 def compile_expr(expr):

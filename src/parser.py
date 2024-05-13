@@ -123,6 +123,30 @@ def p_statement_while(p):
     p[0] = While(p[2], p[4])
 
 
+def p_statement_forever(p):
+    '''
+    statement : FOREVER DO statements end_statement
+    '''
+    p[0] = Forever(p[3])
+
+
+def p_statement_exit(p):
+    '''
+    statement : EXIT LOOP
+    '''
+    p[0] = Exit()
+
+
+def p_expression_letter(p):
+    '''
+    expression : DATATYPE FROM expression TO expression
+    '''
+    if p[1] == 'TXT':
+        p[0] = Substring(p[3], p[5])
+    else:
+        return print("SyntaxError: expected 'TXT', but got '" + p[1] + "'!")
+
+
 def p_expressions(p):
     '''
     items : expression

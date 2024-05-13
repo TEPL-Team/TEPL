@@ -223,3 +223,32 @@ class While(Stmt):
 
     def __repr__(self):
         return f"While({self.condition} {self.body})"
+
+
+class Forever(Stmt):
+    def __init__(self, body):
+        self.type = "forever"
+        self.body = body
+
+
+    def __repr__(self):
+        return f"Forever({self.body})"
+
+
+class Exit(Stmt):
+    def __init__(self):
+        self.type = "exit"
+
+    
+    def __repr__(self):
+        return "Exit()"
+
+
+class Substring(Stmt):
+    def __init__(self, from_expr, to_expr):
+        self.type = "substring"
+        self.from_expr = from_expr
+        self.to_expr = to_expr
+
+    def __repr__(self):
+        return f"Substring({self.from_expr} {self.to_expr})"

@@ -32,7 +32,10 @@ keywords = {
     'MEANS': 'MEANS', 
     'RETURN': 'RETURN',
     'WHILE': 'WHILE',
-    'DO': 'DO'
+    'DO': 'DO',
+    'FOREVER': 'FOREVER',
+    'EXIT': 'EXIT',
+    'LOOP': 'LOOP'
 }
 
 # Regular expression rules for tokens

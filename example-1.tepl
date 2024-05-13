@@ -1,0 +1,9 @@
+set i to 0
+
+repeat
+    output i
+    set i to i + 1
+    pause 1
+until i == 11
+
+output "Your number has been reached!"

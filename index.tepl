@@ -6,7 +6,6 @@ end
 
 
 set i to 0
-
 repeat
     output i
     set i to i + 1

@@ -1,0 +1,12 @@
+set i to 0
+
+forever do
+    output i
+    
+    if i > 10 then
+        exit loop
+    end
+
+    set i to i + 1
+    pause 1
+end
