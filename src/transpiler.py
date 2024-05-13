@@ -220,6 +220,9 @@ def compile_expr(expr):
         from_expr = compile_expr(expr.from_expr)
         to_expr = compile_expr(expr.to_expr)
         string = compile_expr(expr.string)
-        return f"{string}[{from_expr}:{to_expr}]"
+        return f"{string}[{from_expr - 1}:{to_expr}]"
+    elif isinstance(expr, Length):
+        expr_code = compile_expr(expr.expr)
+        return f"len({expr_code})"
     else:
         raise TypeError(f"Unknown expression type: {expr}")

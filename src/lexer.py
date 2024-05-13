@@ -35,7 +35,9 @@ keywords = {
     'DO': 'DO',
     'FOREVER': 'FOREVER',
     'EXIT': 'EXIT',
-    'LOOP': 'LOOP'
+    'LOOP': 'LOOP',
+    'LENGTH': 'LENGTH',
+    'OF': 'OF'
 }
 
 # Regular expression rules for tokens

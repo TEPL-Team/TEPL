@@ -137,7 +137,7 @@ def p_statement_exit(p):
     p[0] = Exit()
 
 
-def p_expression_letter(p):
+def p_expression_substring(p):
     '''
     expression : DATATYPE FROM expression TO expression FROM expression
     '''
@@ -145,6 +145,13 @@ def p_expression_letter(p):
         p[0] = Substring(p[3], p[5], p[7])
     else:
         return print("SyntaxError: expected 'TXT', but got '" + p[1] + "'!")
+
+
+def p_expression_length(p):
+    '''
+    expression : LENGTH OF expression
+    '''
+    p[0] = Length(p[3])
 
 
 def p_expressions(p):

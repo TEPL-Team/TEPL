@@ -1,4 +1,6 @@
 set string to 'Enter your name: ' expecting input and txt
 
-set sub to txt from 0 to 3 from string
+set sub to txt from 1 to 4 from string
 output sub
+
+output length of string

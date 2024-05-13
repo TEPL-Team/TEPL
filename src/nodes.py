@@ -244,7 +244,7 @@ class Exit(Stmt):
         return "Exit()"
 
 
-class Substring(Stmt):
+class Substring(Expr):
     def __init__(self, from_expr, to_expr, string):
         self.type = "substring"
         self.from_expr = from_expr
@@ -253,3 +253,12 @@ class Substring(Stmt):
 
     def __repr__(self):
         return f"Substring({self.from_expr} {self.to_expr} {self.string})"
+
+
+class Length(Expr):
+    def __init__(self, expr):
+        self.type = "length"
+        self.expr = expr
+
+    def __repr__(self):
+        return f"Length({self.expr})"
