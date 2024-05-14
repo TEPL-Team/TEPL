@@ -4,7 +4,7 @@ from lexer import lexer
 from gui import run
 from transpiler import transpile
 
-__version__ = 'v1.95.55'
+__version__ = 'v1.97.00'
 __mode__ = 'execute'  # 'execute' | 'transpile'|'parse'|'tokenize'
 
 

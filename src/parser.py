@@ -144,6 +144,13 @@ def p_statement_convert(p):
     p[0] = Convert(p[2], p[5])
 
 
+def p_statement_call(p):
+    '''
+    statement : CALL IDENTIFIER
+    '''
+    p[0] = Call(p[2])
+
+
 def p_expression_substring(p):
     '''
     expression : DATATYPE FROM expression TO expression FROM expression

@@ -40,7 +40,8 @@ keywords = {
     'OF': 'OF',
     'FIND': 'FIND',
     'OCCURENCES': 'OCCURENCES',
-    'CONVERT': 'CONVERT'
+    'CONVERT': 'CONVERT',
+    'CALL': 'CALL'
 }
 
 # Regular expression rules for tokens

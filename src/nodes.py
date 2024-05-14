@@ -282,3 +282,16 @@ class Convert(Stmt):
 
     def __repr__(self):
         return f"Convert({self.expr} {self.to_type})"
+
+
+class Call(Stmt):
+    def __init__(self, name: Identifier, args=None):
+        self.type = "call"
+        self.name = name
+        self.args = args
+
+    def __repr__(self):
+        if self.args is None:
+            return f"Call({self.name})"
+        else:
+            return f"Call({self.name} {self.args})"

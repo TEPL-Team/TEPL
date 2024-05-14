@@ -1,0 +1,5 @@
+function add means
+    output 5+5
+end
+
+call add
