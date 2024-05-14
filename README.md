@@ -27,6 +27,7 @@ Transpiler can be found in the `src/transpiler.py` file.
 - v1.00.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.00.00)
 - v1.35.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.35.00)
 - v1.80.00 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v1.80.00)
+- v2.0.0 update: [Release Notes](https://github.com/TEPL-Team/TEPL/releases/tag/v2.0.0)
 
 For the license information, check [here](https://github.com/TEPL-Team/TEPL/blob/main/LICENSE).
 
