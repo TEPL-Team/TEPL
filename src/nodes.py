@@ -262,3 +262,13 @@ class Length(Expr):
 
     def __repr__(self):
         return f"Length({self.expr})"
+
+
+class Find(Expr):
+    def __init__(self, char, string):
+        self.type = "find"
+        self.char = char
+        self.string = string
+
+    def __repr__(self):
+        return f"Find({self.char} {self.string})"

@@ -154,6 +154,13 @@ def p_expression_length(p):
     p[0] = Length(p[3])
 
 
+def p_expression_find(p):
+    '''
+    expression : FIND OCCURENCES OF expression IN expression
+    '''
+    p[0] = Find(p[4], p[6])
+
+
 def p_expressions(p):
     '''
     items : expression

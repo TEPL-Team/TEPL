@@ -37,7 +37,9 @@ keywords = {
     'EXIT': 'EXIT',
     'LOOP': 'LOOP',
     'LENGTH': 'LENGTH',
-    'OF': 'OF'
+    'OF': 'OF',
+    'FIND': 'FIND',
+    'OCCURENCES': 'OCCURENCES'
 }
 
 # Regular expression rules for tokens

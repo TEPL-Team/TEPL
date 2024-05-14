@@ -224,5 +224,9 @@ def compile_expr(expr):
     elif isinstance(expr, Length):
         expr_code = compile_expr(expr.expr)
         return f"len({expr_code})"
+    elif isinstance(expr, Find):
+        char = compile_expr(expr.char)
+        string = compile_expr(expr.string)
+        return f"{string}.count({char})"
     else:
         raise TypeError(f"Unknown expression type: {expr}")

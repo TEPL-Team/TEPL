@@ -4,3 +4,7 @@ set sub to txt from 1 to 4 from string
 output sub
 
 output length of string
+
+set message to 'python is popular programming language'
+
+output find occurences of 'p' in message
