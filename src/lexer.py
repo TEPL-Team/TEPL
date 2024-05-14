@@ -39,7 +39,8 @@ keywords = {
     'LENGTH': 'LENGTH',
     'OF': 'OF',
     'FIND': 'FIND',
-    'OCCURENCES': 'OCCURENCES'
+    'OCCURENCES': 'OCCURENCES',
+    'CONVERT': 'CONVERT'
 }
 
 # Regular expression rules for tokens

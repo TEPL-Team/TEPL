@@ -137,6 +137,13 @@ def p_statement_exit(p):
     p[0] = Exit()
 
 
+def p_statement_convert(p):
+    '''
+    statement : CONVERT expression TO TYPE DATATYPE
+    '''
+    p[0] = Convert(p[2], p[5])
+
+
 def p_expression_substring(p):
     '''
     expression : DATATYPE FROM expression TO expression FROM expression

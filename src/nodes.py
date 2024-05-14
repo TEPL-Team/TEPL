@@ -272,3 +272,13 @@ class Find(Expr):
 
     def __repr__(self):
         return f"Find({self.char} {self.string})"
+
+
+class Convert(Stmt):
+    def __init__(self, expr, to_type):
+        self.type = "convert"
+        self.expr = expr
+        self.to_type = to_type
+
+    def __repr__(self):
+        return f"Convert({self.expr} {self.to_type})"

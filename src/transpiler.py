@@ -34,6 +34,9 @@ def transpile(ast):
 
             elif isinstance(node, Exit):
                 compiled_code.append(compile_exit(node))
+
+            elif isinstance(node, Convert):
+                compiled_code.append(compile_convert(node))
             else:
                 raise TypeError(
                     "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -58,6 +61,8 @@ def transpile(ast):
             compiled_code.append(compile_forever(ast))
         elif isinstance(ast, Exit):
             compiled_code.append(compile_exit(ast))
+        elif isinstance(ast, Convert):
+            compiled_code.append(compile_convert(ast))
         else:
             raise TypeError(
                 "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -96,6 +101,9 @@ def transpile_stmt(stmt, ident_level=0):
 
     elif isinstance(stmt, Exit):
         return compile_exit(stmt, ident_level)
+
+    elif isinstance(stmt, Convert):
+        return compile_convert(stmt, ident_level)
 
 
 def compile_output(stmt, indent_level=0):
@@ -155,6 +163,19 @@ def compile_forever(stmt, indent_level=0):
 
 def compile_exit(stmt, indent_level=0):
     return f"{'    ' * indent_level}break"
+
+
+def compile_convert(stmt, indent_level=0):
+    expr = compile_expr(stmt.expr)
+    to_type = stmt.to_type
+    if to_type.upper() == "NUM":
+        return f"{'    ' * indent_level}{expr} = int({expr})"
+    elif to_type.upper() == "DEC":
+        return f"{'    ' * indent_level}{expr} = float({expr})"
+    elif to_type.upper() == "TXT":
+        return f"{'    ' * indent_level}{expr} = str({expr})"
+    else:
+        return print(f"Invalid type, {to_type}, expected 'NUM', 'DEC', or 'TXT'!")
 
 
 def compile_expr(expr):
