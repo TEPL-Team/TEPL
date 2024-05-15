@@ -41,6 +41,9 @@ def transpile(ast):
             elif isinstance(node, Call):
                 compiled_code.append(compile_call(node))
 
+            elif isinstance(node, Return):
+                compiled_code.append(compile_return(node))
+
             else:
                 raise TypeError(
                     "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -69,6 +72,8 @@ def transpile(ast):
             compiled_code.append(compile_convert(ast))
         elif isinstance(ast, Call):
             compiled_code.append(compile_call(ast))
+        elif isinstance(ast, Return):
+            compiled_code.append(compile_return(ast))
         else:
             raise TypeError(
                 "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -114,6 +119,9 @@ def transpile_stmt(stmt, ident_level=0):
     elif isinstance(stmt, Call):
         return compile_call(stmt, ident_level)
 
+    elif isinstance(stmt, Return):
+        return compile_return(stmt, ident_level)
+
 
 def compile_output(stmt, indent_level=0):
     expr_code = compile_expr(stmt.expr)
@@ -156,7 +164,11 @@ def compile_pause(stmt, indent_level=0):
 def compile_function(stmt, ident_level=0):
     name = stmt.name
     body = transpile_stmt(stmt.body, ident_level + 1)
-    return f"{'    ' * ident_level}def {name}():\n{body}"
+    if stmt.args is not None:
+        args = ', '.join(stmt.args)
+        return f"{'    ' * ident_level}def {name}({args}):\n{body}"
+    else:
+        return f"{'    ' * ident_level}def {name}():\n{body}"
 
 
 def compile_while(stmt, indent_level=0):
@@ -191,16 +203,21 @@ def compile_call(stmt, indent_level=0):
     name = stmt.name
     args = stmt.args
     if args:
-        args = compile_expr(args)
+        args = compile_expr(list(args))
         return f"{'    ' * indent_level}{name}({args})"
     else:
         return f"{'    ' * indent_level}{name}()\n"
 
 
+def compile_return(stmt, indent_level=0):
+    expr = compile_expr(stmt.expr)
+    return f"{'    ' * indent_level}return {expr}"
+
+
 def compile_expr(expr):
     if isinstance(expr, list):
         # If the expression is a list, compile each element in the list
-        return ', '.join([compile_expr(e) for e in expr])
+        return ', '.join([str(compile_expr(e)) for e in expr])
     elif isinstance(expr, Number):
         return int(expr.value)
     elif isinstance(expr, BinOp):
@@ -268,5 +285,13 @@ def compile_expr(expr):
         char = compile_expr(expr.char)
         string = compile_expr(expr.string)
         return f"{string}.count({char})"
+    elif isinstance(expr, Call):
+        name = expr.name
+        args = expr.args
+        if args:
+            args = compile_expr(list(args))
+            return f"{name}({args})"
+        else:
+            return f"{name}()\n"
     else:
         raise TypeError(f"Unknown expression type: {expr}")

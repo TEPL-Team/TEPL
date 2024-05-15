@@ -112,8 +112,12 @@ def p_statement_type(p):
 def p_statement_function(p):
     '''
     statement : FUNCTION IDENTIFIER MEANS statements end_statement
+              | FUNCTION IDENTIFIER WITH arguments MEANS statements end_statement
     '''
-    p[0] = Function(p[2], p[4])
+    if len(p) == 8:
+        p[0] = Function(p[2], p[6], p[4])
+    else:
+        p[0] = Function(p[2], p[4])
 
 
 def p_statement_while(p):
@@ -147,8 +151,30 @@ def p_statement_convert(p):
 def p_statement_call(p):
     '''
     statement : CALL IDENTIFIER
+              | CALL IDENTIFIER items
     '''
-    p[0] = Call(p[2])
+    if len(p) == 2:
+        p[0] = Call(p[2])
+    else:
+        p[0] = Call(p[2], p[3])
+
+
+def p_statement_return(p):
+    '''
+    statement : RETURN expression
+    '''
+    p[0] = Return(p[2])
+
+
+def p_expression_arguments(p):
+    '''
+    arguments : IDENTIFIER
+              | arguments IDENTIFIER
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
 
 
 def p_expression_substring(p):
@@ -259,6 +285,17 @@ def p_expression_text(p):
 def p_expression_input(p):
     'expression : INPUT'
     p[0] = Input_Expr()
+
+
+def p_expression_call(p):
+    '''
+    expression : CALL IDENTIFIER
+               | CALL IDENTIFIER items
+    '''
+    if len(p) == 2:
+        p[0] = Call(p[2])
+    else:
+        p[0] = Call(p[2], p[3])
 
 
 def p_error(p):

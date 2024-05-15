@@ -184,19 +184,18 @@ class Pause(Stmt):
         return f"Pause({self.time})"
 
 
-
 class Type(Stmt):
 
     def __init__(self, type):
         self.type = "type"
         self.t_type = type
 
-
     def __repr__(self):
         return f"Type({self.t_type})"
 
 
 class List(Expr):
+
     def __init__(self, expr):
         self.type = "list"
         self.expr = expr
@@ -206,16 +205,22 @@ class List(Expr):
 
 
 class Function(Stmt):
-    def __init__(self, name: Identifier, body):
+
+    def __init__(self, name: Identifier, body, args=None):
         self.type = "function"
         self.name = name
         self.body = body
+        self.args = args
 
     def __repr__(self):
-        return f"Function({self.name} {self.body})"
+        if self.args is None:
+            return f"Function({self.name} {self.body})"
+        else:
+            return f"Function({self.name} {self.args} {self.body})"
 
 
 class While(Stmt):
+
     def __init__(self, condition, body):
         self.type = "while"
         self.condition = condition
@@ -226,25 +231,26 @@ class While(Stmt):
 
 
 class Forever(Stmt):
+
     def __init__(self, body):
         self.type = "forever"
         self.body = body
-
 
     def __repr__(self):
         return f"Forever({self.body})"
 
 
 class Exit(Stmt):
+
     def __init__(self):
         self.type = "exit"
 
-    
     def __repr__(self):
         return "Exit()"
 
 
 class Substring(Expr):
+
     def __init__(self, from_expr, to_expr, string):
         self.type = "substring"
         self.from_expr = from_expr
@@ -256,6 +262,7 @@ class Substring(Expr):
 
 
 class Length(Expr):
+
     def __init__(self, expr):
         self.type = "length"
         self.expr = expr
@@ -265,6 +272,7 @@ class Length(Expr):
 
 
 class Find(Expr):
+
     def __init__(self, char, string):
         self.type = "find"
         self.char = char
@@ -275,6 +283,7 @@ class Find(Expr):
 
 
 class Convert(Stmt):
+
     def __init__(self, expr, to_type):
         self.type = "convert"
         self.expr = expr
@@ -285,6 +294,7 @@ class Convert(Stmt):
 
 
 class Call(Stmt):
+
     def __init__(self, name: Identifier, args=None):
         self.type = "call"
         self.name = name
@@ -295,3 +305,13 @@ class Call(Stmt):
             return f"Call({self.name})"
         else:
             return f"Call({self.name} {self.args})"
+
+
+class Return(Stmt):
+
+    def __init__(self, expr):
+        self.type = "return"
+        self.expr = expr
+
+    def __repr__(self):
+        return f"Return({self.expr})"

@@ -1,5 +1,6 @@
-function add means
-    output 5+5
+function add with a b means
+    return a + b
 end
 
-call add
+set x to call add 5 7
+output x
