@@ -29,7 +29,7 @@ keywords = {
     'TYPE': 'TYPE',
     'LIST': 'DATATYPE',
     'FUNCTION': 'FUNCTION',
-    'MEANS': 'MEANS', 
+    'MEANS': 'MEANS',
     'RETURN': 'RETURN',
     'WHILE': 'WHILE',
     'DO': 'DO',
@@ -42,7 +42,9 @@ keywords = {
     'OCCURENCES': 'OCCURENCES',
     'CONVERT': 'CONVERT',
     'CALL': 'CALL',
-    'WITH': 'WITH'
+    'WITH': 'WITH',
+    'DELETE': 'DELETE',
+    'INDEX': 'INDEX'
 }
 
 # Regular expression rules for tokens

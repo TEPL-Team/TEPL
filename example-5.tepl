@@ -1,0 +1,10 @@
+set x to 555 55 5 type list
+output x
+
+set i to 0
+repeat 
+    output x index i
+    set i to i + 1
+until i == 3
+
+delete list x

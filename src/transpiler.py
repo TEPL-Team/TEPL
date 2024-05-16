@@ -25,10 +25,10 @@ def transpile(ast):
 
             elif isinstance(node, Function):
                 compiled_code.append(compile_function(node))
-            
+
             elif isinstance(node, While):
                 compiled_code.append(compile_while(node))
-            
+
             elif isinstance(node, Forever):
                 compiled_code.append(compile_forever(node))
 
@@ -43,6 +43,9 @@ def transpile(ast):
 
             elif isinstance(node, Return):
                 compiled_code.append(compile_return(node))
+
+            elif isinstance(node, Delete):
+                compiled_code.append(compile_delete(node))
 
             else:
                 raise TypeError(
@@ -74,6 +77,8 @@ def transpile(ast):
             compiled_code.append(compile_call(ast))
         elif isinstance(ast, Return):
             compiled_code.append(compile_return(ast))
+        elif isinstance(ast, Delete):
+            compiled_code.append(compile_delete(ast))
         else:
             raise TypeError(
                 "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
@@ -122,6 +127,9 @@ def transpile_stmt(stmt, ident_level=0):
     elif isinstance(stmt, Return):
         return compile_return(stmt, ident_level)
 
+    elif isinstance(stmt, Delete):
+        return compile_delete(stmt, ident_level)
+
 
 def compile_output(stmt, indent_level=0):
     expr_code = compile_expr(stmt.expr)
@@ -134,7 +142,16 @@ def compile_output(stmt, indent_level=0):
 def compile_assignment(stmt, indent_level=0):
     name = compile_expr(stmt.name)
     value = compile_expr(stmt.value)
-    return f"{'    ' * indent_level}{name} = {value}"
+    if stmt.type is None:
+        return f"{'    ' * indent_level}{name} = {value}"
+    else:
+        type = stmt.type
+        if type.t_type.upper() == "LIST":
+            return f"{'    ' * indent_level}{name} = [{value}]"
+        else:
+            return print(
+                f"TypeError: Invalid assignment type, expected 'LIST', but got '{type.t_type.upper()}'!"
+            )
 
 
 def compile_if(stmt, indent_level=0):
@@ -154,7 +171,7 @@ def compile_repeat(stmt, indent_level=0):
     body = transpile_stmt(stmt.body, indent_level + 1)
     some = indent_level + 2
     some2 = some - 1
-    return f"{'    ' * indent_level}while True:\n{body}\n{'    ' * some2}if {comp}:\n{'    ' * some}    break"
+    return f"{'    ' * indent_level}while True:\n{body}\n{'    ' * some2}if {comp}:\n{'    ' * some2}    break"
 
 
 def compile_pause(stmt, indent_level=0):
@@ -196,7 +213,8 @@ def compile_convert(stmt, indent_level=0):
     elif to_type.upper() == "TXT":
         return f"{'    ' * indent_level}{expr} = str({expr})"
     else:
-        return print(f"Invalid type, {to_type}, expected 'NUM', 'DEC', or 'TXT'!")
+        return print(
+            f"Invalid type, {to_type}, expected 'NUM', 'DEC', or 'TXT'!")
 
 
 def compile_call(stmt, indent_level=0):
@@ -212,6 +230,11 @@ def compile_call(stmt, indent_level=0):
 def compile_return(stmt, indent_level=0):
     expr = compile_expr(stmt.expr)
     return f"{'    ' * indent_level}return {expr}"
+
+
+def compile_delete(stmt, indent_level=0):
+    name = stmt.name
+    return f"{'    ' * indent_level}del {name}"
 
 
 def compile_expr(expr):
@@ -293,5 +316,9 @@ def compile_expr(expr):
             return f"{name}({args})"
         else:
             return f"{name}()\n"
+    elif isinstance(expr, Index):
+        name = expr.name
+        index = compile_expr(expr.index)
+        return f"{name}[{index}]"
     else:
         raise TypeError(f"Unknown expression type: {expr}")

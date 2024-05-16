@@ -60,13 +60,17 @@ class Output(Stmt):
 
 class Assignment(Stmt):
 
-    def __init__(self, name: Identifier, value):
+    def __init__(self, name: Identifier, value, type=None):
         self.type = "assignment"
         self.name = name
         self.value = value
+        self.type = type
 
     def __repr__(self):
-        return f"Assignment({self.name} {self.value})"
+        if type is None:
+            return f"Assignment({self.name} {self.value})"
+        else:
+            return f"Assignment({self.name} {self.value} {self.type}"
 
 
 class Random(Stmt):
@@ -315,3 +319,24 @@ class Return(Stmt):
 
     def __repr__(self):
         return f"Return({self.expr})"
+
+
+class Delete(Stmt):
+
+    def __init__(self, name: Identifier):
+        self.type = "delete"
+        self.name = name
+
+    def __repr__(self):
+        return f"Delete({self.name})"
+
+
+class Index(Expr):
+
+    def __init__(self, name: Identifier, index):
+        self.type = "index"
+        self.name = name
+        self.index = index
+
+    def __repr__(self):
+        return f"Index({self.name} {self.index})"

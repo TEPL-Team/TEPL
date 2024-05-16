@@ -62,8 +62,10 @@ def p_statement_assignment(p):
     '''
     if len(p) == 2:
         p[0] = Assignment(p[1], None)
-    elif len(p) == 4 or len(p) > 6:
+    elif len(p) == 4:
         p[0] = Assignment(p[1], p[3])
+    elif len(p) == 5:
+        p[0] = Assignment(p[1], list(p[3]), p[4])
 
 
 def p_if_then(p):
@@ -164,6 +166,17 @@ def p_statement_return(p):
     statement : RETURN expression
     '''
     p[0] = Return(p[2])
+
+
+def p_statement_delete(p):
+    '''
+    statement : DELETE DATATYPE IDENTIFIER
+    '''
+    if p[2].upper() == 'LIST':
+        p[0] = Delete(p[3])
+    else:
+        return print("TypeError: expected 'list', but got '" + p[2] +
+                     "', on line " + p.lineno + "!")
 
 
 def p_expression_arguments(p):
@@ -296,6 +309,13 @@ def p_expression_call(p):
         p[0] = Call(p[2])
     else:
         p[0] = Call(p[2], p[3])
+
+
+def p_expression_list(p):
+    '''
+    expression : IDENTIFIER INDEX expression
+    '''
+    p[0] = Index(p[1], p[3])
 
 
 def p_error(p):
