@@ -4,188 +4,113 @@ from nodes import *
 
 
 def transpile(ast):
-    compiled_code = []
-    compiled_code.append('import random')
-    compiled_code.append('import time')
-    compiled_code.append('INPUT = None')
+    compiled_code = ['import random', 'import time', 'INPUT = None']
 
     if isinstance(ast, list):
         for node in ast:
-            if isinstance(node, Output):
-                compiled_code.append(compile_output(node))
-            elif isinstance(node, If):
-                compiled_code.append(compile_if(node))
-            elif isinstance(node, Assignment):
-                compiled_code.append(compile_assignment(node))
-            elif isinstance(node, Repeat):
-                compiled_code.append(compile_repeat(node))
-
-            elif isinstance(node, Pause):
-                compiled_code.append(compile_pause(node))
-
-            elif isinstance(node, Function):
-                compiled_code.append(compile_function(node))
-
-            elif isinstance(node, While):
-                compiled_code.append(compile_while(node))
-
-            elif isinstance(node, Forever):
-                compiled_code.append(compile_forever(node))
-
-            elif isinstance(node, Exit):
-                compiled_code.append(compile_exit(node))
-
-            elif isinstance(node, Convert):
-                compiled_code.append(compile_convert(node))
-
-            elif isinstance(node, Call):
-                compiled_code.append(compile_call(node))
-
-            elif isinstance(node, Return):
-                compiled_code.append(compile_return(node))
-
-            elif isinstance(node, Delete):
-                compiled_code.append(compile_delete(node))
-
-            else:
-                raise TypeError(
-                    "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
-                    + str(type(ast)))
-
+            compiled_code.append(transpile_stmt(node))
     else:
-        if isinstance(ast, Output):
-            compiled_code.append(compile_output(ast))
-        elif isinstance(ast, If):
-            compiled_code.append(compile_if(ast))
-        elif isinstance(ast, Assignment):
-            compiled_code.append(compile_assignment(ast))
-        elif isinstance(ast, Repeat):
-            compiled_code.append(compile_repeat(ast))
-        elif isinstance(ast, Pause):
-            compiled_code.append(compile_pause(ast))
-        elif isinstance(ast, Function):
-            compiled_code.append(compile_function(ast))
-        elif isinstance(ast, While):
-            compiled_code.append(compile_while(ast))
-        elif isinstance(ast, Forever):
-            compiled_code.append(compile_forever(ast))
-        elif isinstance(ast, Exit):
-            compiled_code.append(compile_exit(ast))
-        elif isinstance(ast, Convert):
-            compiled_code.append(compile_convert(ast))
-        elif isinstance(ast, Call):
-            compiled_code.append(compile_call(ast))
-        elif isinstance(ast, Return):
-            compiled_code.append(compile_return(ast))
-        elif isinstance(ast, Delete):
-            compiled_code.append(compile_delete(ast))
-        else:
-            raise TypeError(
-                "Invalid AST root node. Expecting an 'Output' node or list of statements, but got "
-                + str(type(ast)))
+        compiled_code.append(transpile_stmt(ast))
 
     return '\n'.join(compiled_code)
 
 
-def transpile_stmt(stmt, ident_level=0):
+def transpile_stmt(stmt, indent_level=0):
     if isinstance(stmt, list):
-        return ('\n').join([transpile_stmt(s, ident_level) for s in stmt])
+        return '\n'.join([transpile_stmt(s, indent_level) for s in stmt])
 
+    indent = '    ' * indent_level
     if isinstance(stmt, Output):
-        return compile_output(stmt, ident_level)
-
+        return compile_output(stmt, indent_level)
     elif isinstance(stmt, If):
-        return compile_if(stmt, ident_level)
-
+        return compile_if(stmt, indent_level)
     elif isinstance(stmt, Assignment):
-        return compile_assignment(stmt, ident_level)
-
+        return compile_assignment(stmt, indent_level)
     elif isinstance(stmt, Repeat):
-        return compile_repeat(stmt, ident_level)
-
+        return compile_repeat(stmt, indent_level)
     elif isinstance(stmt, Pause):
-        return compile_pause(stmt, ident_level)
-
+        return compile_pause(stmt, indent_level)
     elif isinstance(stmt, Function):
-        return compile_function(stmt, ident_level)
-
+        return compile_function(stmt, indent_level)
     elif isinstance(stmt, While):
-        return compile_while(stmt, ident_level)
-
+        return compile_while(stmt, indent_level)
     elif isinstance(stmt, Forever):
-        return compile_forever(stmt, ident_level)
-
+        return compile_forever(stmt, indent_level)
     elif isinstance(stmt, Exit):
-        return compile_exit(stmt, ident_level)
-
+        return compile_exit(stmt, indent_level)
     elif isinstance(stmt, Convert):
-        return compile_convert(stmt, ident_level)
-
+        return compile_convert(stmt, indent_level)
     elif isinstance(stmt, Call):
-        return compile_call(stmt, ident_level)
-
+        return compile_call(stmt, indent_level)
     elif isinstance(stmt, Return):
-        return compile_return(stmt, ident_level)
-
+        return compile_return(stmt, indent_level)
     elif isinstance(stmt, Delete):
-        return compile_delete(stmt, ident_level)
+        return compile_delete(stmt, indent_level)
+    elif isinstance(stmt, Clear):
+        return compile_clear(stmt, indent_level)
+    elif isinstance(stmt, For):
+        return compile_for(stmt, indent_level)
+    else:
+        raise TypeError(f"Unknown statement type: {type(stmt)}")
 
 
 def compile_output(stmt, indent_level=0):
     expr_code = compile_expr(stmt.expr)
+    indent = '    ' * indent_level
     if str(expr_code).startswith('input('):
-        return f"{'    ' * indent_level}INPUT = {expr_code}\n{'    ' * indent_level}print(INPUT)"
+        return f"{indent}INPUT = {expr_code}\n{indent}print(INPUT)"
     else:
-        return f"{'    ' * indent_level}print({expr_code})"
+        return f"{indent}print({expr_code})"
 
 
 def compile_assignment(stmt, indent_level=0):
     name = compile_expr(stmt.name)
     value = compile_expr(stmt.value)
+    indent = '    ' * indent_level
     if stmt.type is None:
-        return f"{'    ' * indent_level}{name} = {value}"
+        return f"{indent}{name} = {value}"
     else:
         type = stmt.type
         if type.t_type.upper() == "LIST":
-            return f"{'    ' * indent_level}{name} = [{value}]"
+            return f"{indent}{name} = [{value}]"
         else:
-            return print(
-                f"TypeError: Invalid assignment type, expected 'LIST', but got '{type.t_type.upper()}'!"
+            raise TypeError(
+                f"Invalid assignment type, expected 'LIST', but got '{type.t_type.upper()}'!"
             )
 
 
 def compile_if(stmt, indent_level=0):
     comp = compile_expr(stmt.condition)
     body = transpile_stmt(stmt.body, indent_level + 1)
-    elsed = stmt.conelse
-
-    if elsed:
+    indent = '    ' * indent_level
+    if stmt.conelse:
         else_body = transpile_stmt(stmt.elsebody, indent_level + 1)
-        return f"{'    ' * indent_level}if {comp}:\n{body}\n{'    ' * indent_level}else:\n{else_body}"
+        return f"{indent}if {comp}:\n{body}\n{indent}else:\n{else_body}"
     else:
-        return f"{'    ' * indent_level}if {comp}:\n{body}"
+        return f"{indent}if {comp}:\n{body}"
 
 
 def compile_repeat(stmt, indent_level=0):
     comp = compile_expr(stmt.condition)
     body = transpile_stmt(stmt.body, indent_level + 1)
-    some = indent_level + 2
-    some2 = some - 1
-    return f"{'    ' * indent_level}while True:\n{body}\n{'    ' * some2}if {comp}:\n{'    ' * some2}    break"
+    indent = '    ' * indent_level
+    inner_indent = '    ' * (indent_level + 1)
+    return f"{indent}while True:\n{body}\n{inner_indent}if {comp}:\n{inner_indent}    break"
 
 
 def compile_pause(stmt, indent_level=0):
     return f"{'    ' * indent_level}time.sleep({compile_expr(stmt.time)})"
 
 
-def compile_function(stmt, ident_level=0):
+def compile_function(stmt, indent_level=0):
     name = stmt.name
-    body = transpile_stmt(stmt.body, ident_level + 1)
-    if stmt.args is not None:
+    body = transpile_stmt(stmt.body, indent_level + 1)
+    indent = '    ' * indent_level
+    if stmt.args:
         args = ', '.join(stmt.args)
-        return f"{'    ' * ident_level}def {name}({args}):\n{body}"
+        return f"{indent}def {name}({args}):\n{body}"
     else:
-        return f"{'    ' * ident_level}def {name}():\n{body}"
+        return f"{indent}def {name}():\n{body}"
 
 
 def compile_while(stmt, indent_level=0):
@@ -205,26 +130,27 @@ def compile_exit(stmt, indent_level=0):
 
 def compile_convert(stmt, indent_level=0):
     expr = compile_expr(stmt.expr)
-    to_type = stmt.to_type
-    if to_type.upper() == "NUM":
-        return f"{'    ' * indent_level}{expr} = int({expr})"
-    elif to_type.upper() == "DEC":
-        return f"{'    ' * indent_level}{expr} = float({expr})"
-    elif to_type.upper() == "TXT":
-        return f"{'    ' * indent_level}{expr} = str({expr})"
+    to_type = stmt.to_type.upper()
+    indent = '    ' * indent_level
+    if to_type == "NUM":
+        return f"{indent}{expr} = int({expr})"
+    elif to_type == "DEC":
+        return f"{indent}{expr} = float({expr})"
+    elif to_type == "TXT":
+        return f"{indent}{expr} = str({expr})"
     else:
-        return print(
+        raise TypeError(
             f"Invalid type, {to_type}, expected 'NUM', 'DEC', or 'TXT'!")
 
 
 def compile_call(stmt, indent_level=0):
     name = stmt.name
-    args = stmt.args
-    if args:
-        args = compile_expr(list(args))
-        return f"{'    ' * indent_level}{name}({args})"
+    indent = '    ' * indent_level
+    if stmt.args:
+        args = compile_expr(stmt.args)
+        return f"{indent}{name}({args})"
     else:
-        return f"{'    ' * indent_level}{name}()\n"
+        return f"{indent}{name}()"
 
 
 def compile_return(stmt, indent_level=0):
@@ -233,69 +159,74 @@ def compile_return(stmt, indent_level=0):
 
 
 def compile_delete(stmt, indent_level=0):
+    name = compile_expr(stmt.name)
+    indent = '    ' * indent_level
+    if stmt.index is None:
+        return f"{indent}del {name}"
+    else:
+        index = compile_expr(stmt.index)
+        return f"{indent}{name}.pop({index} - 1)"
+
+
+def compile_clear(stmt, indent_level=0):
+    name = compile_expr(stmt._list)
+    return f"{'    ' * indent_level}{name}.clear()"
+
+
+def compile_for(stmt, indent_level=0):
     name = stmt.name
-    return f"{'    ' * indent_level}del {name}"
+    times = compile_expr(stmt.times)
+    body = transpile_stmt(stmt.body, indent_level + 1)
+    indent = '    ' * indent_level
+    return f"{indent}for {name} in range(1, {times+1}):\n{body}"
 
 
 def compile_expr(expr):
     if isinstance(expr, list):
-        # If the expression is a list, compile each element in the list
         return ', '.join([str(compile_expr(e)) for e in expr])
     elif isinstance(expr, Number):
-        return int(expr.value)
+        return expr.value
     elif isinstance(expr, BinOp):
         left_code = compile_expr(expr.left)
         right_code = compile_expr(expr.right)
         return f"{left_code} {expr.op} {right_code}"
     elif isinstance(expr, Identifier):
-        return f"{expr.name}"
+        return expr.name
     elif isinstance(expr, Boolean):
-        return 'True' if expr.value.lower() == 'YES' else 'False'
+        return 'True' if expr.value.lower() == 'yes' else 'False'
     elif isinstance(expr, Text):
         return f"{str(expr.text)}"
     elif isinstance(expr, Input):
-        if expr.t.upper() == 'NUM':
-            return f"int(input({expr.q}))"
-        elif expr.t.upper() == 'DEC':
-            pass
-        elif expr.t.upper() == 'TXT':
-            return f"input({expr.q})"
-        elif expr.t.upper() == 'BOOL':
-            return f"bool(input({expr.q}))"
+        q = expr.q
+        t = expr.t.upper()
+        if t == 'NUM':
+            return f"int(input({q}))"
+        elif t == 'DEC':
+            return f"float(input({q}))"
+        elif t == 'TXT':
+            return f"input({q})"
+        elif t == 'BOOL':
+            return f"bool(input({q}))"
         else:
-            return print(
-                f"TypeError: {expr.t} is not a valid data type, only NUM, TXT, and BOOL are valid!"
+            raise TypeError(
+                f"TypeError: {t} is not a valid data type, only 'NUM', 'TXT', 'DEC', and 'BOOL' are valid!"
             )
     elif isinstance(expr, Random):
         return f"random.randint({expr._from.value}, {expr.to.value})"
     elif isinstance(expr, Input_Expr):
         return 'INPUT'
     elif isinstance(expr, Comparism):
-        if expr.left is None:
-            left = compile_expr(expr.left)
-            right = compile_expr(expr.right)
-            if expr.op in ['>', '<', '>=', '<=', '==', '!=']:
-                return print(
-                    f"Error: {expr.op} is not a valid operator in expression, {expr}!"
-                )
-            else:
-                match expr.op:
-                    case 'AND':
-                        return f"({left} and {right})"
-                    case 'OR':
-                        return f"({left} or {right})"
-                    case 'NOT':
-                        return f"not {right}"
-                    case 'IN':
-                        return f"({left} in {right})"
-                    case _:
-                        return print(
-                            f"Error: {expr.op} is not a valid operator in expression, {expr}!"
-                        )
+        left_code = compile_expr(expr.left)
+        right_code = compile_expr(expr.right)
+        op = expr.op
+        if op in ['AND', 'OR']:
+            return f"({left_code} {op.lower()} {right_code})"
+        elif op == 'NOT':
+            return f"not {right_code}"
+        elif op == 'IN':
+            return f"({left_code} in {right_code})"
         else:
-            left_code = compile_expr(expr.left)
-            right_code = compile_expr(expr.right)
-            return f"{left_code} {expr.op} {right_code}"
+            return f"{left_code} {op} {right_code}"
     elif isinstance(expr, Substring):
         from_expr = compile_expr(expr.from_expr)
         to_expr = compile_expr(expr.to_expr)
@@ -310,15 +241,14 @@ def compile_expr(expr):
         return f"{string}.count({char})"
     elif isinstance(expr, Call):
         name = expr.name
-        args = expr.args
-        if args:
-            args = compile_expr(list(args))
+        if expr.args:
+            args = compile_expr(list(expr.args))
             return f"{name}({args})"
         else:
-            return f"{name}()\n"
+            return f"{name}()"
     elif isinstance(expr, Index):
-        name = expr.name
+        name = compile_expr(expr.name)
         index = compile_expr(expr.index)
-        return f"{name}[{index}]"
+        return f"{name}[{index} - 1]"
     else:
-        raise TypeError(f"Unknown expression type: {expr}")
+        raise TypeError(f"Unknown expression type: {type(expr)}")

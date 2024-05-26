@@ -171,12 +171,43 @@ def p_statement_return(p):
 def p_statement_delete(p):
     '''
     statement : DELETE DATATYPE IDENTIFIER
+              | DELETE INDEX expression OF DATATYPE IDENTIFIER
+    '''
+    if len(p) == 4:
+        if p[2].upper() == 'LIST':
+            p[0] = Delete(p[3])
+        else:
+            return print("TypeError: expected 'list', but got '" + p[2] +
+                         "', on line " + p.lineno + "!")
+    else:
+        if p[5].upper() == 'LIST':
+            p[0] = Delete(p[6], [3])
+        else:
+            return print("TypeError: expected 'list', but got '" + p[5] + "'!")
+
+
+def p_statement_clear(p):
+    '''
+    statement : CLEAR DATATYPE IDENTIFIER
     '''
     if p[2].upper() == 'LIST':
-        p[0] = Delete(p[3])
+        p[0] = Clear(p[3])
     else:
-        return print("TypeError: expected 'list', but got '" + p[2] +
-                     "', on line " + p.lineno + "!")
+        return print("TypeError: expected 'list', but got '" + p[2] + "'!")
+
+
+def p_statement_activate(p):
+    '''
+    statement : ACTIVATE TEXT
+    '''
+    p[0] = None
+
+
+def p_statement_for(p):
+    '''
+    statement : REPEAT expression TIMES USING IDENTIFIER statements end_statement
+    '''
+    p[0] = For(p[2], p[5], p[6])
 
 
 def p_expression_arguments(p):

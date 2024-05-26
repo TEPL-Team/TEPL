@@ -44,7 +44,11 @@ keywords = {
     'CALL': 'CALL',
     'WITH': 'WITH',
     'DELETE': 'DELETE',
-    'INDEX': 'INDEX'
+    'INDEX': 'INDEX',
+    'CLEAR': 'CLEAR',
+    'ACTIVATE': 'ACTIVATE',
+    'TIMES': 'TIMES',
+    'USING': 'USING'
 }
 
 # Regular expression rules for tokens

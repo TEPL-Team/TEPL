@@ -28,3 +28,10 @@ end
 output "A small pause..."
 pause 2
 output "Over!"
+
+function game means
+    set 
+    forever do
+        
+    end
+end

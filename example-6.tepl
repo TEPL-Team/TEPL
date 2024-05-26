@@ -1,0 +1,3 @@
+repeat 5 times using i
+    output i
+end

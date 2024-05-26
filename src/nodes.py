@@ -323,12 +323,16 @@ class Return(Stmt):
 
 class Delete(Stmt):
 
-    def __init__(self, name: Identifier):
+    def __init__(self, name: Identifier, index=None):
         self.type = "delete"
         self.name = name
+        self.index = index
 
     def __repr__(self):
-        return f"Delete({self.name})"
+        if self.index is None:
+            return f"Delete({self.name})"
+        else:
+            return f"Delete({self.name} {self.index})"
 
 
 class Index(Expr):
@@ -340,3 +344,25 @@ class Index(Expr):
 
     def __repr__(self):
         return f"Index({self.name} {self.index})"
+
+
+class Clear(Stmt):
+
+    def __init__(self, _list):
+        self.type = "clear"
+        self._list = _list
+
+    def __repr__(self):
+        return f"Clear({self._list})"
+
+
+class For(Stmt):
+
+    def __init__(self, times, name: Identifier, body):
+        self.type = "for"
+        self.name = name
+        self.times = times
+        self.body = body
+
+    def __repr__(self):
+        return f"For({self.times} {self.name} {self.body})"
