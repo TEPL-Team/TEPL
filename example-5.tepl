@@ -1,16 +1,10 @@
 set x to 555 55 5 type list
 output x
 
+
 set i to 0
 while i != 3 do
     output x index i
     delete index i of list x
     set i to i + 1
 end
-
-output x
-
-clear list x
-output x
-
-delete list x

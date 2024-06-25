@@ -1,3 +1,6 @@
 repeat 5 times using i
-    output i
+    repeat 5 times using j
+        output i
+        output j
+    end
 end
