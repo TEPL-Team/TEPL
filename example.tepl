@@ -38,6 +38,3 @@ set x to 10
 repeat x times using j
     output j
 end
-
-Note: A single-line repeat statement
-Note: output 'Hello, world!' repeat 5 times
