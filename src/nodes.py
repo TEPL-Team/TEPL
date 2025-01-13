@@ -106,9 +106,37 @@ class While(Stmt):
 
 # Class for repeat statements
 class Repeat(Stmt):
-    def __init__(self, times, body):
+    def __init__(self, times, id: Id, body):
         self.times = times
+        self.id = id
         self.body = body
         
     def __repr__(self):
-        return 'Repeat({}, {})'.format(self.times, self.body)
+        return 'Repeat({}, {}, {})'.format(self.times, self.id, self.body)
+
+# Class for convert statements
+class Convert(Stmt):
+    def __init__(self, value, datatype):
+        self.value = value
+        self.datatype = datatype
+
+    def __repr__(self):
+        return 'Convert({}, {})'.format(self.value, self.datatype)
+
+# Class for logical AND operation
+class And(Expr):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return 'And({}, {})'.format(self.left, self.right)
+
+# Class for logical OR operation
+class Or(Expr):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return 'Or({}, {})'.format(self.left, self.right)

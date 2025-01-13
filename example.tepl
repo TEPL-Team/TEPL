@@ -23,7 +23,7 @@ Note: Output the value of 'x'
 output x
 
 Note: Ask for the user's name and greet them
-ask "What is your name?" 
+ask "What is your name?"
 output "Hello, " + INPUT + "!"
 
 Note: A while statement
@@ -34,12 +34,10 @@ while i < 10 do
 end
 
 Note: A repeat statement
-set i to 0
 set x to 10
-repeat x times and do
-    output i
-    set i to i + 1
+repeat x times using j
+    output j
 end
 
 Note: A single-line repeat statement
-output 'Hello, world!' repeat 5 times
+Note: output 'Hello, world!' repeat 5 times

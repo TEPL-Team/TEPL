@@ -4,7 +4,7 @@ from src.tokens import tokens, keywords
 # Define token rules for operators and delimiters
 t_PLUS = r'\+'
 t_MINUS = r'-'
-t_TIMES = r'\*'
+t_MULTIPLY = r'\*'
 t_DIVIDE = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -14,6 +14,8 @@ t_ET = r'=='
 t_GTE = r'>='
 t_LTE = r'<='
 t_NE = r'!='
+t_AND = r'AND'
+t_OR = r'OR'
 
 # Ignore spaces and tabs
 t_ignore = ' \t'
@@ -24,13 +26,13 @@ def t_COMMENT(t):
     pass  # Discard comments by not returning them
 
 # Define a rule for numbers
-def t_NUM(t):
+def t_DIGIT(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
 # Define a rule for text (strings)
-def t_TXT(t):
+def t_TEXT(t):
     r'(\'([^\\\'\n]|(\\.))*?\')|(\"([^\\\"\n]|(\\.))*?\")'
     t.value = t.value[1:-1]
     return t
@@ -51,7 +53,7 @@ def t_newline(t):
 
 # Define a rule for errors
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print(f"Illegal character '{t.value[0]}' at line {t.lineno}, position {t.lexpos}")
     t.lexer.skip(1)
 
 # Build the lexer

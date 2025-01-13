@@ -14,20 +14,25 @@ keywords = (
     'WHILE',
     'REPEAT',
     'TIMES',
-    'AND'
+    'USING',
+    'CONVERT',
+    'NUM',
+    'TXT',
+    'AND',
+    'OR'
 )
 
 # Define the tokens used in the language, including keywords
 tokens = (
-    'NUM',
+    'DIGIT',
     'PLUS',
     'MINUS',
-    'TIMES',
+    'MULTIPLY',
     'DIVIDE',
     'LPAREN',
     'RPAREN',
     'ID',
-    'TXT',
+    'TEXT',
     'GT',
     'LT',
     'ET',

@@ -1,6 +1,5 @@
 repeat 5 times using i
     repeat 5 times using j
-        output i
-        output j
+        output 'i: ' + convert i to txt + ', j: ' + convert j to txt
     end
 end
