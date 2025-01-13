@@ -1,0 +1,2479 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMMENT
+
+Grammar
+
+Rule 0     S' -> body
+Rule 1     body -> stmt
+Rule 2     body -> body stmt
+Rule 3     stmt -> set_stmt
+Rule 4     stmt -> output_stmt
+Rule 5     stmt -> if_then_stmt
+Rule 6     stmt -> input_stmt
+Rule 7     stmt -> while_stmt
+Rule 8     stmt -> repeat_stmt
+Rule 9     stmt -> stmt_rep
+Rule 10    var_stmt -> SET ID
+Rule 11    set_stmt -> var_stmt TO expr
+Rule 12    output_stmt -> OUTPUT expr
+Rule 13    if_then_stmt -> IF expr THEN body END
+Rule 14    input_stmt -> ASK TXT
+Rule 15    while_stmt -> WHILE condition DO body END
+Rule 16    repeat_stmt -> REPEAT expr TIMES AND DO body END
+Rule 17    stmt_rep -> stmt REPEAT expr TIMES
+Rule 18    expr -> binop
+Rule 19    expr -> condition
+Rule 20    binop -> expr PLUS expr
+Rule 21    binop -> expr MINUS expr
+Rule 22    binop -> expr TIMES expr
+Rule 23    binop -> expr DIVIDE expr
+Rule 24    condition -> expr GT expr
+Rule 25    condition -> expr LT expr
+Rule 26    condition -> expr ET expr
+Rule 27    condition -> expr GTE expr
+Rule 28    condition -> expr LTE expr
+Rule 29    condition -> expr NE expr
+Rule 30    expr -> NUM
+Rule 31    expr -> ID
+Rule 32    expr -> LPAREN expr RPAREN
+Rule 33    expr -> RANDOM NUMBER FROM expr TO expr
+Rule 34    expr -> TXT
+
+Terminals, with rules where they appear
+
+AND                  : 16
+ASK                  : 14
+COMMENT              : 
+DIVIDE               : 23
+DO                   : 15 16
+END                  : 13 15 16
+ET                   : 26
+FROM                 : 33
+GT                   : 24
+GTE                  : 27
+ID                   : 10 31
+IF                   : 13
+LPAREN               : 32
+LT                   : 25
+LTE                  : 28
+MINUS                : 21
+NE                   : 29
+NUM                  : 30
+NUMBER               : 33
+OUTPUT               : 12
+PLUS                 : 20
+RANDOM               : 33
+REPEAT               : 16 17
+RPAREN               : 32
+SET                  : 10
+THEN                 : 13
+TIMES                : 16 17 22
+TO                   : 11 33
+TXT                  : 14 34
+WHILE                : 15
+error                : 
+
+Nonterminals, with rules where they appear
+
+binop                : 18
+body                 : 2 13 15 16 0
+condition            : 15 19
+expr                 : 11 12 13 16 17 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 28 29 29 32 33 33
+if_then_stmt         : 5
+input_stmt           : 6
+output_stmt          : 4
+repeat_stmt          : 8
+set_stmt             : 3
+stmt                 : 1 2 17
+stmt_rep             : 9
+var_stmt             : 11
+while_stmt           : 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . body
+    (1) body -> . stmt
+    (2) body -> . body stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    body                           shift and go to state 1
+    stmt                           shift and go to state 2
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 1
+
+    (0) S' -> body .
+    (2) body -> body . stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    stmt                           shift and go to state 17
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 2
+
+    (1) body -> stmt .
+    (17) stmt_rep -> stmt . REPEAT expr TIMES
+
+  ! shift/reduce conflict for REPEAT resolved as shift
+    OUTPUT          reduce using rule 1 (body -> stmt .)
+    IF              reduce using rule 1 (body -> stmt .)
+    ASK             reduce using rule 1 (body -> stmt .)
+    WHILE           reduce using rule 1 (body -> stmt .)
+    SET             reduce using rule 1 (body -> stmt .)
+    $end            reduce using rule 1 (body -> stmt .)
+    END             reduce using rule 1 (body -> stmt .)
+    REPEAT          shift and go to state 18
+
+  ! REPEAT          [ reduce using rule 1 (body -> stmt .) ]
+
+
+state 3
+
+    (3) stmt -> set_stmt .
+
+    REPEAT          reduce using rule 3 (stmt -> set_stmt .)
+    OUTPUT          reduce using rule 3 (stmt -> set_stmt .)
+    IF              reduce using rule 3 (stmt -> set_stmt .)
+    ASK             reduce using rule 3 (stmt -> set_stmt .)
+    WHILE           reduce using rule 3 (stmt -> set_stmt .)
+    SET             reduce using rule 3 (stmt -> set_stmt .)
+    $end            reduce using rule 3 (stmt -> set_stmt .)
+    END             reduce using rule 3 (stmt -> set_stmt .)
+
+
+state 4
+
+    (4) stmt -> output_stmt .
+
+    REPEAT          reduce using rule 4 (stmt -> output_stmt .)
+    OUTPUT          reduce using rule 4 (stmt -> output_stmt .)
+    IF              reduce using rule 4 (stmt -> output_stmt .)
+    ASK             reduce using rule 4 (stmt -> output_stmt .)
+    WHILE           reduce using rule 4 (stmt -> output_stmt .)
+    SET             reduce using rule 4 (stmt -> output_stmt .)
+    $end            reduce using rule 4 (stmt -> output_stmt .)
+    END             reduce using rule 4 (stmt -> output_stmt .)
+
+
+state 5
+
+    (5) stmt -> if_then_stmt .
+
+    REPEAT          reduce using rule 5 (stmt -> if_then_stmt .)
+    OUTPUT          reduce using rule 5 (stmt -> if_then_stmt .)
+    IF              reduce using rule 5 (stmt -> if_then_stmt .)
+    ASK             reduce using rule 5 (stmt -> if_then_stmt .)
+    WHILE           reduce using rule 5 (stmt -> if_then_stmt .)
+    SET             reduce using rule 5 (stmt -> if_then_stmt .)
+    $end            reduce using rule 5 (stmt -> if_then_stmt .)
+    END             reduce using rule 5 (stmt -> if_then_stmt .)
+
+
+state 6
+
+    (6) stmt -> input_stmt .
+
+    REPEAT          reduce using rule 6 (stmt -> input_stmt .)
+    OUTPUT          reduce using rule 6 (stmt -> input_stmt .)
+    IF              reduce using rule 6 (stmt -> input_stmt .)
+    ASK             reduce using rule 6 (stmt -> input_stmt .)
+    WHILE           reduce using rule 6 (stmt -> input_stmt .)
+    SET             reduce using rule 6 (stmt -> input_stmt .)
+    $end            reduce using rule 6 (stmt -> input_stmt .)
+    END             reduce using rule 6 (stmt -> input_stmt .)
+
+
+state 7
+
+    (7) stmt -> while_stmt .
+
+    REPEAT          reduce using rule 7 (stmt -> while_stmt .)
+    OUTPUT          reduce using rule 7 (stmt -> while_stmt .)
+    IF              reduce using rule 7 (stmt -> while_stmt .)
+    ASK             reduce using rule 7 (stmt -> while_stmt .)
+    WHILE           reduce using rule 7 (stmt -> while_stmt .)
+    SET             reduce using rule 7 (stmt -> while_stmt .)
+    $end            reduce using rule 7 (stmt -> while_stmt .)
+    END             reduce using rule 7 (stmt -> while_stmt .)
+
+
+state 8
+
+    (8) stmt -> repeat_stmt .
+
+    REPEAT          reduce using rule 8 (stmt -> repeat_stmt .)
+    OUTPUT          reduce using rule 8 (stmt -> repeat_stmt .)
+    IF              reduce using rule 8 (stmt -> repeat_stmt .)
+    ASK             reduce using rule 8 (stmt -> repeat_stmt .)
+    WHILE           reduce using rule 8 (stmt -> repeat_stmt .)
+    SET             reduce using rule 8 (stmt -> repeat_stmt .)
+    $end            reduce using rule 8 (stmt -> repeat_stmt .)
+    END             reduce using rule 8 (stmt -> repeat_stmt .)
+
+
+state 9
+
+    (9) stmt -> stmt_rep .
+
+    REPEAT          reduce using rule 9 (stmt -> stmt_rep .)
+    OUTPUT          reduce using rule 9 (stmt -> stmt_rep .)
+    IF              reduce using rule 9 (stmt -> stmt_rep .)
+    ASK             reduce using rule 9 (stmt -> stmt_rep .)
+    WHILE           reduce using rule 9 (stmt -> stmt_rep .)
+    SET             reduce using rule 9 (stmt -> stmt_rep .)
+    $end            reduce using rule 9 (stmt -> stmt_rep .)
+    END             reduce using rule 9 (stmt -> stmt_rep .)
+
+
+state 10
+
+    (11) set_stmt -> var_stmt . TO expr
+
+    TO              shift and go to state 19
+
+
+state 11
+
+    (12) output_stmt -> OUTPUT . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 20
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 12
+
+    (13) if_then_stmt -> IF . expr THEN body END
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 28
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 13
+
+    (14) input_stmt -> ASK . TXT
+
+    TXT             shift and go to state 29
+
+
+state 14
+
+    (15) while_stmt -> WHILE . condition DO body END
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    condition                      shift and go to state 30
+    expr                           shift and go to state 31
+    binop                          shift and go to state 21
+
+state 15
+
+    (16) repeat_stmt -> REPEAT . expr TIMES AND DO body END
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 32
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 16
+
+    (10) var_stmt -> SET . ID
+
+    ID              shift and go to state 33
+
+
+state 17
+
+    (2) body -> body stmt .
+    (17) stmt_rep -> stmt . REPEAT expr TIMES
+
+  ! shift/reduce conflict for REPEAT resolved as shift
+    OUTPUT          reduce using rule 2 (body -> body stmt .)
+    IF              reduce using rule 2 (body -> body stmt .)
+    ASK             reduce using rule 2 (body -> body stmt .)
+    WHILE           reduce using rule 2 (body -> body stmt .)
+    SET             reduce using rule 2 (body -> body stmt .)
+    $end            reduce using rule 2 (body -> body stmt .)
+    END             reduce using rule 2 (body -> body stmt .)
+    REPEAT          shift and go to state 18
+
+  ! REPEAT          [ reduce using rule 2 (body -> body stmt .) ]
+
+
+state 18
+
+    (17) stmt_rep -> stmt REPEAT . expr TIMES
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 34
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 19
+
+    (11) set_stmt -> var_stmt TO . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 35
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 20
+
+    (12) output_stmt -> OUTPUT expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    REPEAT          reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    OUTPUT          reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    IF              reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    ASK             reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    WHILE           reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    SET             reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    $end            reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    END             reduce using rule 12 (output_stmt -> OUTPUT expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 21
+
+    (18) expr -> binop .
+
+    PLUS            reduce using rule 18 (expr -> binop .)
+    MINUS           reduce using rule 18 (expr -> binop .)
+    TIMES           reduce using rule 18 (expr -> binop .)
+    DIVIDE          reduce using rule 18 (expr -> binop .)
+    GT              reduce using rule 18 (expr -> binop .)
+    LT              reduce using rule 18 (expr -> binop .)
+    ET              reduce using rule 18 (expr -> binop .)
+    GTE             reduce using rule 18 (expr -> binop .)
+    LTE             reduce using rule 18 (expr -> binop .)
+    NE              reduce using rule 18 (expr -> binop .)
+    REPEAT          reduce using rule 18 (expr -> binop .)
+    OUTPUT          reduce using rule 18 (expr -> binop .)
+    IF              reduce using rule 18 (expr -> binop .)
+    ASK             reduce using rule 18 (expr -> binop .)
+    WHILE           reduce using rule 18 (expr -> binop .)
+    SET             reduce using rule 18 (expr -> binop .)
+    $end            reduce using rule 18 (expr -> binop .)
+    END             reduce using rule 18 (expr -> binop .)
+    THEN            reduce using rule 18 (expr -> binop .)
+    RPAREN          reduce using rule 18 (expr -> binop .)
+    DO              reduce using rule 18 (expr -> binop .)
+    TO              reduce using rule 18 (expr -> binop .)
+
+
+state 22
+
+    (19) expr -> condition .
+
+    PLUS            reduce using rule 19 (expr -> condition .)
+    MINUS           reduce using rule 19 (expr -> condition .)
+    TIMES           reduce using rule 19 (expr -> condition .)
+    DIVIDE          reduce using rule 19 (expr -> condition .)
+    GT              reduce using rule 19 (expr -> condition .)
+    LT              reduce using rule 19 (expr -> condition .)
+    ET              reduce using rule 19 (expr -> condition .)
+    GTE             reduce using rule 19 (expr -> condition .)
+    LTE             reduce using rule 19 (expr -> condition .)
+    NE              reduce using rule 19 (expr -> condition .)
+    REPEAT          reduce using rule 19 (expr -> condition .)
+    OUTPUT          reduce using rule 19 (expr -> condition .)
+    IF              reduce using rule 19 (expr -> condition .)
+    ASK             reduce using rule 19 (expr -> condition .)
+    WHILE           reduce using rule 19 (expr -> condition .)
+    SET             reduce using rule 19 (expr -> condition .)
+    $end            reduce using rule 19 (expr -> condition .)
+    END             reduce using rule 19 (expr -> condition .)
+    THEN            reduce using rule 19 (expr -> condition .)
+    RPAREN          reduce using rule 19 (expr -> condition .)
+    DO              reduce using rule 19 (expr -> condition .)
+    TO              reduce using rule 19 (expr -> condition .)
+
+
+state 23
+
+    (30) expr -> NUM .
+
+    PLUS            reduce using rule 30 (expr -> NUM .)
+    MINUS           reduce using rule 30 (expr -> NUM .)
+    TIMES           reduce using rule 30 (expr -> NUM .)
+    DIVIDE          reduce using rule 30 (expr -> NUM .)
+    GT              reduce using rule 30 (expr -> NUM .)
+    LT              reduce using rule 30 (expr -> NUM .)
+    ET              reduce using rule 30 (expr -> NUM .)
+    GTE             reduce using rule 30 (expr -> NUM .)
+    LTE             reduce using rule 30 (expr -> NUM .)
+    NE              reduce using rule 30 (expr -> NUM .)
+    REPEAT          reduce using rule 30 (expr -> NUM .)
+    OUTPUT          reduce using rule 30 (expr -> NUM .)
+    IF              reduce using rule 30 (expr -> NUM .)
+    ASK             reduce using rule 30 (expr -> NUM .)
+    WHILE           reduce using rule 30 (expr -> NUM .)
+    SET             reduce using rule 30 (expr -> NUM .)
+    $end            reduce using rule 30 (expr -> NUM .)
+    END             reduce using rule 30 (expr -> NUM .)
+    THEN            reduce using rule 30 (expr -> NUM .)
+    RPAREN          reduce using rule 30 (expr -> NUM .)
+    DO              reduce using rule 30 (expr -> NUM .)
+    TO              reduce using rule 30 (expr -> NUM .)
+
+
+state 24
+
+    (31) expr -> ID .
+
+    PLUS            reduce using rule 31 (expr -> ID .)
+    MINUS           reduce using rule 31 (expr -> ID .)
+    TIMES           reduce using rule 31 (expr -> ID .)
+    DIVIDE          reduce using rule 31 (expr -> ID .)
+    GT              reduce using rule 31 (expr -> ID .)
+    LT              reduce using rule 31 (expr -> ID .)
+    ET              reduce using rule 31 (expr -> ID .)
+    GTE             reduce using rule 31 (expr -> ID .)
+    LTE             reduce using rule 31 (expr -> ID .)
+    NE              reduce using rule 31 (expr -> ID .)
+    REPEAT          reduce using rule 31 (expr -> ID .)
+    OUTPUT          reduce using rule 31 (expr -> ID .)
+    IF              reduce using rule 31 (expr -> ID .)
+    ASK             reduce using rule 31 (expr -> ID .)
+    WHILE           reduce using rule 31 (expr -> ID .)
+    SET             reduce using rule 31 (expr -> ID .)
+    $end            reduce using rule 31 (expr -> ID .)
+    END             reduce using rule 31 (expr -> ID .)
+    THEN            reduce using rule 31 (expr -> ID .)
+    RPAREN          reduce using rule 31 (expr -> ID .)
+    DO              reduce using rule 31 (expr -> ID .)
+    TO              reduce using rule 31 (expr -> ID .)
+
+
+state 25
+
+    (32) expr -> LPAREN . expr RPAREN
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 46
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 26
+
+    (33) expr -> RANDOM . NUMBER FROM expr TO expr
+
+    NUMBER          shift and go to state 47
+
+
+state 27
+
+    (34) expr -> TXT .
+
+    PLUS            reduce using rule 34 (expr -> TXT .)
+    MINUS           reduce using rule 34 (expr -> TXT .)
+    TIMES           reduce using rule 34 (expr -> TXT .)
+    DIVIDE          reduce using rule 34 (expr -> TXT .)
+    GT              reduce using rule 34 (expr -> TXT .)
+    LT              reduce using rule 34 (expr -> TXT .)
+    ET              reduce using rule 34 (expr -> TXT .)
+    GTE             reduce using rule 34 (expr -> TXT .)
+    LTE             reduce using rule 34 (expr -> TXT .)
+    NE              reduce using rule 34 (expr -> TXT .)
+    REPEAT          reduce using rule 34 (expr -> TXT .)
+    OUTPUT          reduce using rule 34 (expr -> TXT .)
+    IF              reduce using rule 34 (expr -> TXT .)
+    ASK             reduce using rule 34 (expr -> TXT .)
+    WHILE           reduce using rule 34 (expr -> TXT .)
+    SET             reduce using rule 34 (expr -> TXT .)
+    $end            reduce using rule 34 (expr -> TXT .)
+    END             reduce using rule 34 (expr -> TXT .)
+    THEN            reduce using rule 34 (expr -> TXT .)
+    RPAREN          reduce using rule 34 (expr -> TXT .)
+    DO              reduce using rule 34 (expr -> TXT .)
+    TO              reduce using rule 34 (expr -> TXT .)
+
+
+state 28
+
+    (13) if_then_stmt -> IF expr . THEN body END
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    THEN            shift and go to state 48
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 29
+
+    (14) input_stmt -> ASK TXT .
+
+    REPEAT          reduce using rule 14 (input_stmt -> ASK TXT .)
+    OUTPUT          reduce using rule 14 (input_stmt -> ASK TXT .)
+    IF              reduce using rule 14 (input_stmt -> ASK TXT .)
+    ASK             reduce using rule 14 (input_stmt -> ASK TXT .)
+    WHILE           reduce using rule 14 (input_stmt -> ASK TXT .)
+    SET             reduce using rule 14 (input_stmt -> ASK TXT .)
+    $end            reduce using rule 14 (input_stmt -> ASK TXT .)
+    END             reduce using rule 14 (input_stmt -> ASK TXT .)
+
+
+state 30
+
+    (15) while_stmt -> WHILE condition . DO body END
+    (19) expr -> condition .
+
+    DO              shift and go to state 49
+    GT              reduce using rule 19 (expr -> condition .)
+    LT              reduce using rule 19 (expr -> condition .)
+    ET              reduce using rule 19 (expr -> condition .)
+    GTE             reduce using rule 19 (expr -> condition .)
+    LTE             reduce using rule 19 (expr -> condition .)
+    NE              reduce using rule 19 (expr -> condition .)
+    PLUS            reduce using rule 19 (expr -> condition .)
+    MINUS           reduce using rule 19 (expr -> condition .)
+    TIMES           reduce using rule 19 (expr -> condition .)
+    DIVIDE          reduce using rule 19 (expr -> condition .)
+
+
+state 31
+
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+
+
+state 32
+
+    (16) repeat_stmt -> REPEAT expr . TIMES AND DO body END
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    TIMES           shift and go to state 50
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 33
+
+    (10) var_stmt -> SET ID .
+
+    TO              reduce using rule 10 (var_stmt -> SET ID .)
+
+
+state 34
+
+    (17) stmt_rep -> stmt REPEAT expr . TIMES
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    TIMES           shift and go to state 51
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 35
+
+    (11) set_stmt -> var_stmt TO expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    REPEAT          reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    OUTPUT          reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    IF              reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    ASK             reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    WHILE           reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    SET             reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    $end            reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    END             reduce using rule 11 (set_stmt -> var_stmt TO expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 36
+
+    (20) binop -> expr PLUS . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 52
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 37
+
+    (21) binop -> expr MINUS . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 53
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 38
+
+    (22) binop -> expr TIMES . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 54
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 39
+
+    (23) binop -> expr DIVIDE . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 55
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 40
+
+    (24) condition -> expr GT . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 56
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 41
+
+    (25) condition -> expr LT . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 57
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 42
+
+    (26) condition -> expr ET . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 58
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 43
+
+    (27) condition -> expr GTE . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 59
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 44
+
+    (28) condition -> expr LTE . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 60
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 45
+
+    (29) condition -> expr NE . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 61
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 46
+
+    (32) expr -> LPAREN expr . RPAREN
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    RPAREN          shift and go to state 62
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 47
+
+    (33) expr -> RANDOM NUMBER . FROM expr TO expr
+
+    FROM            shift and go to state 63
+
+
+state 48
+
+    (13) if_then_stmt -> IF expr THEN . body END
+    (1) body -> . stmt
+    (2) body -> . body stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    body                           shift and go to state 64
+    stmt                           shift and go to state 2
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 49
+
+    (15) while_stmt -> WHILE condition DO . body END
+    (1) body -> . stmt
+    (2) body -> . body stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    body                           shift and go to state 65
+    stmt                           shift and go to state 2
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 50
+
+    (16) repeat_stmt -> REPEAT expr TIMES . AND DO body END
+    (22) binop -> expr TIMES . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    AND             shift and go to state 66
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 54
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 51
+
+    (17) stmt_rep -> stmt REPEAT expr TIMES .
+    (22) binop -> expr TIMES . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    REPEAT          reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    OUTPUT          reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    IF              reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    ASK             reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    WHILE           reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    SET             reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    $end            reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    END             reduce using rule 17 (stmt_rep -> stmt REPEAT expr TIMES .)
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 54
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 52
+
+    (20) binop -> expr PLUS expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 20 (binop -> expr PLUS expr .)
+    OUTPUT          reduce using rule 20 (binop -> expr PLUS expr .)
+    IF              reduce using rule 20 (binop -> expr PLUS expr .)
+    ASK             reduce using rule 20 (binop -> expr PLUS expr .)
+    WHILE           reduce using rule 20 (binop -> expr PLUS expr .)
+    SET             reduce using rule 20 (binop -> expr PLUS expr .)
+    $end            reduce using rule 20 (binop -> expr PLUS expr .)
+    END             reduce using rule 20 (binop -> expr PLUS expr .)
+    THEN            reduce using rule 20 (binop -> expr PLUS expr .)
+    RPAREN          reduce using rule 20 (binop -> expr PLUS expr .)
+    DO              reduce using rule 20 (binop -> expr PLUS expr .)
+    TO              reduce using rule 20 (binop -> expr PLUS expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! MINUS           [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! TIMES           [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! DIVIDE          [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! GT              [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! LT              [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! ET              [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! GTE             [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! LTE             [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+  ! NE              [ reduce using rule 20 (binop -> expr PLUS expr .) ]
+
+
+state 53
+
+    (21) binop -> expr MINUS expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 21 (binop -> expr MINUS expr .)
+    OUTPUT          reduce using rule 21 (binop -> expr MINUS expr .)
+    IF              reduce using rule 21 (binop -> expr MINUS expr .)
+    ASK             reduce using rule 21 (binop -> expr MINUS expr .)
+    WHILE           reduce using rule 21 (binop -> expr MINUS expr .)
+    SET             reduce using rule 21 (binop -> expr MINUS expr .)
+    $end            reduce using rule 21 (binop -> expr MINUS expr .)
+    END             reduce using rule 21 (binop -> expr MINUS expr .)
+    THEN            reduce using rule 21 (binop -> expr MINUS expr .)
+    RPAREN          reduce using rule 21 (binop -> expr MINUS expr .)
+    DO              reduce using rule 21 (binop -> expr MINUS expr .)
+    TO              reduce using rule 21 (binop -> expr MINUS expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! MINUS           [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! TIMES           [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! DIVIDE          [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! GT              [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! LT              [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! ET              [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! GTE             [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! LTE             [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+  ! NE              [ reduce using rule 21 (binop -> expr MINUS expr .) ]
+
+
+state 54
+
+    (22) binop -> expr TIMES expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 22 (binop -> expr TIMES expr .)
+    OUTPUT          reduce using rule 22 (binop -> expr TIMES expr .)
+    IF              reduce using rule 22 (binop -> expr TIMES expr .)
+    ASK             reduce using rule 22 (binop -> expr TIMES expr .)
+    WHILE           reduce using rule 22 (binop -> expr TIMES expr .)
+    SET             reduce using rule 22 (binop -> expr TIMES expr .)
+    $end            reduce using rule 22 (binop -> expr TIMES expr .)
+    END             reduce using rule 22 (binop -> expr TIMES expr .)
+    THEN            reduce using rule 22 (binop -> expr TIMES expr .)
+    RPAREN          reduce using rule 22 (binop -> expr TIMES expr .)
+    DO              reduce using rule 22 (binop -> expr TIMES expr .)
+    TO              reduce using rule 22 (binop -> expr TIMES expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! MINUS           [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! TIMES           [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! DIVIDE          [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! GT              [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! LT              [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! ET              [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! GTE             [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! LTE             [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+  ! NE              [ reduce using rule 22 (binop -> expr TIMES expr .) ]
+
+
+state 55
+
+    (23) binop -> expr DIVIDE expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 23 (binop -> expr DIVIDE expr .)
+    OUTPUT          reduce using rule 23 (binop -> expr DIVIDE expr .)
+    IF              reduce using rule 23 (binop -> expr DIVIDE expr .)
+    ASK             reduce using rule 23 (binop -> expr DIVIDE expr .)
+    WHILE           reduce using rule 23 (binop -> expr DIVIDE expr .)
+    SET             reduce using rule 23 (binop -> expr DIVIDE expr .)
+    $end            reduce using rule 23 (binop -> expr DIVIDE expr .)
+    END             reduce using rule 23 (binop -> expr DIVIDE expr .)
+    THEN            reduce using rule 23 (binop -> expr DIVIDE expr .)
+    RPAREN          reduce using rule 23 (binop -> expr DIVIDE expr .)
+    DO              reduce using rule 23 (binop -> expr DIVIDE expr .)
+    TO              reduce using rule 23 (binop -> expr DIVIDE expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! MINUS           [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! TIMES           [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! DIVIDE          [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! GT              [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! LT              [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! ET              [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! GTE             [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! LTE             [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+  ! NE              [ reduce using rule 23 (binop -> expr DIVIDE expr .) ]
+
+
+state 56
+
+    (24) condition -> expr GT expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 24 (condition -> expr GT expr .)
+    OUTPUT          reduce using rule 24 (condition -> expr GT expr .)
+    IF              reduce using rule 24 (condition -> expr GT expr .)
+    ASK             reduce using rule 24 (condition -> expr GT expr .)
+    WHILE           reduce using rule 24 (condition -> expr GT expr .)
+    SET             reduce using rule 24 (condition -> expr GT expr .)
+    $end            reduce using rule 24 (condition -> expr GT expr .)
+    END             reduce using rule 24 (condition -> expr GT expr .)
+    THEN            reduce using rule 24 (condition -> expr GT expr .)
+    DO              reduce using rule 24 (condition -> expr GT expr .)
+    RPAREN          reduce using rule 24 (condition -> expr GT expr .)
+    TO              reduce using rule 24 (condition -> expr GT expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! MINUS           [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! TIMES           [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! DIVIDE          [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! GT              [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! LT              [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! ET              [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! GTE             [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! LTE             [ reduce using rule 24 (condition -> expr GT expr .) ]
+  ! NE              [ reduce using rule 24 (condition -> expr GT expr .) ]
+
+
+state 57
+
+    (25) condition -> expr LT expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 25 (condition -> expr LT expr .)
+    OUTPUT          reduce using rule 25 (condition -> expr LT expr .)
+    IF              reduce using rule 25 (condition -> expr LT expr .)
+    ASK             reduce using rule 25 (condition -> expr LT expr .)
+    WHILE           reduce using rule 25 (condition -> expr LT expr .)
+    SET             reduce using rule 25 (condition -> expr LT expr .)
+    $end            reduce using rule 25 (condition -> expr LT expr .)
+    END             reduce using rule 25 (condition -> expr LT expr .)
+    THEN            reduce using rule 25 (condition -> expr LT expr .)
+    DO              reduce using rule 25 (condition -> expr LT expr .)
+    RPAREN          reduce using rule 25 (condition -> expr LT expr .)
+    TO              reduce using rule 25 (condition -> expr LT expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! MINUS           [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! TIMES           [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! DIVIDE          [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! GT              [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! LT              [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! ET              [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! GTE             [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! LTE             [ reduce using rule 25 (condition -> expr LT expr .) ]
+  ! NE              [ reduce using rule 25 (condition -> expr LT expr .) ]
+
+
+state 58
+
+    (26) condition -> expr ET expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 26 (condition -> expr ET expr .)
+    OUTPUT          reduce using rule 26 (condition -> expr ET expr .)
+    IF              reduce using rule 26 (condition -> expr ET expr .)
+    ASK             reduce using rule 26 (condition -> expr ET expr .)
+    WHILE           reduce using rule 26 (condition -> expr ET expr .)
+    SET             reduce using rule 26 (condition -> expr ET expr .)
+    $end            reduce using rule 26 (condition -> expr ET expr .)
+    END             reduce using rule 26 (condition -> expr ET expr .)
+    THEN            reduce using rule 26 (condition -> expr ET expr .)
+    DO              reduce using rule 26 (condition -> expr ET expr .)
+    RPAREN          reduce using rule 26 (condition -> expr ET expr .)
+    TO              reduce using rule 26 (condition -> expr ET expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! MINUS           [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! TIMES           [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! DIVIDE          [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! GT              [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! LT              [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! ET              [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! GTE             [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! LTE             [ reduce using rule 26 (condition -> expr ET expr .) ]
+  ! NE              [ reduce using rule 26 (condition -> expr ET expr .) ]
+
+
+state 59
+
+    (27) condition -> expr GTE expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 27 (condition -> expr GTE expr .)
+    OUTPUT          reduce using rule 27 (condition -> expr GTE expr .)
+    IF              reduce using rule 27 (condition -> expr GTE expr .)
+    ASK             reduce using rule 27 (condition -> expr GTE expr .)
+    WHILE           reduce using rule 27 (condition -> expr GTE expr .)
+    SET             reduce using rule 27 (condition -> expr GTE expr .)
+    $end            reduce using rule 27 (condition -> expr GTE expr .)
+    END             reduce using rule 27 (condition -> expr GTE expr .)
+    THEN            reduce using rule 27 (condition -> expr GTE expr .)
+    DO              reduce using rule 27 (condition -> expr GTE expr .)
+    RPAREN          reduce using rule 27 (condition -> expr GTE expr .)
+    TO              reduce using rule 27 (condition -> expr GTE expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! MINUS           [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! TIMES           [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! DIVIDE          [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! GT              [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! LT              [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! ET              [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! GTE             [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! LTE             [ reduce using rule 27 (condition -> expr GTE expr .) ]
+  ! NE              [ reduce using rule 27 (condition -> expr GTE expr .) ]
+
+
+state 60
+
+    (28) condition -> expr LTE expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 28 (condition -> expr LTE expr .)
+    OUTPUT          reduce using rule 28 (condition -> expr LTE expr .)
+    IF              reduce using rule 28 (condition -> expr LTE expr .)
+    ASK             reduce using rule 28 (condition -> expr LTE expr .)
+    WHILE           reduce using rule 28 (condition -> expr LTE expr .)
+    SET             reduce using rule 28 (condition -> expr LTE expr .)
+    $end            reduce using rule 28 (condition -> expr LTE expr .)
+    END             reduce using rule 28 (condition -> expr LTE expr .)
+    THEN            reduce using rule 28 (condition -> expr LTE expr .)
+    DO              reduce using rule 28 (condition -> expr LTE expr .)
+    RPAREN          reduce using rule 28 (condition -> expr LTE expr .)
+    TO              reduce using rule 28 (condition -> expr LTE expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! MINUS           [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! TIMES           [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! DIVIDE          [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! GT              [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! LT              [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! ET              [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! GTE             [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! LTE             [ reduce using rule 28 (condition -> expr LTE expr .) ]
+  ! NE              [ reduce using rule 28 (condition -> expr LTE expr .) ]
+
+
+state 61
+
+    (29) condition -> expr NE expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 29 (condition -> expr NE expr .)
+    OUTPUT          reduce using rule 29 (condition -> expr NE expr .)
+    IF              reduce using rule 29 (condition -> expr NE expr .)
+    ASK             reduce using rule 29 (condition -> expr NE expr .)
+    WHILE           reduce using rule 29 (condition -> expr NE expr .)
+    SET             reduce using rule 29 (condition -> expr NE expr .)
+    $end            reduce using rule 29 (condition -> expr NE expr .)
+    END             reduce using rule 29 (condition -> expr NE expr .)
+    THEN            reduce using rule 29 (condition -> expr NE expr .)
+    DO              reduce using rule 29 (condition -> expr NE expr .)
+    RPAREN          reduce using rule 29 (condition -> expr NE expr .)
+    TO              reduce using rule 29 (condition -> expr NE expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! MINUS           [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! TIMES           [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! DIVIDE          [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! GT              [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! LT              [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! ET              [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! GTE             [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! LTE             [ reduce using rule 29 (condition -> expr NE expr .) ]
+  ! NE              [ reduce using rule 29 (condition -> expr NE expr .) ]
+
+
+state 62
+
+    (32) expr -> LPAREN expr RPAREN .
+
+    PLUS            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    GT              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    LT              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    ET              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    GTE             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    LTE             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    NE              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    REPEAT          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    OUTPUT          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    IF              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    ASK             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    WHILE           reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    SET             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    $end            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    END             reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    THEN            reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    DO              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+    TO              reduce using rule 32 (expr -> LPAREN expr RPAREN .)
+
+
+state 63
+
+    (33) expr -> RANDOM NUMBER FROM . expr TO expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 67
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 64
+
+    (13) if_then_stmt -> IF expr THEN body . END
+    (2) body -> body . stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    END             shift and go to state 68
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    stmt                           shift and go to state 17
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 65
+
+    (15) while_stmt -> WHILE condition DO body . END
+    (2) body -> body . stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    END             shift and go to state 69
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    stmt                           shift and go to state 17
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 66
+
+    (16) repeat_stmt -> REPEAT expr TIMES AND . DO body END
+
+    DO              shift and go to state 70
+
+
+state 67
+
+    (33) expr -> RANDOM NUMBER FROM expr . TO expr
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+    TO              shift and go to state 71
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+
+state 68
+
+    (13) if_then_stmt -> IF expr THEN body END .
+
+    REPEAT          reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    OUTPUT          reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    IF              reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    ASK             reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    WHILE           reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    SET             reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    $end            reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+    END             reduce using rule 13 (if_then_stmt -> IF expr THEN body END .)
+
+
+state 69
+
+    (15) while_stmt -> WHILE condition DO body END .
+
+    REPEAT          reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    OUTPUT          reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    IF              reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    ASK             reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    WHILE           reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    SET             reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    $end            reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+    END             reduce using rule 15 (while_stmt -> WHILE condition DO body END .)
+
+
+state 70
+
+    (16) repeat_stmt -> REPEAT expr TIMES AND DO . body END
+    (1) body -> . stmt
+    (2) body -> . body stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    body                           shift and go to state 72
+    stmt                           shift and go to state 2
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 71
+
+    (33) expr -> RANDOM NUMBER FROM expr TO . expr
+    (18) expr -> . binop
+    (19) expr -> . condition
+    (30) expr -> . NUM
+    (31) expr -> . ID
+    (32) expr -> . LPAREN expr RPAREN
+    (33) expr -> . RANDOM NUMBER FROM expr TO expr
+    (34) expr -> . TXT
+    (20) binop -> . expr PLUS expr
+    (21) binop -> . expr MINUS expr
+    (22) binop -> . expr TIMES expr
+    (23) binop -> . expr DIVIDE expr
+    (24) condition -> . expr GT expr
+    (25) condition -> . expr LT expr
+    (26) condition -> . expr ET expr
+    (27) condition -> . expr GTE expr
+    (28) condition -> . expr LTE expr
+    (29) condition -> . expr NE expr
+
+    NUM             shift and go to state 23
+    ID              shift and go to state 24
+    LPAREN          shift and go to state 25
+    RANDOM          shift and go to state 26
+    TXT             shift and go to state 27
+
+    expr                           shift and go to state 73
+    binop                          shift and go to state 21
+    condition                      shift and go to state 22
+
+state 72
+
+    (16) repeat_stmt -> REPEAT expr TIMES AND DO body . END
+    (2) body -> body . stmt
+    (3) stmt -> . set_stmt
+    (4) stmt -> . output_stmt
+    (5) stmt -> . if_then_stmt
+    (6) stmt -> . input_stmt
+    (7) stmt -> . while_stmt
+    (8) stmt -> . repeat_stmt
+    (9) stmt -> . stmt_rep
+    (11) set_stmt -> . var_stmt TO expr
+    (12) output_stmt -> . OUTPUT expr
+    (13) if_then_stmt -> . IF expr THEN body END
+    (14) input_stmt -> . ASK TXT
+    (15) while_stmt -> . WHILE condition DO body END
+    (16) repeat_stmt -> . REPEAT expr TIMES AND DO body END
+    (17) stmt_rep -> . stmt REPEAT expr TIMES
+    (10) var_stmt -> . SET ID
+
+    END             shift and go to state 74
+    OUTPUT          shift and go to state 11
+    IF              shift and go to state 12
+    ASK             shift and go to state 13
+    WHILE           shift and go to state 14
+    REPEAT          shift and go to state 15
+    SET             shift and go to state 16
+
+    stmt                           shift and go to state 17
+    set_stmt                       shift and go to state 3
+    output_stmt                    shift and go to state 4
+    if_then_stmt                   shift and go to state 5
+    input_stmt                     shift and go to state 6
+    while_stmt                     shift and go to state 7
+    repeat_stmt                    shift and go to state 8
+    stmt_rep                       shift and go to state 9
+    var_stmt                       shift and go to state 10
+
+state 73
+
+    (33) expr -> RANDOM NUMBER FROM expr TO expr .
+    (20) binop -> expr . PLUS expr
+    (21) binop -> expr . MINUS expr
+    (22) binop -> expr . TIMES expr
+    (23) binop -> expr . DIVIDE expr
+    (24) condition -> expr . GT expr
+    (25) condition -> expr . LT expr
+    (26) condition -> expr . ET expr
+    (27) condition -> expr . GTE expr
+    (28) condition -> expr . LTE expr
+    (29) condition -> expr . NE expr
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for ET resolved as shift
+  ! shift/reduce conflict for GTE resolved as shift
+  ! shift/reduce conflict for LTE resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+    REPEAT          reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    OUTPUT          reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    IF              reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    ASK             reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    WHILE           reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    SET             reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    $end            reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    END             reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    THEN            reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    RPAREN          reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    DO              reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    TO              reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .)
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    GT              shift and go to state 40
+    LT              shift and go to state 41
+    ET              shift and go to state 42
+    GTE             shift and go to state 43
+    LTE             shift and go to state 44
+    NE              shift and go to state 45
+
+  ! PLUS            [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! MINUS           [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! TIMES           [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! DIVIDE          [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! GT              [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! LT              [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! ET              [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! GTE             [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! LTE             [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+  ! NE              [ reduce using rule 33 (expr -> RANDOM NUMBER FROM expr TO expr .) ]
+
+
+state 74
+
+    (16) repeat_stmt -> REPEAT expr TIMES AND DO body END .
+
+    REPEAT          reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    OUTPUT          reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    IF              reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    ASK             reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    WHILE           reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    SET             reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    $end            reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+    END             reduce using rule 16 (repeat_stmt -> REPEAT expr TIMES AND DO body END .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for REPEAT in state 2 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 17 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 52 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 52 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 52 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 52 resolved as shift
+WARNING: shift/reduce conflict for GT in state 52 resolved as shift
+WARNING: shift/reduce conflict for LT in state 52 resolved as shift
+WARNING: shift/reduce conflict for ET in state 52 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 52 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 52 resolved as shift
+WARNING: shift/reduce conflict for NE in state 52 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 53 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 53 resolved as shift
+WARNING: shift/reduce conflict for GT in state 53 resolved as shift
+WARNING: shift/reduce conflict for LT in state 53 resolved as shift
+WARNING: shift/reduce conflict for ET in state 53 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 53 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 53 resolved as shift
+WARNING: shift/reduce conflict for NE in state 53 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 54 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 54 resolved as shift
+WARNING: shift/reduce conflict for GT in state 54 resolved as shift
+WARNING: shift/reduce conflict for LT in state 54 resolved as shift
+WARNING: shift/reduce conflict for ET in state 54 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 54 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 54 resolved as shift
+WARNING: shift/reduce conflict for NE in state 54 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 55 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 55 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 55 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 55 resolved as shift
+WARNING: shift/reduce conflict for GT in state 55 resolved as shift
+WARNING: shift/reduce conflict for LT in state 55 resolved as shift
+WARNING: shift/reduce conflict for ET in state 55 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 55 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 55 resolved as shift
+WARNING: shift/reduce conflict for NE in state 55 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 56 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 56 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 56 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 56 resolved as shift
+WARNING: shift/reduce conflict for GT in state 56 resolved as shift
+WARNING: shift/reduce conflict for LT in state 56 resolved as shift
+WARNING: shift/reduce conflict for ET in state 56 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 56 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 56 resolved as shift
+WARNING: shift/reduce conflict for NE in state 56 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 57 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 57 resolved as shift
+WARNING: shift/reduce conflict for GT in state 57 resolved as shift
+WARNING: shift/reduce conflict for LT in state 57 resolved as shift
+WARNING: shift/reduce conflict for ET in state 57 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 57 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 57 resolved as shift
+WARNING: shift/reduce conflict for NE in state 57 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 58 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 58 resolved as shift
+WARNING: shift/reduce conflict for GT in state 58 resolved as shift
+WARNING: shift/reduce conflict for LT in state 58 resolved as shift
+WARNING: shift/reduce conflict for ET in state 58 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 58 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 58 resolved as shift
+WARNING: shift/reduce conflict for NE in state 58 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 59 resolved as shift
+WARNING: shift/reduce conflict for GT in state 59 resolved as shift
+WARNING: shift/reduce conflict for LT in state 59 resolved as shift
+WARNING: shift/reduce conflict for ET in state 59 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 59 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 59 resolved as shift
+WARNING: shift/reduce conflict for NE in state 59 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 60 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 60 resolved as shift
+WARNING: shift/reduce conflict for GT in state 60 resolved as shift
+WARNING: shift/reduce conflict for LT in state 60 resolved as shift
+WARNING: shift/reduce conflict for ET in state 60 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 60 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 60 resolved as shift
+WARNING: shift/reduce conflict for NE in state 60 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 61 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 61 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 61 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 61 resolved as shift
+WARNING: shift/reduce conflict for GT in state 61 resolved as shift
+WARNING: shift/reduce conflict for LT in state 61 resolved as shift
+WARNING: shift/reduce conflict for ET in state 61 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 61 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 61 resolved as shift
+WARNING: shift/reduce conflict for NE in state 61 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 73 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 73 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 73 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 73 resolved as shift
+WARNING: shift/reduce conflict for GT in state 73 resolved as shift
+WARNING: shift/reduce conflict for LT in state 73 resolved as shift
+WARNING: shift/reduce conflict for ET in state 73 resolved as shift
+WARNING: shift/reduce conflict for GTE in state 73 resolved as shift
+WARNING: shift/reduce conflict for LTE in state 73 resolved as shift
+WARNING: shift/reduce conflict for NE in state 73 resolved as shift
