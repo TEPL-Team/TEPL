@@ -1,5 +1,5 @@
 from ply import yacc
-from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, And, Or
+from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert
 from src.tokens import tokens
 
 # Define the grammar rules for the language
@@ -94,12 +94,7 @@ def p_condition(p):
               | expr AND expr
               | expr OR expr
     '''
-    if p[2] == 'AND':
-        p[0] = And(p[1], p[3])
-    elif p[2] == 'OR':
-        p[0] = Or(p[1], p[3])
-    else:
-        p[0] = Condition(p[1], p[2], p[3])
+    p[0] = Condition(p[1], p[2], p[3])
 
 def p_number(p):
     '''expr : DIGIT'''

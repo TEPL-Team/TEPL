@@ -1,4 +1,4 @@
-from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, And, Or
+from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert
 import random
 from typing import Union
 
@@ -63,6 +63,7 @@ def interpret(body):
 
 # Evaluate expressions
 def expr(node):
+    print(node)
     try:
         if isinstance(node, Number):
             return node.value
@@ -124,12 +125,6 @@ def expr(node):
                 return str(value)
             else:
                 raise TypeError(f"Expected 'NUM' or 'TXT' as datatype, got {datatype}")
-
-        elif isinstance(node, And):
-            return expr(node.left) and expr(node.right)
-
-        elif isinstance(node, Or):
-            return expr(node.left) or expr(node.right)
 
         else:
             raise Exception('Unknown expression type')

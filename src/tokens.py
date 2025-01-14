@@ -18,8 +18,6 @@ keywords = (
     'CONVERT',
     'NUM',
     'TXT',
-    'AND',
-    'OR'
 )
 
 # Define the tokens used in the language, including keywords

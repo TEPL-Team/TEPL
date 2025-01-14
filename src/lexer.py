@@ -14,8 +14,6 @@ t_ET = r'=='
 t_GTE = r'>='
 t_LTE = r'<='
 t_NE = r'!='
-t_AND = r'AND'
-t_OR = r'OR'
 
 # Ignore spaces and tabs
 t_ignore = ' \t'

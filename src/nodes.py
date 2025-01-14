@@ -122,21 +122,3 @@ class Convert(Stmt):
 
     def __repr__(self):
         return 'Convert({}, {})'.format(self.value, self.datatype)
-
-# Class for logical AND operation
-class And(Expr):
-    def __init__(self, left, right):
-        self.left = left
-        self.right = right
-
-    def __repr__(self):
-        return 'And({}, {})'.format(self.left, self.right)
-
-# Class for logical OR operation
-class Or(Expr):
-    def __init__(self, left, right):
-        self.left = left
-        self.right = right
-
-    def __repr__(self):
-        return 'Or({}, {})'.format(self.left, self.right)
