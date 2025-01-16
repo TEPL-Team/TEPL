@@ -1,6 +1,7 @@
-from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert
+from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause
 import random
 from typing import Union
+import time
 
 # Environment to store variable values
 enviroment: dict[str, Union[int, float, str, None]] = {'INPUT': None}
@@ -56,6 +57,12 @@ def interpret(body):
                     enviroment[body.id.name] = i
                     interpret(body.body)
 
+            elif isinstance(body, Pause):
+                value = expr(body.value)
+                if not isinstance(value, int):
+                    raise TypeError(f"Expected 'value' to be an integer, got {type(value).__name__}")
+                time.sleep(value)
+
             else:
                 raise Exception('Unknown statement type')
     except Exception as e:
@@ -63,7 +70,6 @@ def interpret(body):
 
 # Evaluate expressions
 def expr(node):
-    print(node)
     try:
         if isinstance(node, Number):
             return node.value

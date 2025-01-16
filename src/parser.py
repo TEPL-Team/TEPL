@@ -1,5 +1,5 @@
 from ply import yacc
-from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert
+from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause
 from src.tokens import tokens
 
 # Define the grammar rules for the language
@@ -22,6 +22,7 @@ def p_stmt(p):
          | input_stmt
          | while_stmt
          | repeat_stmt
+         | pause_stmt
     '''
     p[0] = p[1]
 
@@ -67,6 +68,13 @@ def p_repeat_stmt(p):
     '''
     p[0] = Repeat(p[1][0], p[1][1], p[2])
 
+
+def p_pause_stmt(p):
+    '''
+    pause_stmt : PAUSE expr
+    '''
+    p[0] = Pause(p[2])
+
 def p_expr(p):
     '''
     expr : binop
@@ -91,8 +99,6 @@ def p_condition(p):
               | expr GTE expr
               | expr LTE expr
               | expr NE expr
-              | expr AND expr
-              | expr OR expr
     '''
     p[0] = Condition(p[1], p[2], p[3])
 

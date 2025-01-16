@@ -38,3 +38,8 @@ set x to 10
 repeat x times using j
     output j
 end
+
+Note: A pause statement
+output 'Pausing soon...'
+pause 3
+output "3 seconds in..."
