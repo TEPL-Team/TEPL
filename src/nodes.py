@@ -50,13 +50,13 @@ class Output(Stmt):
 
 # Class for random number generation
 class Random(Expr):
-    def __init__(self, _type, _from, _to):
+    def __init__(self, _type, low, max):
         self.type = _type
-        self.f = _from
-        self.to = _to
+        self.low = low
+        self.max = max
 
     def __repr__(self):
-        return 'Random({}, {}, {})'.format(self.type, self.f, self.to)
+        return 'Random({}, {}, {})'.format(self.type, self.low, self.max)
 
 # Class for text values
 class Text(Expr):
@@ -116,18 +116,36 @@ class Repeat(Stmt):
 
 # Class for convert statements
 class Convert(Stmt):
-    def __init__(self, value, datatype):
+    def __init__(self, value, to):
         self.value = value
-        self.datatype = datatype
+        self.to = to
 
     def __repr__(self):
-        return 'Convert({}, {})'.format(self.value, self.datatype)
+        return 'Convert({}, {})'.format(self.value, self.to)
     
 
 # Class for pause statements
 class Pause(Stmt):
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, duration):
+        self.duration = duration
     
     def __repr__(self):
-        return 'Pause({})'.format(self.value)
+        return 'Pause({})'.format(self.duration)
+    
+
+# Class for forever statements 
+class Forever(Stmt):
+    def __init__(self, body):
+        self.body = body
+
+    def __repr__(self):
+        return 'Forever({})'.format(self.body)
+    
+
+# Class for exit statements
+class Exit(Stmt):
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return 'Exit()'

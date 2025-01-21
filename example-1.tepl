@@ -1,9 +1,45 @@
-set i to 0
+Note: this is a comment! 
 
-repeat
+Note: Output a greeting message
+output "hello, world!" 
+
+Note: Set a variable 'x' to a random number between 0 and 100
+set x to random number from 0 to 100
+
+Note: Conditional statements to check the value of 'x'
+if x > 50 then 
+    output "X is greater than 50!"
+end
+
+if x < 50 then
+    output "X is less than 50!"
+end
+
+if x == 50 then 
+    output "X is equal to 50!"
+end
+
+Note: Output the value of 'x'
+output x
+
+Note: Ask for the user's name and greet them
+ask "What is your name?"
+output "Hello, " + INPUT + "!"
+
+Note: A while statement
+set i to 0
+while i < 10 do
     output i
     set i to i + 1
-    pause 1
-until i == 11
+end
 
-output "Your number has been reached!"
+Note: A repeat statement
+set x to 10
+repeat x times using j
+    output j
+end
+
+Note: A pause statement
+output 'Pausing soon...'
+pause 3
+output "3 seconds in..."

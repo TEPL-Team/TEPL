@@ -32,7 +32,7 @@ def t_DIGIT(t):
 # Define a rule for text (strings)
 def t_TEXT(t):
     r'(\'([^\\\'\n]|(\\.))*?\')|(\"([^\\\"\n]|(\\.))*?\")'
-    t.value = t.value[1:-1]
+    # t.value = t.value[1:-1]
     return t
 
 # Define a rule for identifiers and keywords

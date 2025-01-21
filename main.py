@@ -1,6 +1,6 @@
 from src.lexer import lexer
 from src.parser import parser, semantic_analysis
-from src.interpreter import interpret
+from src.interpreter import compile_ast
 import sys
 
 DEBUG = True
@@ -10,10 +10,15 @@ def read_file(file_path):
     """Read the contents of a file and return it as a string."""
     with open(file_path, 'r') as f:
         return f.read()
+    
+def write_file(file_path, content):
+    """Write content to a file."""
+    with open(file_path, 'w') as f:
+        f.write(content)
 
 # Main function for interactive mode
 def main():
-    print('''TEPL Interpreter - v0.1\n\n''')
+    print('''TEPL compile_aster - v0.1\n\n''')
     while True:
         try:
             text = input('> ')
@@ -21,7 +26,9 @@ def main():
                 exit(0)
             tree = parser.parse(text, lexer=lexer)
             if semantic_analysis(tree):
-                interpret(tree)
+                compiled_code = compile_ast(tree)
+                write_file('output.py', compiled_code)
+                exec(open('output.py').read())
         except EOFError:
             break
         except Exception as e:
@@ -51,10 +58,14 @@ DEBUG Mode...\n\n''')
             print('\nAST:')
             for node in tree:
                 print(node)
-            # Perform semantic analysis and interpret the abstract syntax tree if valid
+            # Perform semantic analysis and compile_ast the abstract syntax tree if valid
             if semantic_analysis(tree):
-                print('\nResult:')
-                interpret(tree)
+                print('\nCompiled Code:')
+                compiled_code = compile_ast(tree)
+                print(compiled_code)
+                write_file('output.py', compiled_code)
+                print('\nOutput:')
+                exec(open('output.py').read())
         except EOFError:
             break
         except Exception as e:
@@ -69,7 +80,7 @@ def process_input(input_source):
         else:
             text = input_source
 
-        # Tokenize, parse, and interpret the input
+        # Tokenize, parse, and compile_ast the input
         print('TOKENS:')
         lexer.input(text)
         while True:
@@ -91,8 +102,11 @@ def process_input(input_source):
             print(f"Error during parsing: '{e}'")
 
         if tree and semantic_analysis(tree):
-            print('\nResult:')
-            interpret(tree)
+            print('\nCompiled Code:')
+            print(compile_ast(tree))
+            write_file('output.py', compile_ast(tree))
+            print('\nOutput:')
+            exec(open('output.py').read())
     except Exception as e:
         print(f"Error: {e}")
 

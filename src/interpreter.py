@@ -1,139 +1,118 @@
-from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause
+from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit
 import random
 from typing import Union
 import time
 
-# Environment to store variable values
-enviroment: dict[str, Union[int, float, str, None]] = {'INPUT': None}
+def compile_ast(ast):
+    compiled_code = ['import random', 'import time', 'INPUT = None']
 
-# Interpret the list of statements
-def interpret(body):
-    try:
-        if isinstance(body, list):
-            for stmt in body:
-                interpret(stmt)
+    if isinstance(ast, list):
+        for node in ast:
+            compiled_code.append(compile_statements(node))
+    else:
+        compiled_code.append(compile_statements(ast))
+
+    return '\n'.join(compiled_code)
+
+def compile_statements(stmt, indent_level=0):
+    if isinstance(stmt, list):
+        return '\n'.join([compile_statements(s, indent_level) for s in stmt])
+
+    method_name = f'compile_{type(stmt).__name__.lower()}'
+    method = globals().get(method_name)
+    if method:
+        return method(stmt, indent_level)
+    else:
+        raise TypeError(f"Unknown statement type: {type(stmt).__name__}")
+
+def compile_output(node, indent_level=0):
+    expr_code = compile_expr(node.value)
+    indent = '    ' * indent_level
+    return f"{indent}print({expr_code})"
+
+def compile_set(node, indent_level=0):
+    value = compile_expr(node.value)
+    name = node.name.name  # Ensure name is extracted from Id
+    indent = '    ' * indent_level
+    return f"{indent}{name} = {value}"
+
+def compile_if(node, indent_level=0):
+    condition = compile_expr(node.condition)
+    statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
+    indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
+    indent = '    ' * indent_level
+    return f"{indent}if {condition}:\n{indented_statements}"
+
+def compile_while(node, indent_level=0):
+    condition = compile_expr(node.cond)
+    statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
+    indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
+    indent = '    ' * indent_level
+    return f"{indent}while {condition}:\n{indented_statements}"
+
+def compile_input(node, indent_level=0):
+    indent = '    ' * indent_level
+    return f"{indent}INPUT = input({compile_expr(node.question)})"
+
+def compile_pause(node, indent_level=0):
+    indent = '    ' * indent_level
+    return f"{indent}time.sleep({compile_expr(node.duration)})"
+
+def compile_forever(node, indent_level=0):
+    statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
+    indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
+    indent = '    ' * indent_level
+    return f"{indent}while True:\n{indented_statements}"
+
+def compile_exit(node, indent_level=0):
+    indent = '    ' * indent_level
+    return f"{indent}break"
+
+def compile_repeat(node, indent_level=0):
+    times = compile_expr(node.times)
+    loop_var = node.id.name  # Ensure name is extracted from Id
+    statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
+    indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
+    indent = '    ' * indent_level
+    return f"{indent}for {loop_var} in range({times}):\n{indented_statements}"
+
+def compile_expr(expr):
+    if isinstance(expr, list):
+        return ', '.join([compile_expr(e) for e in expr])
+
+    elif isinstance(expr, (Number, Text)):
+        return str(expr.value)
+
+    elif isinstance(expr, Id):
+        return expr.name
+
+    elif isinstance(expr, Binary):
+        left_code = compile_expr(expr.left)
+        right_code = compile_expr(expr.right)
+        return f"{left_code} {expr.op} {right_code}"
+
+    elif isinstance(expr, Random):
+        low = compile_expr(expr.low)
+        max = compile_expr(expr.max)
+        if expr.type == 'number':
+            return f"random.randint({low}, {max})"
         else:
-            if isinstance(body, Set):
-                name = body.name.name
-                value = expr(body.value)
-                enviroment[name] = value
-
-            elif isinstance(body, Output):
-                value = expr(body.value)
-                print(value)
-
-            elif isinstance(body, If):
-                condition = expr(body.condition)
-                if condition:
-                    interpret(body.body)
-
-            elif isinstance(body, Input):
-                # Ask the input question, process, and store the result
-                question = expr(body.question)  # Input prompt/question
-
-                # Get input from user
-                user_input = input(str(question))
-
-                # Try to cast the input to a number if possible, otherwise keep it as a string
-                try:
-                    if '.' in user_input:
-                        enviroment['INPUT'] = float(user_input)
-                    else:
-                        enviroment['INPUT'] = int(user_input)
-                except ValueError:
-                    enviroment['INPUT'] = user_input
-
-            elif isinstance(body, While):
-                cond = expr(body.cond)
-                while cond:
-                    interpret(body.body)
-                    cond = expr(body.cond)
-
-            elif isinstance(body, Repeat):
-                times = expr(body.times)
-                if not isinstance(times, int):
-                    raise TypeError(f"Expected 'times' to be an integer, got {type(times).__name__}")
-                for i in range(1, times + 1):
-                    enviroment[body.id.name] = i
-                    interpret(body.body)
-
-            elif isinstance(body, Pause):
-                value = expr(body.value)
-                if not isinstance(value, int):
-                    raise TypeError(f"Expected 'value' to be an integer, got {type(value).__name__}")
-                time.sleep(value)
-
-            else:
-                raise Exception('Unknown statement type')
-    except Exception as e:
-        print(f"Interpreter error: {e}")
-
-# Evaluate expressions
-def expr(node):
-    try:
-        if isinstance(node, Number):
-            return node.value
-
-        elif isinstance(node, Binary):
-            left = expr(node.left)
-            right = expr(node.right)
-
-            if node.op == '+':
-                return left + right
-
-            elif node.op == '-':
-                return left - right
-
-            elif node.op == '*':
-                return left * right
-
-            elif node.op == '/':
-                return left / right
-
-        elif isinstance(node, Id):
-            return enviroment.get(node.name, None)
-
-        elif isinstance(node, Random):
-            if node.type.lower() == 'number':
-                return random.randint(expr(node.f), expr(node.to))
-
-        elif isinstance(node, Text):
-            return node.value
-
-        elif isinstance(node, Condition):
-            left = expr(node.left)
-            right = expr(node.right)
-
-            if node.op == '==':
-                return left == right
-
-            elif node.op == '!=':
-                return left != right
-
-            elif node.op == '<':
-                return left < right
-
-            elif node.op == '>':
-                return left > right
-
-            elif node.op == '<=':
-                return left <= right
-
-            elif node.op == '>=':
-                return left >= right
-
-        elif isinstance(node, Convert):
-            value = expr(node.value)
-            datatype = node.datatype.upper()
-            if datatype == 'NUM':
-                return int(value)
-            elif datatype == 'TXT':
-                return str(value)
-            else:
-                raise TypeError(f"Expected 'NUM' or 'TXT' as datatype, got {datatype}")
-
+            raise TypeError(f"Unsupported type: {expr.type} for 'random'")
+        
+    elif isinstance(expr, Convert):
+        value = compile_expr(expr.value)
+        if expr.to.upper() == 'NUM':
+            return f"int({value})"
+        elif expr.to.upper() == 'TXT':
+            return f"str({value})"
         else:
-            raise Exception('Unknown expression type')
-    except Exception as e:
-        print(f"Expression error: {e}")
-        return None
+            raise TypeError(f"Unsupported type: {expr.to} for 'convert'")
+        
+    elif isinstance(expr, Condition):
+        left_code = compile_expr(expr.left)
+        right_code = compile_expr(expr.right)
+        return f"{left_code} {expr.op} {right_code}"
+
+    else:
+        raise TypeError(f"Unknown expression type: {type(expr).__name__}")
+

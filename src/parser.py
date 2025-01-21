@@ -1,5 +1,5 @@
 from ply import yacc
-from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause
+from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit
 from src.tokens import tokens
 
 # Define the grammar rules for the language
@@ -23,6 +23,8 @@ def p_stmt(p):
          | while_stmt
          | repeat_stmt
          | pause_stmt
+         | forever_stmt
+         | exit_stmt
     '''
     p[0] = p[1]
 
@@ -68,12 +70,23 @@ def p_repeat_stmt(p):
     '''
     p[0] = Repeat(p[1][0], p[1][1], p[2])
 
-
 def p_pause_stmt(p):
     '''
     pause_stmt : PAUSE expr
     '''
     p[0] = Pause(p[2])
+
+def p_forever_stmt(p):
+    '''
+    forever_stmt : FOREVER DO body END
+    '''
+    p[0] = Forever(p[3])
+
+def p_exit_stmt(p):
+    '''
+    exit_stmt : EXIT LOOP
+    '''
+    p[0] = Exit()
 
 def p_expr(p):
     '''
