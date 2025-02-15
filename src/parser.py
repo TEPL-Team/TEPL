@@ -1,5 +1,5 @@
 from ply import yacc
-from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit
+from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call
 from src.tokens import tokens
 
 # Define the grammar rules for the language
@@ -25,6 +25,9 @@ def p_stmt(p):
          | pause_stmt
          | forever_stmt
          | exit_stmt
+         | function_stmt
+         | return_stmt
+         | call_stmt
     '''
     p[0] = p[1]
 
@@ -88,12 +91,37 @@ def p_exit_stmt(p):
     '''
     p[0] = Exit()
 
+def p_function_stmt(p):
+    '''
+    function_stmt : FUNCTION expr WITH params MEANS body END
+    '''
+    p[0] = Function(p[2], p[4], p[6])
+
+def p_return_stmt(p):
+    '''
+    return_stmt : RETURN expr
+    '''
+    p[0] = Return(p[2])
+
+def p_call_stmt(p):
+    '''
+    call_stmt : ID params
+    '''
+    p[0] = Call(p[1], p[2])
+
 def p_expr(p):
     '''
     expr : binop
          | condition
     '''
     p[0] = p[1]
+
+# Removed duplicate rule from p_expr rule; now only p_expr_call handles "ID params"
+def p_expr_call(p):
+    '''
+    expr : CALL expr params
+    '''
+    p[0] = Call(p[2], p[3])
 
 def p_binop(p):
     '''
@@ -150,6 +178,16 @@ def p_datatype(p):
     '''
     p[0] = p[1]
 
+def p_params(p):
+    '''
+    params : expr
+           | params expr
+    '''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = p[1] + [p[2]]
+
 def p_error(p):
     if p:
         print(f"Syntax error at token '{p.value}' on line {p.lineno}, position {p.lexpos}")
@@ -166,7 +204,7 @@ def semantic_analysis(tree):
             if isinstance(node, Set):
                 if not isinstance(node.name, Id):
                     raise TypeError(f"Expected an identifier for variable name, got {type(node.name).__name__}")
-                if not isinstance(node.value, Expr):
+                if (not isinstance(node.value, Expr)) and (not isinstance(node.value, Call)):
                     raise TypeError(f"Expected an expression for variable value, got {type(node.value).__name__}")
             elif isinstance(node, Output):
                 if not isinstance(node.value, Expr):
@@ -188,6 +226,27 @@ def semantic_analysis(tree):
                     raise TypeError(f"Expected an identifier for loop variable, got {type(node.id).__name__}")
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
+            elif isinstance(node, Pause):
+                if not isinstance(node.duration, Expr):
+                    raise TypeError(f"Expected an expression for pause value, got {type(node.duration).__name__}")
+            elif isinstance(node, Forever):
+                if not isinstance(node.body, list):
+                    raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
+            elif isinstance(node, Function):
+                if not isinstance(node.name, Id):
+                    raise TypeError(f"Expected an identifier for function name, got {type(node.name).__name__}")
+                if not isinstance(node.args, list):
+                    raise TypeError(f"Expected a list of parameters for function, got {type(node.args).__name__}")
+                if not isinstance(node.body, list):
+                    raise TypeError(f"Expected a list of statements for function body, got {type(node.body).__name__}")
+            elif isinstance(node, Return):
+                if not isinstance(node.value, Expr):
+                    raise TypeError(f"Expected an expression for return value, got {type(node.value).__name__}")
+            elif isinstance(node, Call):
+                if not isinstance(node.name, Id):
+                    raise TypeError(f"Expected an identifier for function name, got {type(node.name).__name__}")
+                if not isinstance(node.args, list):
+                    raise TypeError(f"Expected a list of arguments for function call, got {type(node.args).__name__}")
             # Add more checks as needed for other node types
     except Exception as e:
         print(f"Semantic error: {e}")

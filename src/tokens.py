@@ -22,6 +22,11 @@ keywords = (
     'EXIT',
     'LOOP',
     'FOREVER',
+    'FUNCTION',
+    'WITH',
+    'MEANS',
+    'RETURN',
+    'CALL'
 )
 
 # Define the tokens used in the language, including keywords

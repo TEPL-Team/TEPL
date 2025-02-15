@@ -149,3 +149,33 @@ class Exit(Stmt):
 
     def __repr__(self):
         return 'Exit()'
+    
+
+# Class for function calls
+class Function(Stmt):
+    def __init__(self, name, args, body):
+        self.name = name
+        self.args = args
+        self.body = body
+
+    def __repr__(self):
+        return 'Function({}, {}, {})'.format(self.name, self.args, self.body)
+    
+
+# Class for return statements
+class Return(Stmt):
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return 'Return({})'.format(self.value)
+
+
+# Class for function calls
+class Call(Stmt):
+    def __init__(self, name, args):
+        self.name = name
+        self.args = args
+
+    def __repr__(self):
+        return 'Call({}, {})'.format(self.name, self.args)

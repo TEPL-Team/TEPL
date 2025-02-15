@@ -1,4 +1,4 @@
-from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit
+from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call
 import random
 from typing import Union
 import time
@@ -76,6 +76,26 @@ def compile_repeat(node, indent_level=0):
     indent = '    ' * indent_level
     return f"{indent}for {loop_var} in range({times}):\n{indented_statements}"
 
+def compile_function(node, indent_level=0):
+    name = node.name.name  # Ensure name is extracted from Id
+    params = ', '.join([p.name for p in node.args])  # Updated from node.params to node.args
+    statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
+    indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
+    indent = '    ' * indent_level
+    return f"{indent}def {name}({params}):\n{indented_statements}"
+
+def compile_return(node, indent_level=0):
+    value = compile_expr(node.value)
+    indent = '    ' * indent_level
+    return f"{indent}return {value}"
+
+def compile_call(node, indent_level=0):
+    name = node.name.name  # Ensure name is extracted from Id
+    args = ', '.join([compile_expr(arg) for arg in node.args])
+    indent = '    ' * indent_level
+    return f"{indent}{name}({args})"
+
+
 def compile_expr(expr):
     if isinstance(expr, list):
         return ', '.join([compile_expr(e) for e in expr])
@@ -94,7 +114,8 @@ def compile_expr(expr):
     elif isinstance(expr, Random):
         low = compile_expr(expr.low)
         max = compile_expr(expr.max)
-        if expr.type == 'number':
+        # Updated condition check to uppercase for consistency
+        if expr.type.upper() == 'NUMBER':
             return f"random.randint({low}, {max})"
         else:
             raise TypeError(f"Unsupported type: {expr.type} for 'random'")
@@ -112,6 +133,11 @@ def compile_expr(expr):
         left_code = compile_expr(expr.left)
         right_code = compile_expr(expr.right)
         return f"{left_code} {expr.op} {right_code}"
+    
+    elif isinstance(expr, Call):
+        name = expr.name.name
+        args = ', '.join([compile_expr(arg) for arg in expr.args])
+        return f"{name}({args})"
 
     else:
         raise TypeError(f"Unknown expression type: {type(expr).__name__}")
