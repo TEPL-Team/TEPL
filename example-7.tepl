@@ -1,0 +1,10 @@
+create file
+    name it "test_file_1.txt"
+    add content "Hello, world!" 
+    place in "C:\Users\caleb\OneDrive\Documents\Coding\Tests"
+end
+
+read file "C:\Users\caleb\OneDrive\Documents\Coding\Tests\test_file_1.txt"
+
+set file_content to DATA_READ
+output file_content

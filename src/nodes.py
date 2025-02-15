@@ -179,3 +179,23 @@ class Call(Stmt):
 
     def __repr__(self):
         return 'Call({}, {})'.format(self.name, self.args)
+    
+
+# Class for creating files
+class CreateFile(Stmt):
+    def __init__(self, name, content, path):
+        self.content = content
+        self.name = name
+        self.path = path
+
+    def __repr__(self):
+        return 'CreateFile({}, {}, {})'.format(self.name, self.content, self.path)
+    
+
+# Class for reading files
+class ReadFile(Stmt):
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return 'ReadFile({})'.format(self.name)

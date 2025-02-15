@@ -1,5 +1,5 @@
 from ply import yacc
-from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call
+from src.nodes import Expr, Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call, CreateFile, ReadFile
 from src.tokens import tokens
 
 # Define the grammar rules for the language
@@ -28,6 +28,8 @@ def p_stmt(p):
          | function_stmt
          | return_stmt
          | call_stmt
+         | createfile_stmt
+         | readfile_stmt
     '''
     p[0] = p[1]
 
@@ -108,6 +110,18 @@ def p_call_stmt(p):
     call_stmt : ID params
     '''
     p[0] = Call(p[1], p[2])
+
+def p_createfile_stmt(p):
+    '''
+    createfile_stmt : CREATE FILE NAME IT expr ADD CONTENT expr PLACE IN expr END
+    '''
+    p[0] = CreateFile(p[5], p[8], p[11])
+
+def p_readfile_stmt(p):
+    '''
+    readfile_stmt : READ FILE expr
+    '''
+    p[0] = ReadFile(p[3])
 
 def p_expr(p):
     '''

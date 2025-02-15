@@ -26,7 +26,16 @@ keywords = (
     'WITH',
     'MEANS',
     'RETURN',
-    'CALL'
+    'CALL',
+    'CREATE',
+    'FILE',
+    'NAME',
+    'IT',
+    'ADD',
+    'CONTENT',
+    'PLACE',
+    'IN',
+    'READ',
 )
 
 # Define the tokens used in the language, including keywords

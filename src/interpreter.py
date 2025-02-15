@@ -1,10 +1,22 @@
-from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call
+from src.nodes import Set, Output, Binary, Number, Id, Random, Text, If, Condition, Input, While, Repeat, Convert, Pause, Forever, Exit, Function, Return, Call, CreateFile, ReadFile
 import random
 from typing import Union
 import time
 
 def compile_ast(ast):
-    compiled_code = ['import random', 'import time', 'INPUT = None']
+    compiled_code = [
+        'import random',
+        'import time',
+        'import os',  # added os import for path operations
+        'INPUT = None',
+        'DATA_READ = None',
+        'def write_file(name, content, path):',
+        '    with open(path, "w") as file:',
+        '        file.write(content)',
+        'def read_file(file_path):',
+        '    with open(file_path, "r") as file:',
+        '        return file.read()'
+    ]
 
     if isinstance(ast, list):
         for node in ast:
@@ -94,6 +106,19 @@ def compile_call(node, indent_level=0):
     args = ', '.join([compile_expr(arg) for arg in node.args])
     indent = '    ' * indent_level
     return f"{indent}{name}({args})"
+
+def compile_createfile(node, indent_level=0):
+    name_expr = compile_expr(node.name)
+    content_expr = compile_expr(node.content)
+    path_expr = compile_expr(node.path)
+    indent = '    ' * indent_level
+    # Combine directory and file name using os.path.join
+    return f"{indent}write_file({name_expr}, {content_expr}, os.path.join(r{path_expr}, {name_expr}))"
+
+def compile_readfile(node, indent_level=0):
+    name = compile_expr(node.name)
+    indent = '    ' * indent_level
+    return f"{indent}DATA_READ = read_file(r{name})"
 
 
 def compile_expr(expr):
