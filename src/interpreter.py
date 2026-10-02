@@ -15,7 +15,15 @@ def compile_ast(ast):
         '        file.write(content)',
         'def read_file(file_path):',
         '    with open(file_path, "r") as file:',
-        '        return file.read()'
+        '        return file.read()',
+        'def tepl_to_bool(value):',
+        '    if isinstance(value, str):',
+        '        normalized_value = value.strip().lower()',
+        '        if normalized_value in ("true", "1", "yes", "on"):',
+        '            return True',
+        '        if normalized_value in ("false", "0", "no", "off", ""):',
+        '            return False',
+        '    return bool(value)'
     ]
 
     if isinstance(ast, list):
@@ -159,10 +167,15 @@ def compile_expr(expr):
         
     elif isinstance(expr, Convert):
         value = compile_expr(expr.value)
-        if expr.to.upper() == 'NUM':
+        convert_to = expr.to.upper()
+        if convert_to in ('NUM', 'NUMBER'):
             return f"int({value})"
-        elif expr.to.upper() == 'TXT':
+        elif convert_to in ('TXT', 'TEXT'):
             return f"str({value})"
+        elif convert_to in ('DEC', 'DECIMAL'):
+            return f"float({value})"
+        elif convert_to in ('BOOL', 'BOOLEAN'):
+            return f"tepl_to_bool({value})"
         else:
             raise TypeError(f"Unsupported type: {expr.to} for 'convert'")
         

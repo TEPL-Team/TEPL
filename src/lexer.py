@@ -25,8 +25,11 @@ def t_COMMENT(t):
 
 # Define a rule for numbers
 def t_DIGIT(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'\d+(\.\d+)?'
+    if '.' in t.value:
+        t.value = float(t.value)
+    else:
+        t.value = int(t.value)
     return t
 
 # Define a rule for text (strings)
