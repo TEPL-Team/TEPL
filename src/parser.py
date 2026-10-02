@@ -36,12 +36,20 @@ def p_stmt(p):
 def p_var_stmt(p):
     '''
     var_stmt : SET ID
+             | SET ID TYPE datatype
     '''
-    p[0] = Id(p[2])
+    if len(p) == 3:
+        p[0] = (Id(p[2]), None)
+    else:
+        p[0] = (Id(p[2]), p[4])
 
 def p_set_stmt(p):
     '''set_stmt : var_stmt TO expr'''
-    p[0] = Set(p[1], p[3])
+    variable_name, variable_type = p[1]
+    variable_value = p[3]
+    if variable_type is not None:
+        variable_value = Convert(variable_value, variable_type)
+    p[0] = Set(variable_name, variable_value)
 
 def p_output_stmt(p):
     '''output_stmt : OUTPUT expr'''
@@ -189,8 +197,28 @@ def p_datatype(p):
     '''
     datatype : NUM
              | TXT
+             | DEC
+             | BOOL
+             | NUMBER
+             | DECIMAL
+             | BOOLEAN
+             | TEXT
+             | ID
     '''
-    p[0] = p[1]
+    datatype_map = {
+        'NUM': 'NUM',
+        'NUMBER': 'NUM',
+        'TXT': 'TXT',
+        'TEXT': 'TXT',
+        'DEC': 'DEC',
+        'DECIMAL': 'DEC',
+        'BOOL': 'BOOL',
+        'BOOLEAN': 'BOOL',
+    }
+    datatype_key = p[1].upper()
+    if datatype_key not in datatype_map:
+        raise SyntaxError(f"Unsupported datatype '{p[1]}'")
+    p[0] = datatype_map[datatype_key]
 
 def p_params(p):
     '''
@@ -218,30 +246,30 @@ def semantic_analysis(tree):
             if isinstance(node, Set):
                 if not isinstance(node.name, Id):
                     raise TypeError(f"Expected an identifier for variable name, got {type(node.name).__name__}")
-                if (not isinstance(node.value, Expr)) and (not isinstance(node.value, Call)):
+                if (not isinstance(node.value, Expr)) and (not isinstance(node.value, Call)) and (not isinstance(node.value, Convert)):
                     raise TypeError(f"Expected an expression for variable value, got {type(node.value).__name__}")
             elif isinstance(node, Output):
-                if not isinstance(node.value, Expr):
+                if (not isinstance(node.value, Expr)) and (not isinstance(node.value, Convert)):
                     raise TypeError(f"Expected an expression for output value, got {type(node.value).__name__}")
             elif isinstance(node, If):
-                if not isinstance(node.condition, Expr):
+                if (not isinstance(node.condition, Expr)) and (not isinstance(node.condition, Convert)):
                     raise TypeError(f"Expected an expression for condition, got {type(node.condition).__name__}")
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
             elif isinstance(node, While):
-                if not isinstance(node.cond, Expr):
+                if (not isinstance(node.cond, Expr)) and (not isinstance(node.cond, Convert)):
                     raise TypeError(f"Expected an expression for condition, got {type(node.cond).__name__}")
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
             elif isinstance(node, Repeat):
-                if not isinstance(node.times, Expr):
+                if (not isinstance(node.times, Expr)) and (not isinstance(node.times, Convert)):
                     raise TypeError(f"Expected an expression for times, got {type(node.times).__name__}")
                 if not isinstance(node.id, Id):
                     raise TypeError(f"Expected an identifier for loop variable, got {type(node.id).__name__}")
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
             elif isinstance(node, Pause):
-                if not isinstance(node.duration, Expr):
+                if (not isinstance(node.duration, Expr)) and (not isinstance(node.duration, Convert)):
                     raise TypeError(f"Expected an expression for pause value, got {type(node.duration).__name__}")
             elif isinstance(node, Forever):
                 if not isinstance(node.body, list):
@@ -254,7 +282,7 @@ def semantic_analysis(tree):
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for function body, got {type(node.body).__name__}")
             elif isinstance(node, Return):
-                if not isinstance(node.value, Expr):
+                if (not isinstance(node.value, Expr)) and (not isinstance(node.value, Convert)):
                     raise TypeError(f"Expected an expression for return value, got {type(node.value).__name__}")
             elif isinstance(node, Call):
                 if not isinstance(node.name, Id):
