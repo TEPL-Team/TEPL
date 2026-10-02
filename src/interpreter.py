@@ -53,7 +53,19 @@ def compile_if(node, indent_level=0):
     statements = compile_statements(node.body, indent_level + 1)  # Increase indent level for block
     indented_statements = '\n'.join(['    ' * indent_level + line for line in statements.split('\n')])
     indent = '    ' * indent_level
-    return f"{indent}if {condition}:\n{indented_statements}"
+    code = [f"{indent}if {condition}:\n{indented_statements}"]
+
+    for elif_condition, elif_body in node.elif_branches:
+        elif_statements = compile_statements(elif_body, indent_level + 1)
+        indented_elif_statements = '\n'.join(['    ' * indent_level + line for line in elif_statements.split('\n')])
+        code.append(f"{indent}elif {compile_expr(elif_condition)}:\n{indented_elif_statements}")
+
+    if node.else_body is not None:
+        else_statements = compile_statements(node.else_body, indent_level + 1)
+        indented_else_statements = '\n'.join(['    ' * indent_level + line for line in else_statements.split('\n')])
+        code.append(f"{indent}else:\n{indented_else_statements}")
+
+    return '\n'.join(code)
 
 def compile_while(node, indent_level=0):
     condition = compile_expr(node.cond)
@@ -166,4 +178,3 @@ def compile_expr(expr):
 
     else:
         raise TypeError(f"Unknown expression type: {type(expr).__name__}")
-

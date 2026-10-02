@@ -48,8 +48,28 @@ def p_output_stmt(p):
     p[0] = Output(p[2])
 
 def p_if_then_stmt(p):
-    '''if_then_stmt : IF expr THEN body END'''
-    p[0] = If(p[2], p[4])
+    '''if_then_stmt : IF expr THEN body elseif_branches else_branch END'''
+    p[0] = If(p[2], p[4], p[5], p[6])
+
+def p_elseif_branches(p):
+    '''
+    elseif_branches : empty
+                    | ELSEIF expr THEN body elseif_branches
+    '''
+    if len(p) == 2:
+        p[0] = []
+    else:
+        p[0] = [(p[2], p[4])] + p[5]
+
+def p_else_branch(p):
+    '''
+    else_branch : empty
+                | ELSE THEN body
+    '''
+    if len(p) == 2:
+        p[0] = None
+    else:
+        p[0] = p[3]
 
 def p_input_stmt(p):
     '''
@@ -202,6 +222,10 @@ def p_params(p):
     else:
         p[0] = p[1] + [p[2]]
 
+def p_empty(p):
+    'empty :'
+    p[0] = None
+
 def p_error(p):
     if p:
         print(f"Syntax error at token '{p.value}' on line {p.lineno}, position {p.lexpos}")
@@ -228,6 +252,15 @@ def semantic_analysis(tree):
                     raise TypeError(f"Expected an expression for condition, got {type(node.condition).__name__}")
                 if not isinstance(node.body, list):
                     raise TypeError(f"Expected a list of statements for body, got {type(node.body).__name__}")
+                if not isinstance(node.elif_branches, list):
+                    raise TypeError(f"Expected a list for elseif branches, got {type(node.elif_branches).__name__}")
+                for elif_condition, elif_body in node.elif_branches:
+                    if not isinstance(elif_condition, Expr):
+                        raise TypeError(f"Expected an expression for elseif condition, got {type(elif_condition).__name__}")
+                    if not isinstance(elif_body, list):
+                        raise TypeError(f"Expected a list of statements for elseif body, got {type(elif_body).__name__}")
+                if (node.else_body is not None) and (not isinstance(node.else_body, list)):
+                    raise TypeError(f"Expected a list of statements for else body, got {type(node.else_body).__name__}")
             elif isinstance(node, While):
                 if not isinstance(node.cond, Expr):
                     raise TypeError(f"Expected an expression for condition, got {type(node.cond).__name__}")

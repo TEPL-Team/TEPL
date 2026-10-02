@@ -68,12 +68,14 @@ class Text(Expr):
 
 # Class for if statements
 class If(Stmt):
-    def __init__(self, condition, body):
+    def __init__(self, condition, body, elif_branches=None, else_body=None):
         self.condition = condition
         self.body = body
+        self.elif_branches = elif_branches or []
+        self.else_body = else_body
 
     def __repr__(self):
-        return 'If({}, {})'.format(self.condition, self.body)
+        return 'If({}, {}, {}, {})'.format(self.condition, self.body, self.elif_branches, self.else_body)
 
 # Class for conditions
 class Condition(Expr):

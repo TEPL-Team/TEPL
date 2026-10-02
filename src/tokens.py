@@ -7,6 +7,8 @@ keywords = (
     'FROM',
     'NUMBER',
     'IF',
+    'ELSE',
+    'ELSEIF',
     'THEN',
     'END',
     'ASK',
